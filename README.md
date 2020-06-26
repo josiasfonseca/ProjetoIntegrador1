@@ -1,21 +1,22 @@
 # Projeto Integrador 1
 
+## Node
 Instalar o Node JS: https://nodejs.org/en/
 
-# Angular:
+## Angular:
 npm install
 
-# Laravel:
+## Laravel:
 Instalação:
 Composer: https://getcomposer.org/download/
 Instalar o laravel via composer: https://laravel.com/docs/7.x#installing-laravel
 composer update ou composer install
 
-# Mysql/MariaDB
+## Mysql/MariaDB
 Instalar o MySQL e criar o banco de dados com o nome otimizador.
 Configurar os dados do banco no arquivo .env
 
-
+## Versões
 Versão:
 Laravel 7
 Angular 8
