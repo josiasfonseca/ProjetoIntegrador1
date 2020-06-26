@@ -23,3 +23,12 @@ Angular 8
 Node 10.16.13
 PHP 7.4.6
 MySQL/MariaDB 10.4.11
+
+
+## Comandos
+
+### Angular
+ng serve
+
+### Laravel
+php artisan serve
