@@ -1,0 +1,41 @@
+
+
+  <h3 class="text-center">Usuários</h3>
+  <button class="btn btn-primary" (click)="onNew()">Novo</button>
+  <h6 *ngIf="this.usuarios != null ? this.usuarios.length : '' " >Total de registros: {{ this.totalRegistros }}</h6>
+
+
+  <table class="table table-hover table-striped table-responsive-md" *ngIf="this.usuarios != null" >
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Login</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Ativo</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios" >
+        <th scope="row">{{ u.id }}</th>
+        <td>{{ u.nome }}</td>
+        <td>{{ u.login }}</td>
+        <td>{{ u.tipo }}</td>
+        <td>{{ u.ativo}}</td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="onEdit(u.id)">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete(u)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+<!-- <ng-template #deleteModal>
+  <div class="modal-body text-center">
+    <h6>Deseja excluir este usuário ( {{ this.usuarioSelecionado.id }} - {{ this.usuarioSelecionado.nome }}) ?</h6>
+    <button type="button" class="btn btn-default" (click)="onConfirmDelete()">Sim</button>
+    <button type="button" class="btn btn-primary" (click)="onDeclineDelete()">Não</button>
+  </div>
+</ng-template> -->

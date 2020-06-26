@@ -1,0 +1,48 @@
+<h3 class="text-center">Edição de usuário</h3>
+
+<form [formGroup]="formulario" class="needs-validation">
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <app-input-field id="nome" label="Nome Completo" place="Nome completo" type="text" readOnly="!!isReadOnly" formControlName="nome"
+      classeValidacao="{{ this.formulario.controls.nome.valid ? 'is-valid' : (this.formulario.controls.nome.dirty && this.formulario.controls.nome.invalid ? 'is-invalid' : '') }}"></app-input-field>
+      <div *ngIf="this.formulario.controls.nome.invalid && this.formulario.controls.nome.dirty ? (this.erros != null ? this.erros.nome : '') : ''" class="invalid-feedback">
+        fdsdfs
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <app-input-field id="login" label="Login" place="Login" type="text" readOnly="!!isReadOnly" formControlName="login"
+      classeValidacao="{{ this.formulario.controls.login.valid ? 'is-valid' : (this.formulario.controls.login.dirty && this.formulario.controls.login.invalid ? 'is-invalid' : '') }}"></app-input-field>
+    </div>
+    <div class="col-md-4 mb-3" *ngIf="!editando" >
+      <app-input-field id="senha" label="Senha" place="*****" type="password" readOnly="!!isReadOnly" formControlName="senha"
+      classeValidacao="{{ this.formulario.controls.senha.valid ? 'is-valid' : (this.formulario.controls.senha.dirty && this.formulario.controls.senha.invalid ? 'is-invalid' : '') }}"></app-input-field>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="ativo">Ativo</label>
+      <div id="ativo">
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="sim" name="ativo" class="custom-control-input" formControlName="ativo"
+            [checked]="this.usuario == null ? true : (this.usuario.ativo == 'Sim' ? true : false)" value="Sim" />
+          <label class="custom-control-label" for="sim">Sim</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input
+            type="radio" id="nao" name="ativo" class="custom-control-input" formControlName="ativo" value="Nao" [checked]="" />
+            <label class="custom-control-label" for="nao">Não</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="tipo-usuario">Tipo Usuário</label>
+      <select class="custom-select custom-select-sm" name="tipo-usuario" id="tipo-usuario" formControlName="tipo">
+        <option selected value="">Selecione o tipo do usuário</option>
+        <option *ngFor="let t of tiposUsuarios" value="{{ t }}"> {{ t }} </option>
+      </select>
+    </div>
+  </div>
+  <input type="text" class="form-control" formControlName="id" hidden id="id" name="id" />
+  <button class="btn btn-primary" type="submit" (click)="gravarForm(this.formulario.value)" >Gravar</button>
+  <button class="btn btn-danger" type="button" (click)="cancelarForm()">Cancelar</button>
+</form>
