@@ -5,7 +5,7 @@ import { Usuario } from './../../model/usuario';
 import { TipoFuncionario } from './../../enums/tipoFuncionario';
 import { UsuariosService } from './../usuarios.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Status } from 'src/app/enums/status';
 import { stringify } from 'querystring';
@@ -24,6 +24,7 @@ export class UsuariosFormComponent implements OnInit {
   usuarioUrl: number;
   editando = false;
   erros: Usuario;
+  classeErro = {};
 
   constructor(
     private service: UsuariosService,
@@ -37,25 +38,26 @@ export class UsuariosFormComponent implements OnInit {
 
     // Recebe uma lista dos tipos de usuários (Enums) no formato de Array
     this.tiposUsuarios = this.service.listTiposUsuarios();
-
+    this.usuarioUrl = this.route.snapshot.params.id ? parseInt(this.route.snapshot.params.id, 10) : null;
     // Cria os controles do formulário Reativo
     // this.usuario = {id: null, nome: null, login: null, senha: null, tipo: null, ativo: null};
     this.formulario = this.fb.group({
       id: [null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       login: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      senha: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      senha: [null, [ (this.usuarioUrl == null ? Validators.required : Validators.minLength(0) ),
+        Validators.minLength(6), Validators.maxLength(25)]],
       ativo: ['Sim', [Validators.required]],
       tipo: ['', [Validators.required]]
     });
-    console.log(this.formulario);
+
     // Se for edição preenche os campos com os dados do usuário
     const url: string = this.router.url;
     if (url.indexOf('novo') === -1) {
 
         this.editando = true;
         // Recebe id do usuário pela URL e já transforma em número
-        this.usuarioUrl = parseInt(this.route.snapshot.params.id, 10);
+
 
         // Busca no serviço o usuário pelo id
         this.service.listById(this.usuarioUrl).subscribe(usu => {
@@ -77,27 +79,75 @@ export class UsuariosFormComponent implements OnInit {
   }
 
   gravarForm(usuario: FormGroup) {
-    console.log(this.formulario);
+    // console.log(this.formulario);
     let id: number;
     if (this.usuarioUrl) {
       id = this.usuarioUrl;
     }
-    this.service.gravarUsuario(usuario, id)
-    .subscribe( dados => {
-      this.alertService.showAlertSucess( id != null ? 'Usuário atualizado com sucesso!' : 'Usuário cadastrado com sucesso!');
-      setTimeout(() => {
-        this.alertService.closeAlert();
+    if (this.formulario.valid) {
+        this.service.gravarUsuario(usuario, id)
+      .subscribe( dados => {
+        this.alertService.showAlertSucess( id != null ? 'Usuário atualizado com sucesso!' : 'Usuário cadastrado com sucesso!');
         setTimeout(() => {
-          this.router.navigate(['usuarios']);
+          this.alertService.closeAlert();
+          setTimeout(() => {
+            this.router.navigate(['usuarios']);
+          }, 1000);
         }, 1000);
-      }, 1000);
-    }, (erro: any) => {
-      this.erros = (erro.error.errors as Usuario);
-      this.alertService.showAlertDanger( id != null ? 'Erro ao atualizar usuário!' : 'Erro ao cadastrar usuário!');
-    });
+      }, (erro: any) => {
+        this.erros = (erro.error.errors as Usuario);
+        if (this.erros.login[0] === 'validation.unique') {
+          this.alertService.showAlertDanger('O campo login já existe! Informe outro valor válido!');
+          this.formulario.get('login').setValue('');
+        } else {
+          this.alertService.showAlertDanger( id != null ? 'Erro ao atualizar usuário!' : 'Erro ao cadastrar usuário!');
+        }
+      });
+    } else {
+      this.alertService.showAlertDanger('Verifique os campos em vermelho e preencha-os corretamente!');
+      Object.keys(this.formulario.controls).forEach(campo => {
+        const controle = this.formulario.get(campo);
+        controle.markAsDirty();
+      });
+    }
   }
 
   cancelarForm() {
     this.router.navigate(['usuarios']);
+  }
+
+  verificaValidadeCampo(campo) {
+    return {
+      'is-invalid':  (this.formulario.get(campo).dirty && this.formulario.get(campo).invalid),
+      'is-valid':  (this.formulario.get(campo).valid)
+    };
+  }
+
+  mostraErro(form) {
+    const campo = this.formulario.get(form);
+    if (campo.invalid && campo.dirty) {
+      return true;
+    }
+    return false;
+  }
+  aplicaClasseErro(campo) {
+    return {
+      'alert alert-danger' : true
+    };
+  }
+
+  imprimeErro(field, opcoes = null) {
+    const campo = this.formulario.get(field);
+    if (campo.errors == null) {
+      return;
+    }
+    const tipoErro = campo.errors;
+    if (tipoErro.required === true && campo.dirty) {
+      return `O ${field} é obrigatório.`;
+    } else if (tipoErro.minlength) {
+      return `O ${field} deve ter no mínimo ${tipoErro.minlength.requiredLength} caracteres.`;
+    } else if (tipoErro.maxlength) {
+      return `O ${field} deve ter no máximo ${tipoErro.maxlength.requiredLength} caracteres.`;
+    }
   }
 }
