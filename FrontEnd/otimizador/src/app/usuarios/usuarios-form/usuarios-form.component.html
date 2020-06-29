@@ -1,4 +1,4 @@
-<h3 class="text-center">Edição de usuário</h3>
+<h3 class="text-center">{{ usuarioUrl == null ? 'Inclusão de Usuário' : 'Edição de usuário' }}</h3>
 
 <form [formGroup]="formulario" class="needs-validation">
   <div class="form-row">
@@ -39,8 +39,8 @@
         <option selected value="">Selecione o tipo do usuário</option>
         <option *ngFor="let t of tiposUsuarios" value="{{ t }}"> {{ t }} </option>
       </select>
+      <app-input-control-erro [msgErro]="imprimeErro('tipo')" [mostrarErro]="mostraErro('tipo')"></app-input-control-erro>
     </div>
-    <app-input-control-erro [msgErro]="imprimeErro('tipo')" [mostrarErro]="mostraErro('tipo')"></app-input-control-erro>
   </div>
   <input type="text" class="form-control" formControlName="id" hidden id="id" name="id" />
   <button class="btn btn-primary" type="button" (click)="gravarForm(this.formulario.value)">Gravar</button>
