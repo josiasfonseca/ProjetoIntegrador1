@@ -4,11 +4,11 @@
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <app-input-field id="nome" label="Nome Completo" place="Nome completo" type="text" readOnly="!!isReadOnly" formControlName="nome" [classeValidacao]="verificaValidadeCampo('nome')">
-    </app-input-field>
-    <app-input-control-erro [msgErro]="imprimeErro('nome')" [mostrarErro]="mostraErro('nome')"></app-input-control-erro>
-  </div>
+      </app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('nome')" [mostrarErro]="mostraErro('nome')"></app-input-control-erro>
+    </div>
     <div class="col-md-4 mb-3">
-      <app-input-field id="login" label="Login" place="Login" type="text" readOnly="!!isReadOnly" formControlName="login" [classeValidacao]="verificaValidadeCampo('login')"></app-input-field>
+      <app-input-field [disabled]="editando" id="login" label="Login" place="Login" type="text" readOnly="!!isReadOnly" formControlName="login" [classeValidacao]="verificaValidadeCampo('login')"></app-input-field>
       <app-input-control-erro [msgErro]="imprimeErro('login')" [mostrarErro]="mostraErro('login')"></app-input-control-erro>
     </div>
     <div class="col-md-4 mb-3" *ngIf="!editando" >
@@ -22,13 +22,13 @@
       <div id="ativo">
         <div class="custom-control custom-radio custom-control-inline">
           <input type="radio" id="sim" name="ativo" class="custom-control-input" formControlName="ativo"
-            [checked]="this.usuario == null ? true : (this.usuario.ativo == 'Sim' ? true : false)" value="Sim" />
+          [checked]="this.usuario == null ? true : (this.usuario.ativo == 'Sim' ? true : false)" value="Sim" />
           <label class="custom-control-label" for="sim">Sim</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
           <input
-            type="radio" id="nao" name="ativo" class="custom-control-input" formControlName="ativo" value="Nao" [checked]="" />
-            <label class="custom-control-label" for="nao">Não</label>
+          type="radio" id="nao" name="ativo" class="custom-control-input" formControlName="ativo" value="Nao" [checked]="" />
+          <label class="custom-control-label" for="nao">Não</label>
         </div>
       </div>
       <app-input-control-erro [msgErro]="imprimeErro('ativo')" [mostrarErro]="mostraErro('ativo')"></app-input-control-erro>

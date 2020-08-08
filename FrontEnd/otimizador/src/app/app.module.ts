@@ -10,12 +10,14 @@ import { AppComponent } from './app.component';
 import { MenuNavbarComponent } from './menu/menu-navbar/menu-navbar.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EmpresasListComponent } from './empresas/empresas-list/empresas-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuNavbarComponent,
     HomeComponent,
+    EmpresasListComponent,
   ],
   imports: [
     BrowserModule,

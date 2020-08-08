@@ -12,7 +12,7 @@ export class AlertModalService {
 
   constructor(public modalService: BsModalService) { }
 
-  private showAlert(mensagem: string, tipo: string ){
+  private showAlert(mensagem: string, tipo: string ) {
     this.bsModalRef = this.modalService.show(AlertModalComponent);
     this.bsModalRef.content.type = tipo;
     this.bsModalRef.content.message = mensagem;
@@ -23,7 +23,7 @@ export class AlertModalService {
   showAlertSucess(mensagem: string) {
     this.showAlert( mensagem, 'success');
   }
-  closeAlert(){
+  closeAlert() {
     this.bsModalRef.hide();
   }
 

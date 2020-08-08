@@ -13,12 +13,30 @@ class User extends Authenticatable
     use SoftDeletes;
 
     protected $table = "usuarios";
+    protected $primaryKey = "id_usuario";
 
     protected $fillable = [
-        'id',
+        'id_usuario',
+        'nome',
         'login',
         'tipo',
-        'ativo'
     ];
 
+    protected $hidden = [
+        'senha'
+    ];
+
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    public function setPasswordAttribute($value){
+        $this->attributes['senha'] = bcrypt($value);
+    }
+
+    public function tipoUsuario() {
+        return $this->hasOne('App\Models\TipoUsuario', 'id_tipo_usuario');
+    }
+
+    public function empresas() {
+        return $this->belongsTo('App\Models\Empresa', 'id_empresa');
+    }
 }

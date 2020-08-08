@@ -23,6 +23,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() class;
   @Input() isReadOnly = false;
   @Input() classeValidacao;
+  @Input() disabled;
 
 
   constructor() { }

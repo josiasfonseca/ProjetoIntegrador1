@@ -19,3 +19,9 @@ Route::post('usuarios', 'UsuarioController@incluir')->name('usuarios.incluir');
 Route::put('usuarios/{id}', 'UsuarioController@atualizar')->name('usuarios.atualizar');
 Route::delete('usuarios/{id}', 'UsuarioController@excluir')->name('usuarios.excluir');
 Route::get('usuarios/{id}', 'UsuarioController@listarPorId')->name('usuarios.listarPorId');
+
+//Empresas
+Route::get('empresas', 'EmpresaController@listar')->name('empresas.listar');
+
+Route::get('controles', 'ControleController@listar')->name('controles.listar');
+Route::get('controles/{id}', 'ControleController@listarPorId')->name('controles.listarPorId');

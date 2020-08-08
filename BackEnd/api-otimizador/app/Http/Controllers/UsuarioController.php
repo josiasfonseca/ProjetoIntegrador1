@@ -19,7 +19,7 @@ class UsuarioController extends Controller
         if($usuario)
             return response()->json($usuario);
         else
-        return response()->json(['msg' => "Erro ao busca usuario com id "]);
+        return response()->json(['msg' => "Erro ao buscar usuario com id "]);
     }
 
     public function incluir(UsuarioRequest $request){
@@ -28,6 +28,9 @@ class UsuarioController extends Controller
         foreach($request->all() as $key => $value){
             if($key != '_method' && $key != '_token'){
                 $usuario->$key = $value;
+                if($key == 'login') {
+                    $usuario->$key = strtolower($usuario->$key);
+                }
                 if($key == 'senha'){
                     $usuario->$key = bcrypt($value);
                 }
@@ -57,6 +60,9 @@ class UsuarioController extends Controller
             foreach($request->all() as $key => $value){
                 if($key != '_method' && $key != '_token'){
                     $usuario->$key = $value;
+                    if($key == 'login') {
+                        $usuario->$key = strtolower($usuario->$key);
+                    }
                     if($key == 'senha'){
                         unset($usuario->$key);
                     }

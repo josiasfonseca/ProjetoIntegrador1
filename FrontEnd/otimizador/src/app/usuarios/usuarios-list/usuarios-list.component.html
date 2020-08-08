@@ -4,7 +4,6 @@
   <button class="btn btn-primary" (click)="onNew()">Novo</button>
   <h6 *ngIf="this.usuarios != null ? this.usuarios.length : '' " >Total de registros: {{ this.totalRegistros }}</h6>
 
-
   <table class="table table-hover table-striped table-responsive-md" *ngIf="this.usuarios != null" >
     <thead>
       <tr>
@@ -31,11 +30,6 @@
     </tbody>
   </table>
 
-
-<!-- <ng-template #deleteModal>
-  <div class="modal-body text-center">
-    <h6>Deseja excluir este usuário ( {{ this.usuarioSelecionado.id }} - {{ this.usuarioSelecionado.nome }}) ?</h6>
-    <button type="button" class="btn btn-default" (click)="onConfirmDelete()">Sim</button>
-    <button type="button" class="btn btn-primary" (click)="onDeclineDelete()">Não</button>
+  <div *ngIf="totalRegistros == 0" >
+    <h4 class="text-center">Nenhum registro encontrado!</h4>
   </div>
-</ng-template> -->
