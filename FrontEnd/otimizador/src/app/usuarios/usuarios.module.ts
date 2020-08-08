@@ -1,6 +1,6 @@
 import { ShareModule } from './../share/share.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UsuariosService } from './usuarios.service';
+import { UsuariosService } from '../services/usuarios.service';
 import { UsuariosListComponent } from './usuarios-list/usuarios-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

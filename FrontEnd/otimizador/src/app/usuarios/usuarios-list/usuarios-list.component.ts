@@ -2,7 +2,7 @@ import { take, switchMap } from 'rxjs/operators';
 import { AlertModalService } from './../../share/alert-modal.service';
 import { AlertModalComponent } from './../../share/alert-modal/alert-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { UsuariosService } from './../usuarios.service';
+import { UsuariosService } from '../../services/usuarios.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Usuario } from 'src/app/model/usuario';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -59,11 +59,11 @@ export class UsuariosListComponent implements OnInit {
     this.usuarioSelecionado = usuario;
     // this.deleteModalRef = this.modalService.show(this.deleteModal, {class: 'modal-sm'});
     const result$ =
-    this.alertService.showConfirm('Exclusão', 'Deseja excluir esse usuário ?', null, null, `${usuario.id} - ${usuario.nome} `);
+    this.alertService.showConfirm('Exclusão', 'Deseja excluir esse usuário ?', null, null, `${usuario.id_usuario} - ${usuario.nome} `);
     result$.asObservable()
     .pipe(
       take(1),
-      switchMap( result => result ? this.service.deleteUsuario(usuario.id) : EMPTY))
+      switchMap( result => result ? this.service.deleteUsuario(usuario.id_usuario) : EMPTY))
       .subscribe(dados => {
         this.alertService.showAlertSucess('Usuário excluído com sucesso!');
         setTimeout(() => {

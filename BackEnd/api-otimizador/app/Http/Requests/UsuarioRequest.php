@@ -25,12 +25,11 @@ class UsuarioRequest extends FormRequest
     {
 
         return [
-            'id' => 'present',
+            'id_usuario' => 'present',
             'nome' => 'required',
-            'login' => 'required|unique:App\User,login,' . ($this->get('id') ? $this->get('id') : 0),
-            'senha' =>  ($this->get('id') == null ? 'required|min:6|max:20' : ''),
-            'ativo'=> 'required',
-            'tipo'=> 'required',
+            'login' => 'required|unique:App\User,login,' . ($this->get('id_usuario') ? $this->get('id_usuario') : 0) . ',id_usuario',
+            'senha' =>  ($this->get('id_usuario') == null ? 'required|min:6|max:20' : ''),
+            'tipo_usuario'=> 'required',
         ];
     }
 }

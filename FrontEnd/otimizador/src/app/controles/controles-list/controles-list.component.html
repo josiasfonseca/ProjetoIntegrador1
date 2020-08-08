@@ -18,20 +18,20 @@
     <th>Controle</th>
   </thead>
   <tbody>
-    <tr >
-      <td>Ano</td>
-      <td>JAN</td>
-      <td>FEV</td>
-      <td>MAR</td>
-      <td>ABR</td>
-      <td>MAI</td>
-      <td>JUN</td>
-      <td>JUL</td>
-      <td>AGO</td>
-      <td>SET</td>
-      <td>OUT</td>
-      <td>NOV</td>
-      <td>DEZ</td>
+    <tr *ngFor="let c of controles" >
+      <td>{{ c.ano }}</td>
+      <td>{{ c.jan }}</td>
+      <td>{{ c.fev }}</td>
+      <td>{{ c.mar }}</td>
+      <td>{{ c.abr }}</td>
+      <td>{{ c.mai }}</td>
+      <td>{{ c.jun }}</td>
+      <td>{{ c.jul }}</td>
+      <td>{{ c.ago }}</td>
+      <td>{{ c.set }}</td>
+      <td>{{ c.out }}</td>
+      <td>{{ c.nov }}</td>
+      <td>{{ c.dez }}</td>
       <td>OBS</td>
       <td>
         <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>

@@ -17,7 +17,7 @@ class Usuarios extends Migration
             $table->id('id_usuario');
             $table->string('nome', 45);
             $table->string('login', 45)->unique();
-            $table->string('senha', 45);
+            $table->string('senha', 80);
             $table->unsignedBigInteger('tipo_usuario');
             $table->foreign('tipo_usuario')->references('id_tipo_usuario')->on('tipo_usuarios');
             $table->timestamps();

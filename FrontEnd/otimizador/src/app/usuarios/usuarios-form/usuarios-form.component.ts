@@ -3,7 +3,7 @@ import { AlertModalComponent } from './../../share/alert-modal/alert-modal.compo
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Usuario } from './../../model/usuario';
 import { TipoFuncionario } from './../../enums/tipoFuncionario';
-import { UsuariosService } from './../usuarios.service';
+import { UsuariosService } from '../../services/usuarios.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,13 +42,12 @@ export class UsuariosFormComponent implements OnInit {
     // Cria os controles do formulário Reativo
     // this.usuario = {id: null, nome: null, login: null, senha: null, tipo: null, ativo: null};
     this.formulario = this.fb.group({
-      id: [null],
+      id_usuario: [null],
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       login: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       senha: [null, [ (this.usuarioUrl == null ? Validators.required : Validators.minLength(0) ),
         Validators.minLength(6), Validators.maxLength(25)]],
-      ativo: ['Sim', [Validators.required]],
-      tipo: ['', [Validators.required]]
+      tipo_usuario: ['', [Validators.required]]
     });
 
     // Se for edição preenche os campos com os dados do usuário
@@ -73,13 +72,11 @@ export class UsuariosFormComponent implements OnInit {
 
     this.formulario.get('login').setValue(this.usuario.login);
     this.formulario.get('nome').setValue(this.usuario.nome);
-    this.formulario.get('ativo').setValue(this.usuario.ativo);
-    this.formulario.get('tipo').setValue(this.usuario.tipo);
-    this.formulario.get('id').setValue(this.usuario.id);
+    this.formulario.get('tipo_usuario').setValue(this.usuario.tipo_usuario);
+    this.formulario.get('id_usuario').setValue(this.usuario.id_usuario);
   }
 
   gravarForm(usuario: FormGroup) {
-    // console.log(this.formulario);
     let id: number;
     if (this.usuarioUrl) {
       id = this.usuarioUrl;

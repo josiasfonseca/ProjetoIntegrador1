@@ -2,7 +2,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertModalService } from './../../share/alert-modal.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Empresa } from './../../model/empresa';
-import { EmpresaService } from '../../services/empresa-service';
+import { EmpresaService } from '../../services/empresa.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -28,7 +28,7 @@ export class EmpresasListComponent implements OnInit {
   }
 
   atualizaLista() {
-    // Recebe uma lista de usuários de forma assíncrona
+    // Recebe uma lista de empresas de forma assíncrona
     this.service.list().subscribe(
       (dados: any) => {
         this.empresas = dados.data;

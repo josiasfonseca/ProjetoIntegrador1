@@ -13,7 +13,7 @@ class ControleController extends Controller
     }
 
     public function listarPorId($id){
-        $controle = Controle::where("empresa_id", $id);
+        $controle = Controle::where("empresa_id", $id)->get();
         if($controle)
             return response()->json($controle);
         else

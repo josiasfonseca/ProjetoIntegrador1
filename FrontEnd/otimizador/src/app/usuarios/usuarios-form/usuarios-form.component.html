@@ -18,31 +18,17 @@
   </div>
   <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label for="ativo">Ativo</label>
-      <div id="ativo">
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="sim" name="ativo" class="custom-control-input" formControlName="ativo"
-          [checked]="this.usuario == null ? true : (this.usuario.ativo == 'Sim' ? true : false)" value="Sim" />
-          <label class="custom-control-label" for="sim">Sim</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-          <input
-          type="radio" id="nao" name="ativo" class="custom-control-input" formControlName="ativo" value="Nao" [checked]="" />
-          <label class="custom-control-label" for="nao">Não</label>
-        </div>
-      </div>
-      <app-input-control-erro [msgErro]="imprimeErro('ativo')" [mostrarErro]="mostraErro('ativo')"></app-input-control-erro>
+      <label for="tipo-usuario">Tipo Usuário</label>
+      <select class="custom-select custom-select-sm" name="tipo_usuario" id="tipo_usuario" formControlName="tipo_usuario" [ngClass]="verificaValidadeCampo('tipo_usuario')">
+        <option selected value="">Selecione o tipo do usuário</option>
+        <option *ngFor="let t of tiposUsuarios" value="1"> {{ t }} </option>
+      </select>
+      <app-input-control-erro [msgErro]="imprimeErro('tipo_usuario')" [mostrarErro]="mostraErro('tipo_usuario')"></app-input-control-erro>
     </div>
     <div class="col-md-4 mb-3">
-      <label for="tipo-usuario">Tipo Usuário</label>
-      <select class="custom-select custom-select-sm" name="tipo-usuario" id="tipo-usuario" formControlName="tipo" [ngClass]="verificaValidadeCampo('tipo')">
-        <option selected value="">Selecione o tipo do usuário</option>
-        <option *ngFor="let t of tiposUsuarios" value="{{ t }}"> {{ t }} </option>
-      </select>
-      <app-input-control-erro [msgErro]="imprimeErro('tipo')" [mostrarErro]="mostraErro('tipo')"></app-input-control-erro>
     </div>
   </div>
-  <input type="text" class="form-control" formControlName="id" hidden id="id" name="id" />
+  <input type="text" class="form-control" formControlName="id_usuario" hidden id="id" name="id_usuario" />
   <button class="btn btn-primary" type="button" (click)="gravarForm(this.formulario.value)">Gravar</button>
   <button class="btn btn-danger" type="button" (click)="cancelarForm()">Cancelar</button>
 </form>

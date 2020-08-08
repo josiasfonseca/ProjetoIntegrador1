@@ -1,8 +1,8 @@
-import { AlertModalService } from './../share/alert-modal.service';
-import { AlertModalComponent } from './../share/alert-modal/alert-modal.component';
+import { AlertModalService } from '../share/alert-modal.service';
+import { AlertModalComponent } from '../share/alert-modal/alert-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Usuario } from './../model/usuario';
-import { TipoFuncionario } from './../enums/tipoFuncionario';
+import { Usuario } from '../model/usuario';
+import { TipoFuncionario } from '../enums/tipoFuncionario';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Status } from '../enums/status';

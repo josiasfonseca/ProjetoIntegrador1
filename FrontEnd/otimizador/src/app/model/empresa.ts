@@ -1,7 +1,6 @@
 import { Usuario } from 'src/app/model/usuario';
 
-export class Empresa {
-  // tslint:disable-next-line: variable-name
+export interface Empresa {
   id_empresa: number;
   nome: string;
   cnpj: string;
