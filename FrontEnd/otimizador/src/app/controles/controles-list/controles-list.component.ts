@@ -14,6 +14,7 @@ export class ControlesListComponent implements OnInit {
 
   controles: Controle[];
   totalRegistros: number;
+  idUrl: number;
 
   constructor(
     private service: ControleService,
@@ -24,19 +25,35 @@ export class ControlesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.idUrl = this.route.snapshot.params.id ? parseInt(this.route.snapshot.params.id, 10) : null;
+    if (!this.idUrl) {
+      this.voltarPagina();
+    }
+
     this.atualizaLista();
   }
 
+  voltarPagina() {
+    this.router.navigate(['/']);
+  }
   atualizaLista() {
+
     // Recebe uma lista de controles de forma assíncrona
-    this.service.list().subscribe(
+    this.service.listaPorEmpresa(this.idUrl).subscribe(
       (dados: any) => {
         this.controles = dados.data;
-        console.log(this.controles);
         this.totalRegistros = dados.total;
-      }, error => {
+        }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');
+        setTimeout(() => {
+          this.voltarPagina();
+        }, 2000);
       }
     );
   }
+
+  editar(idControle: number) {
+    this.router.navigate(['/controles/' + idControle + '/editar']);
+  }
+
 }

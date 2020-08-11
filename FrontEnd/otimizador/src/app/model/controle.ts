@@ -2,7 +2,7 @@ import { Empresa } from './empresa';
 export interface Controle {
   id_controle: number;
   ano: string;
-  empresa_id: Empresa;
+  empresa_id: number;
   jan: string;
   fev: string;
   mar: string;
@@ -15,4 +15,5 @@ export interface Controle {
   out: string;
   nov: string;
   dez: string;
+  empresa: Empresa;
 }

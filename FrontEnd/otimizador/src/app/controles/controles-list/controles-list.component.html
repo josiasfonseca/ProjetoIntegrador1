@@ -32,9 +32,11 @@
       <td>{{ c.out }}</td>
       <td>{{ c.nov }}</td>
       <td>{{ c.dez }}</td>
-      <td>OBS</td>
+      <!-- <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2" (click)="verObservacoes(c.id_controle)" >Ver</button>
+      </td> -->
       <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
+        <button type="button" class="btn btn-primary btn-sm mr-2" (click)="editar(c.id_controle)" >Editar</button>
         <button type="button" class="btn btn-secondary btn-sm">Atualizar</button>
       </td>
     </tr>

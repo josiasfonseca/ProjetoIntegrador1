@@ -1,11 +1,10 @@
+import { TipoUsuario } from './../model/tipo-usuario';
 import { AlertModalService } from '../share/alert-modal.service';
 import { AlertModalComponent } from '../share/alert-modal/alert-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Usuario } from '../model/usuario';
-import { TipoFuncionario } from '../enums/tipoFuncionario';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Status } from '../enums/status';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -39,12 +38,7 @@ export class UsuariosService {
     return this.http.get<Usuario>(`${this.url}/${id}`).pipe(take(1));
   }
 
-  listTiposUsuarios() {
-    const dados = Object.values(TipoFuncionario);
-    return dados;
-  }
-
-  deleteUsuario(id: number) {
+deleteUsuario(id: number) {
     return this.http.delete(`${this.url}/${id}`).pipe(take(1));
   }
 

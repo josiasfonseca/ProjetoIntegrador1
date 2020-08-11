@@ -1,9 +1,9 @@
-import { Status } from './../enums/status';
-import { TipoFuncionario } from './../enums/tipoFuncionario';
+import { TipoUsuario } from './tipo-usuario';
+
 export interface Usuario  {
   id_usuario: number;
   nome: string;
   login: string;
   senha: string;
-  tipo_usuario: TipoFuncionario;
+  tipo_usuario: TipoUsuario;
 }

@@ -9,38 +9,54 @@ use Illuminate\Http\Request;
 class UsuarioController extends Controller
 {
     public function listar(){
-        $usuarios = User::paginate(10);
-        sleep(1);
-            return response()->json($usuarios);
+        try {
+            $query = User::with(["tipoUsuario"]);
+            $usuarios = $query->paginate(10);
+                return response()->json($usuarios, 200);
+        } catch (\Exception $ex) {
+            return response()->json(["msg", "Erro ao listar usuários!"], 406);
+        }
     }
 
     public function listarPorId($id){
-        $usuario = User::find($id);
-        if($usuario)
-            return response()->json($usuario);
-        else
-        return response()->json(['msg' => "Erro ao buscar usuario com id "]);
+        try {
+
+            $query = User::with(["tipoUsuario"]);
+            $usuario = $query->find($id);
+            if($usuario)
+                return response()->json($usuario, 200);
+            else
+                return response()->json(['msg' => "Usuario $id não encontrado!"], 406);
+            } catch (\Exception $ex) {
+                return response()->json(['msg' => "Erro ao buscar usuario com id $id!"], 400);
+
+        }
     }
 
     public function incluir(UsuarioRequest $request){
-        $usuario = new User();
+        try {
+            $usuario = new User();
 
-        foreach($request->all() as $key => $value){
-            if($key != '_method' && $key != '_token'){
-                $usuario->$key = $value;
-                if($key == 'login') {
-                    $usuario->$key = strtolower($usuario->$key);
-                }
-                if($key == 'senha'){
-                    $usuario->$key = bcrypt($value);
+            foreach($request->all() as $key => $value){
+                if($key != '_method' && $key != '_token'){
+                    $usuario->$key = $value;
+                    if($key == 'login') {
+                        $usuario->$key = strtolower($usuario->$key);
+                        $usuario->$key = str_replace(" ", "", $usuario->$key);
+                    }
+                    if($key == 'senha'){
+                        $usuario->$key = bcrypt($value);
+                    }
                 }
             }
-        }
 
-        if($usuario->save())
-            return response()->json($usuario);
-        else
-            return  response()->json(["msg" => "Erro na inclusao"], $request);
+            if($usuario->save())
+                return response()->json($usuario, 200);
+            else
+                return  response()->json(["msg" => "Erro na inclusao", "dados" => $usuario], 400);
+            } catch (\Exception $ex) {
+                return  response()->json(["msg" => "Erro na inclusao", "dados" => $usuario], 400);
+        }
     }
 
     public function excluir($id){
@@ -70,7 +86,7 @@ class UsuarioController extends Controller
             }
             $usuario->save();
         }
-        return response()->json($request);
+        return response()->json($request, 200);
     }
 
 

@@ -19,16 +19,21 @@
   <div class="form-row">
     <div class="col-md-4 mb-3">
       <label for="tipo-usuario">Tipo Usuário</label>
-      <select class="custom-select custom-select-sm" name="tipo_usuario" id="tipo_usuario" formControlName="tipo_usuario" [ngClass]="verificaValidadeCampo('tipo_usuario')">
+      <select class="custom-select custom-select-sm" name="tipo_usuario_id" id="tipo_usuario_id" formControlName="tipo_usuario_id" [ngClass]="verificaValidadeCampo('tipo_usuario_id')">
         <option selected value="">Selecione o tipo do usuário</option>
-        <option *ngFor="let t of tiposUsuarios" value="1"> {{ t }} </option>
+        <option *ngFor="let t of tiposUsuarios" value="{{ t.id_tipo_usuario }}"> {{ t.tipo }} </option>
       </select>
-      <app-input-control-erro [msgErro]="imprimeErro('tipo_usuario')" [mostrarErro]="mostraErro('tipo_usuario')"></app-input-control-erro>
+      <app-input-control-erro [msgErro]="imprimeErro('tipo_usuario_id')" [mostrarErro]="mostraErro('tipo_usuario_id')"></app-input-control-erro>
     </div>
     <div class="col-md-4 mb-3">
     </div>
   </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <p>*Campo login não pode conter espaços e/ou carater especial.</p>
+    </div>
+  </div>
   <input type="text" class="form-control" formControlName="id_usuario" hidden id="id" name="id_usuario" />
-  <button class="btn btn-primary" type="button" (click)="gravarForm(this.formulario.value)">Gravar</button>
+  <button class="btn btn-primary" type="button" (click)="gravarForm()">Gravar</button>
   <button class="btn btn-danger" type="button" (click)="cancelarForm()">Cancelar</button>
 </form>

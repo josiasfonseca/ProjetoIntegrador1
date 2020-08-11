@@ -19,7 +19,7 @@ class User extends Authenticatable
         'id_usuario',
         'nome',
         'login',
-        'tipo_usuario',
+        'tipo_usuario_id',
     ];
 
     protected $hidden = [
@@ -33,10 +33,10 @@ class User extends Authenticatable
     }
 
     public function tipoUsuario() {
-        return $this->hasOne('App\Models\TipoUsuario', 'id_tipo_usuario');
+        return $this->hasOne('App\Models\TipoUsuario', 'id_tipo_usuario', 'tipo_usuario_id');
     }
 
     public function empresas() {
-        return $this->belongsTo('App\Models\Empresa', 'id_empresa');
+        return $this->belongsTo('App\Models\Empresa', 'id_empresa', 'empresa_id');
     }
 }

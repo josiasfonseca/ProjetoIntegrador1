@@ -1,0 +1,122 @@
+<h3 class="text-center">Controles</h3>
+
+<hr>
+  <h4>{{ controle ? controle.empresa.nome : '' }} - {{ controle ? controle.empresa.id_empresa : ''}}</h4>
+  <h4>Responsável: </h4>
+<hr>
+<form [formGroup]="formulario" class="needs-validation">
+  <div class="form-row">
+    <div class="col-md-1">
+      <label for="ano">Ano</label>
+      <input name="ano" formControlName="ano" disabled/>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-1">
+      <label for="jan">Janeiro</label>
+      <select class="form-control" name="jan" id="jan" formControlName="jan">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="fev">Fevereiro</label>
+      <select class="form-control" name="fev" id="fev" formControlName="fev">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="mar">Março</label>
+      <select class="form-control" name="mar" id="mar" formControlName="mar">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="abr">Abril</label>
+      <select class="form-control" name="abr" id="abr" formControlName="abr">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="mai">Maio</label>
+      <select class="form-control" name="mai" id="mai" formControlName="mai">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="jun">Junho</label>
+      <select class="form-control" name="jun" id="jun" formControlName="jun">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="julho">Julho</label>
+      <select class="form-control" name="julho" id="julho" formControlName="jul">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="ago">Agosto</label>
+      <select class="form-control" name="ago" Agosto="ago" formControlName="ago">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="set">Setembro</label>
+      <select class="form-control" name="set" id="set" formControlName="set">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="out">Outubro</label>
+      <select class="form-control" name="out" id="out" formControlName="out">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="nov">Novembro</label>
+      <select class="form-control" name="nov" id="nov" formControlName="nov">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <label for="dez">Dezembro</label>
+      <select class="form-control" name="dez" id="dez" formControlName="dez">
+        <option value=""></option>
+        <option value="Ok">OK</option>
+        <option value="Pendente">Pendente</option>
+      </select>
+    </div>
+    <div class="for-group row mt-2">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-primary btn-sm btn-block">Gravar controle</button>
+      </div>
+    </div>
+    <div class="for-row mt-2">
+      <div class="col-md-3">
+        <button type="button" class="btn btn-primary" (click)="onBack()" >Voltar</button>
+      </div>
+    </div>
+  </div>
+</form>

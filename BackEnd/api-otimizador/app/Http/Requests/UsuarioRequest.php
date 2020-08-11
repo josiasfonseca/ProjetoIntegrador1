@@ -29,7 +29,7 @@ class UsuarioRequest extends FormRequest
             'nome' => 'required',
             'login' => 'required|unique:App\User,login,' . ($this->get('id_usuario') ? $this->get('id_usuario') : 0) . ',id_usuario',
             'senha' =>  ($this->get('id_usuario') == null ? 'required|min:6|max:20' : ''),
-            'tipo_usuario'=> 'required',
+            'tipo_usuario_id'=> 'required',
         ];
     }
 }

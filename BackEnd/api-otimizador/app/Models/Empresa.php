@@ -22,11 +22,11 @@ class Empresa extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function usuario() {
-        return $this->hasOne('App\User', 'id_usuario');
+        return $this->hasOne('App\User', 'id_usuario', 'usuario_id');
     }
 
     public function controles() {
-        return $this->belongsTo('App\Models\Controle', 'id_controle');
+        return $this->hasMany('App\Models\Controle', 'id_empresa', 'empresa_id');
     }
 
     public function pagamentos() {

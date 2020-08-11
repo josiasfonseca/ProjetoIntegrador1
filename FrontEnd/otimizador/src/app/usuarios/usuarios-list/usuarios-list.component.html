@@ -19,7 +19,7 @@
         <th scope="row">{{ u.id_usuario }}</th>
         <td>{{ u.nome }}</td>
         <td>{{ u.login }}</td>
-        <td>{{ u.tipo_usuario }}</td>
+        <td>{{ u.tipo_usuario.tipo }}</td>
         <td>
           <button type="button" class="btn btn-primary" (click)="onEdit(u.id_usuario)">Editar</button>
           <button type="button" class="btn btn-danger" (click)="onDelete(u)">Excluir</button>

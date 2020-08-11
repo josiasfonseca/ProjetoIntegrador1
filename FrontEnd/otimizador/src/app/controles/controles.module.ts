@@ -5,12 +5,14 @@ import { ControlesRoutingModule } from './controles-routing.module';
 import { ControlesListComponent } from './controles-list/controles-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ControlesFormComponent } from './controles-form/controles-form.component';
 
 
 
 @NgModule({
   declarations: [
-    ControlesListComponent
+    ControlesListComponent,
+    ControlesFormComponent
   ],
   imports: [
     CommonModule,

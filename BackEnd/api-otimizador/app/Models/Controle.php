@@ -22,7 +22,7 @@ class Controle extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function empresa() {
-        return $this->hasOne('App\Models\Empresa', 'id_empresa');
+        return $this->hasOne('App\Models\Empresa', 'id_empresa', 'empresa_id');
     }
 
     public function observacoes() {

@@ -20,6 +20,6 @@ class TipoUsuario extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function usuarios() {
-        return $this->belongsTo('App\User', 'id_usuario');
+        return $this->hasMany('App\User', 'id_tipo_usuario', 'id_usuario');
     }
 }

@@ -14,7 +14,6 @@ class Observacoes extends Migration
     public function up()
     {
         Schema::create('observacoes', function (Blueprint $table) {
-            $table->id('id_observacoes');
             $table->string('observacao', 255);
             $table->string('mes_referencia', 45);
             $table->unsignedBigInteger('controle_id');
@@ -22,7 +21,7 @@ class Observacoes extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(["mes_referencia"]);
+            $table->primary(['controle_id', 'mes_referencia']);
         });
     }
 
