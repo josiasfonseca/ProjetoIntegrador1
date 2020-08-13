@@ -1,5 +1,14 @@
 <h3 class="text-center">Controles</h3>
-<table class="table table-striped table-hover table-bordered">
+
+<div *ngIf="empresa" >
+  <hr>
+    <h4>{{ empresa ? empresa.nome : '' }} - {{ empresa ? empresa.id_empresa : ''}}</h4>
+    <h4>Responsável: {{ empresa ? empresa.usuario.nome : '' }} </h4>
+    <hr>
+</div>
+
+<button class="btn btn-primary mb-2 mt-2" (click)="novo()" >Novo</button>
+<table class="table table-sm table-striped table-hover table-bordered table-responsive-sm">
   <thead class="table-active">
     <th>Ano</th>
     <th>JAN</th>
@@ -19,26 +28,35 @@
   </thead>
   <tbody>
     <tr *ngFor="let c of controles" >
-      <td>{{ c.ano }}</td>
-      <td>{{ c.jan }}</td>
-      <td>{{ c.fev }}</td>
-      <td>{{ c.mar }}</td>
-      <td>{{ c.abr }}</td>
-      <td>{{ c.mai }}</td>
-      <td>{{ c.jun }}</td>
-      <td>{{ c.jul }}</td>
-      <td>{{ c.ago }}</td>
-      <td>{{ c.set }}</td>
-      <td>{{ c.out }}</td>
-      <td>{{ c.nov }}</td>
-      <td>{{ c.dez }}</td>
-      <!-- <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2" (click)="verObservacoes(c.id_controle)" >Ver</button>
-      </td> -->
+      <td class="text-center">{{ c.ano }}</td>
+      <td class="text-center">{{ c.jan }}</td>
+      <td class="text-center">{{ c.fev }}</td>
+      <td class="text-center">{{ c.mar }}</td>
+      <td class="text-center">{{ c.abr }}</td>
+      <td class="text-center">{{ c.mai }}</td>
+      <td class="text-center">{{ c.jun }}</td>
+      <td class="text-center">{{ c.jul }}</td>
+      <td class="text-center">{{ c.ago }}</td>
+      <td class="text-center">{{ c.set }}</td>
+      <td class="text-center">{{ c.out }}</td>
+      <td class="text-center">{{ c.nov }}</td>
+      <td class="text-center">{{ c.dez }}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2" (click)="editar(c.id_controle)" >Editar</button>
-        <button type="button" class="btn btn-secondary btn-sm">Atualizar</button>
+        <div class="row">
+          <div class="col-sm-6">
+            <button *ngIf="(c.observacoes.length > 0)" type="button" class="btn btn-primary btn-sm" (click)="verObservacoes(c.id_controle)" >Ver</button>
+          </div>
+          <div class="col-sm-6 mr-0">
+            <button type="button" class="btn btn-primary btn-sm mr-0">Editar</button>
+          </div>
+        </div>
+      </td>
+      <td class="text-center">
+        <button type="button" class="btn btn-primary btn-sm mr-2 p-1" (click)="editar(c.id_controle)" >Editar</button>
+        <button type="button" class="btn btn-secondary btn-sm p-1">Atualizar</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<button type="button" class="btn btn-primary" (click)="onBack()" >Voltar</button>

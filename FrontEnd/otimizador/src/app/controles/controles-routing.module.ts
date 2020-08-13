@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', component: ControlesListComponent},
+  { path: 'novo/:id', component: ControlesFormComponent},
   { path: ':id', component: ControlesListComponent},
   { path: ':id/editar', component: ControlesFormComponent},
 ];

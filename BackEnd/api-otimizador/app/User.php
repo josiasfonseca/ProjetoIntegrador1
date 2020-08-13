@@ -37,6 +37,6 @@ class User extends Authenticatable
     }
 
     public function empresas() {
-        return $this->belongsTo('App\Models\Empresa', 'id_empresa', 'empresa_id');
+        return $this->hasMany('App\Models\Empresa', 'id_empresa', 'empresa_id');
     }
 }

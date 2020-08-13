@@ -32,4 +32,14 @@ export class ControleService {
   listaControle(id: number) {
     return this.http.get<Controle[]>(`${this.url}/${id}/editar`).pipe(take(1));
   }
+
+  gravar(controle, idControle: number = null) {
+    if (idControle == null) {
+      return this.http.post(`${this.url}/incluir`, controle)
+      .pipe(take(1));
+    } else {
+      return this.http.put(`${this.url}/${idControle}`, JSON.stringify(controle), this.httpOptions)
+      .pipe(take(1));
+    }
+  }
 }

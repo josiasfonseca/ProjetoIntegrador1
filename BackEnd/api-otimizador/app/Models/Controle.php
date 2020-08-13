@@ -26,6 +26,6 @@ class Controle extends Model
     }
 
     public function observacoes() {
-        return $this->belongsTo('App\Models\Observacao', 'id_obervacao');
+        return $this->hasMany('App\Models\Observacao', 'controle_id', 'id_controle');
     }
 }

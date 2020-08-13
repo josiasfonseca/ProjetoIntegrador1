@@ -15,24 +15,25 @@ class Controles extends Migration
     {
         Schema::create('controles', function (Blueprint $table) {
             $table->id('id_controle');
-            $table->string('ano', 45)->unique();
+            $table->string('ano', 45);
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id_empresa')->on('empresas');
-            $table->string('jan', 45);
-            $table->string('fev', 45);
-            $table->string('mar', 45);
-            $table->string('abr', 45);
-            $table->string('mai', 45);
-            $table->string('jun', 45);
-            $table->string('jul', 45);
-            $table->string('ago', 45);
-            $table->string('set', 45);
-            $table->string('out', 45);
-            $table->string('nov', 45);
-            $table->string('dez', 45);
+            $table->enum('jan', ['', 'X', 'OK']);
+            $table->enum('fev', ['', 'X', 'OK']);
+            $table->enum('mar', ['', 'X', 'OK']);
+            $table->enum('abr', ['', 'X', 'OK']);
+            $table->enum('mai', ['', 'X', 'OK']);
+            $table->enum('jun', ['', 'X', 'OK']);
+            $table->enum('jul', ['', 'X', 'OK']);
+            $table->enum('ago', ['', 'X', 'OK']);
+            $table->enum('set', ['', 'X', 'OK']);
+            $table->enum('out', ['', 'X', 'OK']);
+            $table->enum('nov', ['', 'X', 'OK']);
+            $table->enum('dez', ['', 'X', 'OK']);
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['empresa_id', 'ano']);
             $table->index(["ano", "empresa_id"]);
         });
     }

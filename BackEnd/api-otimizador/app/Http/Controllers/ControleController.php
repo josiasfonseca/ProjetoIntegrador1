@@ -19,11 +19,12 @@ class ControleController extends Controller
     //Lista controles de uma empresa, pelo id da empresa
     public function listarPorId($id){
         try {
-            $controles = Controle::where("empresa_id", $id)->orderBy("ano", "desc")->paginate(10);
+            $query = Controle::with('observacoes');
+            $controles = $query->where("empresa_id", $id)->orderBy("ano", "desc")->paginate(10);
             if($controles)
-            return response()->json($controles, 200);
+              return response()->json($controles, 200);
             else
-            return response()->json(['msg' => "Erro ao buscar controles com o id dessa empresa"], 400);
+                return response()->json(['msg' => "Erro ao buscar controles com o id dessa empresa"], 400);
         } catch (\Exception $ex) {
             return response()->json(['msg' => "Erro ao buscar controles com o id dessa empresa", $ex], 400);
         }
@@ -35,11 +36,42 @@ class ControleController extends Controller
             $query = Controle::with('empresa');
             $controle = $query->find($id);
             if ($controle)
-            return response()->json($controle, 200);
+                return response()->json($controle, 200);
             else
-            return response()->json(['msg' => "Erro ao busca controle pelo id"], 400);
+                return response()->json(['msg' => "Erro ao busca controle pelo id"], 400);
         } catch (\Exception $ex) {
             return response()->json(['msg' => "Erro ao busca controle pelo id", $ex], 400);
         }
     }
+
+    public function incluir(Request $request){
+        try {
+            $controle = new Controle();
+
+            foreach($request->all() as $key => $value){
+                    $controle->$key = $value;
+                        $controle->$key = strtoupper($controle->$key);
+            }
+
+            if($controle->save())
+                return response()->json($controle, 200);
+            else
+                return  response()->json(["msg" => "Erro na inclusao", "dados" => $controle], 400);
+            } catch (\Exception $ex) {
+                return  response()->json($ex, 400);
+        }
+    }
+
+    public function atualizar($id, Request $request){
+        $controle = Controle::findOrFail($id);
+        if($controle){
+            foreach($request->all() as $key => $value){
+                $controle->$key = $value;
+                    $controle->$key = strtoupper($controle->$key);
+            }
+            $controle->save();
+        }
+        return response()->json($controle, 200);
+    }
+
 }

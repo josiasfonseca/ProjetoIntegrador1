@@ -22,6 +22,6 @@ class Observacao extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function controles() {
-        return $this->hasOne('App\Models\Controle', 'id_controle');
+        return $this->hasOne('App\Models\Controle', 'id_controle', 'controle_id');
     }
 }

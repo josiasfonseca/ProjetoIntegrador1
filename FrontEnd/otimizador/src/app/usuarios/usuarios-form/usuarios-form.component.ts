@@ -107,18 +107,17 @@ export class UsuariosFormComponent implements OnInit {
   }
 
   formataLogin() {
-    console.log('Login', this.formulario.get('login').value);
+    if (this.formulario.get('login').value) {
     return this.formulario
       .get('login')
       .setValue(
         this.formulario
           .get('login')
           .value.normalize('NFD').
-          replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '')
-      );
-    // this.formulario.set:
-    // const parsed = str.normalize('NFD').replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, '');
-    // console.log(this.formulario.get('login').value);
+          replace(/([\u0300-\u036f]|[^0-9a-zA-Z])/g, ''));
+      } else {
+        return '';
+      }
   }
   gravarForm() {
     this.formataLogin();
@@ -188,6 +187,7 @@ export class UsuariosFormComponent implements OnInit {
     }
     return false;
   }
+
   aplicaClasseErro(campo) {
     return {
       'alert alert-danger': true,
@@ -201,11 +201,11 @@ export class UsuariosFormComponent implements OnInit {
     }
     const tipoErro = campo.errors;
     if (tipoErro.required === true && campo.dirty) {
-      return `O ${field} é obrigatório.`;
+      return `${field} é obrigatório.`;
     } else if (tipoErro.minlength) {
-      return `O ${field} deve ter no mínimo ${tipoErro.minlength.requiredLength} caracteres.`;
+      return `${field} deve ter no mínimo ${tipoErro.minlength.requiredLength} caracteres.`;
     } else if (tipoErro.maxlength) {
-      return `O ${field} deve ter no máximo ${tipoErro.maxlength.requiredLength} caracteres.`;
+      return `${field} deve ter no máximo ${tipoErro.maxlength.requiredLength} caracteres.`;
     }
   }
 }
