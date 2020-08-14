@@ -85,7 +85,10 @@ export class ControlesListComponent implements OnInit {
   }
 
   verObservacoes(idControle: number) {
-    console.log(idControle);
     this.router.navigate([`/observacoes/${idControle}`]);
+  }
+
+  editarObservacao(idControle: number) {
+    this.router.navigate([`/observacoes/${idControle}/editar`]);
   }
 }

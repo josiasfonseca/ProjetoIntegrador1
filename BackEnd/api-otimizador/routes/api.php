@@ -36,5 +36,7 @@ Route::get('tipos_usuarios', 'TipoUsuarioController@listar')->name('tipos_usuari
 
 //Observações
 Route::get('observacoes/{id}', 'ObservacaoController@listarPorId')->name('observacoes.listarPorId');
+Route::get('observacoes/{idControle}/{mes}', 'ObservacaoController@listarPorMesReferencia')->name('observacoes.listarPorMesReferencia');
+Route::post('observacoes/{idControle}', 'ObservacaoController@incluir')->name('observacoes.incluir');
 
 

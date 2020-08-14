@@ -52,7 +52,7 @@ export class ObservacoesListComponent implements OnInit {
       (dados: any) => {
         if (dados.total > 0) {
           this.observacoes = dados.data;
-          console.log(this.observacoes);
+          this.buscaEmpresa(this.observacoes[0].controles.empresa_id);
           this.totalRegistros = dados.total;
         } else {
           this.alertService.showAlertDanger('Erro ao carregar lista!');

@@ -10,10 +10,11 @@ class Observacao extends Model
     use SoftDeletes;
 
     protected $table = "observacoes";
-    protected $primaryKey = "id_observacao";
+    protected $primaryKey = "mes_referencia";
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
-        'id_observacao',
         'observacao',
         'mes_referencia',
         'controle_id',

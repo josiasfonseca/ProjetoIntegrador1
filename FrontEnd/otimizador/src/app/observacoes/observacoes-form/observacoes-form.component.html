@@ -1,0 +1,67 @@
+<h3 class="text-center">Observações</h3>
+
+<div class="row" *ngIf="empresa" >
+  <div class="col-sm-12">
+    <hr>
+      <h4>{{ empresa ? empresa.nome : '' }} - {{ empresa ? empresa.id_empresa : ''}}</h4>
+      <h5>Responsável: {{ empresa ? empresa.usuario.nome : '' }} </h5>
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="com-sm-12">
+    <h5 class="ml-3">Ano Controle: {{ observacoes ? observacoes[0].controles.ano : '' }}</h5>
+  </div>
+</div>
+<form [formGroup]="formulario" class="needs-validation">
+    <div class="row mt-4 mb-3">
+      <div class="col-sm-2">
+      <label for="mes_refencia">Mês Referência</label>
+      <select name="mes_referencia" id="mes_referencia" class="form-control" formControlName="mes_referencia">
+        <option value="jan">Janeiro</option>
+        <option value="fev">Fevereiro</option>
+        <option value="mar">Março</option>
+        <option value="abr">Abril</option>
+        <option value="mai">Maio</option>
+        <option value="jun">Junho</option>
+        <option value="jul">Julho</option>
+        <option value="ago">Agosto</option>
+        <option value="set">Setembro</option>
+        <option value="out">Outubro</option>
+        <option value="nov">Novembro</option>
+        <option value="dez">Dezembro</option>
+      </select>
+    </div>
+    <div class="col-sm-8 mb-0">
+      <p class="mb-0">
+        {{ msgErro }}
+      </p>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <textarea minlength="15" maxlength="255" placeholder="Escreva sua observação...(Entre 15 e 255 caracteres)" name="observacao" id="observacao" class="form-control" rows="5" formControlName="observacao">
+      </textarea>
+    </div>
+</div>
+<div class="row mb-2">
+  <div class="col-sm-12">
+    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="gravarObservacao()" >Gravar observação</button>
+  </div>
+</div>
+</form>
+
+<table class="table table-sm table-striped table-hover table-bordered table-responsive-sm mb-2">
+  <thead class="table-active">
+    <th class="align-middle text-center">Mês Referência</th>
+    <th class="align-middle text-center ">Observação</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let o of observacoes" >
+      <td class="text-center">{{ o.mes_referencia }}</td>
+      <td class="text-center">{{ o.observacao }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button type="button" class="btn btn-primary" (click)="onBack()" >Voltar</button>
