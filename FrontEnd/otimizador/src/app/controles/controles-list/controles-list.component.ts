@@ -18,7 +18,7 @@ export class ControlesListComponent implements OnInit {
   totalRegistros = 0;
   idEmpresa: number;
   empresa: Empresa;
-
+  msgDados = '';
   constructor(
     private service: ControleService,
     private serviceEmpresa: EmpresaService,
@@ -33,7 +33,7 @@ export class ControlesListComponent implements OnInit {
     if (this.idEmpresa == null) {
       this.onBack();
     } else {
-      this.buscaEmpresa(this.idEmpresa);
+      // this.buscaEmpresa(this.idEmpresa);
       this.atualizaLista();
     }
 
@@ -46,12 +46,16 @@ export class ControlesListComponent implements OnInit {
         if (dados.total > 0) {
           this.controles = dados.data;
           this.totalRegistros = dados.total;
+          this.empresa = this.controles[0].empresa;
+          this.msgDados = '';
         } else {
-          this.alertService.showAlertDanger('Erro ao carregar lista!');
-          setTimeout(() => {
-            this.alertService.closeAlert();
-            this.onBack();
-          }, 2000);
+          if (!this.empresa) {
+            this.serviceEmpresa.listPorId(this.idEmpresa)
+              .subscribe( (emps: any) => {
+                this.empresa = emps;
+              });
+          }
+          this.msgDados = 'Não encontrado controles!';
         }
       }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');

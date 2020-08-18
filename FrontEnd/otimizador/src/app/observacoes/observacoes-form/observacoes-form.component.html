@@ -3,8 +3,8 @@
 <div class="row" *ngIf="empresa" >
   <div class="col-sm-12">
     <hr>
-      <h4>{{ empresa ? empresa.nome : '' }} - {{ empresa ? empresa.id_empresa : ''}}</h4>
-      <h5>Responsável: {{ empresa ? empresa.usuario.nome : '' }} </h5>
+      <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+      <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
     <hr>
   </div>
 </div>
@@ -32,7 +32,14 @@
         <option value="dez">Dezembro</option>
       </select>
     </div>
-    <div class="col-sm-8 mb-0">
+    <div class="col-sm-2">
+      <label for="estado">Estado</label>
+      <select name="estado" id="estado" formControlName="estado" class="form-control">
+        <option value="Pendente">Pendente</option>
+        <option value="Concluído">Concluído</option>
+      </select>
+    </div>
+    <div class="col-sm-6 mb-0">
       <p class="mb-0">
         {{ msgErro }}
       </p>
@@ -63,5 +70,9 @@
     </tr>
   </tbody>
 </table>
-
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <h5>{{ msgDados }}</h5>
+  </div>
+</div>
 <button type="button" class="btn btn-primary" (click)="onBack()" >Voltar</button>

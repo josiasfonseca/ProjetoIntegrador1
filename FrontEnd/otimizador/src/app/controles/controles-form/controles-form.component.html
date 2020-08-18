@@ -3,14 +3,14 @@
 <div *ngIf="empresa" >
   <hr>
     <h4>{{ empresa ? empresa.nome : '' }} - {{ empresa ? empresa.id_empresa : ''}}</h4>
-    <h4>Responsável: {{ empresa ? empresa.usuario.nome : ''}}</h4>
+    <h6>Responsável: {{ empresa ? empresa.usuario.nome : ''}}</h6>
     <hr>
 </div>
 <form [formGroup]="formulario" class="needs-validation">
   <div class="form-row">
-    <div class="col-md-1" >
+    <div class="col-md-1">
       <label for="ano">Ano</label>
-      <input name="ano" [ngClass]="verificaValidadeCampo('ano')" placeholder="Ex:  2020" size="5" class="text-center" formControlName="ano" [disabled]="editando" required/>
+      <input name="ano" (keyup)="validaAno()" type="text" placeholder="Ex:  2020" size="5" class="text-center" [ngClass]="verificaValidadeCampo('ano')" formControlName="ano" [disabled]="editando" required/>
     </div>
   </div>
   <div class="form-row">

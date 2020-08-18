@@ -8,6 +8,7 @@ import { Observacao } from './../../model/observacao';
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { trimTrailingNulls } from '@angular/compiler/src/render3/view/util';
+import { ControleService } from 'src/app/services/controle.service';
 
 @Component({
   selector: 'app-observacoes-form',
@@ -23,10 +24,12 @@ export class ObservacoesFormComponent implements OnInit {
   idControle: number;
   formulario: FormGroup;
   msgErro = '';
+  msgDados = '';
 
   constructor(
     private service: ObservacaoService,
     private serviceEmpresa: EmpresaService,
+    private serviceControle: ControleService,
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
@@ -39,6 +42,7 @@ export class ObservacoesFormComponent implements OnInit {
     this.formulario = this.fb.group({
       mes_referencia: [null, Validators.required],
       observacao: [null],
+      estado: [null, Validators.required],
     });
 
 
@@ -71,12 +75,15 @@ export class ObservacoesFormComponent implements OnInit {
           this.observacoes = dados.data;
           this.buscaEmpresa(this.observacoes[0].controles.empresa_id);
           this.totalRegistros = dados.total;
+          this.msgDados = '';
         } else {
-          this.alertService.showAlertDanger('Erro ao carregar lista!');
-          setTimeout(() => {
-            this.alertService.closeAlert();
-            this.onBack();
-          }, 2000);
+          if (!this.empresa) {
+            this.serviceControle.listaControle(this.idControle)
+              .subscribe( (conts: any) => {
+                this.empresa = conts.empresa;
+              });
+          }
+          this.msgDados = 'Não encontrado observações!';
         }
       }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');
@@ -90,6 +97,9 @@ export class ObservacoesFormComponent implements OnInit {
   gravarObservacao() {
     if (this.formulario.get('mes_referencia').value == null) {
       this.alertService.showAlertDanger('Selecione um mês para referência!');
+      return;
+    } else if (this.formulario.get('estado').value == null) {
+      this.alertService.showAlertDanger('Selecione o estado da observação!');
       return;
     } else if (this.formulario.get('observacao').value == null) {
       this.alertService.showAlertDanger('Você deve informar uma observação!');
@@ -117,12 +127,13 @@ export class ObservacoesFormComponent implements OnInit {
           }, 1500);
         }
       }, (error: any) => {
-        console.log(error);
+        console.log('eRRo no servidor' , error);
       });
   }
 
   preencheCampos() {
     this.formulario.get('observacao').setValue(this.observacao.observacao);
+    this.formulario.get('estado').setValue(this.observacao.estado);
   }
 
   buscaEmpresa(id: number = null) {
@@ -136,6 +147,6 @@ export class ObservacoesFormComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['../../../controles/' + this.observacoes[0].controles.empresa_id], { relativeTo: this.route });
+    this.router.navigate(['../../../controles/' + this.empresa.id_empresa], { relativeTo: this.route });
   }
 }

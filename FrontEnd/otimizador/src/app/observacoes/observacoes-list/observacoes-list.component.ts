@@ -73,4 +73,8 @@ export class ObservacoesListComponent implements OnInit {
   onBack() {
     this.router.navigate(['../../controles/' + this.observacoes[0].controles.empresa_id], { relativeTo: this.route });
   }
+
+  editarObservacao(idControle: number) {
+    this.router.navigate([`/observacoes/${idControle}/editar`]);
+  }
 }

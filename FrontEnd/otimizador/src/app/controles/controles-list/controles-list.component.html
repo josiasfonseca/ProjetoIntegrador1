@@ -2,8 +2,8 @@
 
 <div *ngIf="empresa" >
   <hr>
-    <h4>{{ empresa ? empresa.nome : '' }} - {{ empresa ? empresa.id_empresa : ''}}</h4>
-    <h4>Responsável: {{ empresa ? empresa.usuario.nome : '' }} </h4>
+    <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+    <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
     <hr>
 </div>
 
@@ -58,5 +58,9 @@
     </tr>
   </tbody>
 </table>
-
+<div class="row">
+  <div class="col-sm-12 text-center mb-2">
+    <h4>{{ msgDados }}</h4>
+  </div>
+</div>
 <button type="button" class="btn btn-primary" (click)="onBack()" >Voltar</button>

@@ -3,24 +3,22 @@
 <div *ngIf="empresa" >
   <hr>
     <h4>{{ empresa ? empresa.nome : '' }} - {{ empresa ? empresa.id_empresa : ''}}</h4>
-    <h4>Responsável: {{ empresa ? empresa.usuario.nome : '' }} </h4>
+    <h6>Responsável: {{ empresa ? empresa.usuario.nome : '' }} </h6>
     <hr>
 </div>
 <h5>Ano Controle: {{ observacoes ? observacoes[0].controles.ano : '' }}</h5>
-<button class="btn btn-primary mb-2 mt-2">Novo</button>
+<button class="btn btn-primary mb-2 mt-2" (click)="editarObservacao(observacoes[0].controle_id)" >Novo/Editar</button>
 <table class="table table-sm table-striped table-hover table-bordered table-responsive-sm">
   <thead class="table-active">
     <th>Mês Referência</th>
     <th>Observação</th>
     <th>Estado</th>
-    <th>Ação</th>
   </thead>
   <tbody>
     <tr *ngFor="let o of observacoes" >
       <td class="text-center">{{ o.mes_referencia }}</td>
       <td class="text-center">{{ o.observacao }}</td>
-      <td>***Pendente***</td>
-      <td>Ação</td>
+      <td class="text-center">{{ o.estado }}</td>
     </tr>
   </tbody>
 </table>

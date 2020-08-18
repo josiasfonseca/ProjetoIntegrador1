@@ -1,3 +1,4 @@
+import { Empresa } from './empresa';
 import { Observacao } from './observacao';
 export interface Controle {
   id_controle: number;
@@ -16,4 +17,5 @@ export interface Controle {
   nov: string;
   dez: string;
   observacoes: Observacao;
+  empresa: Empresa;
 }

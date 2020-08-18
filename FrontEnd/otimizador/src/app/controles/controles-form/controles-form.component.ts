@@ -7,6 +7,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Component, OnInit } from '@angular/core';
 import { Controle } from 'src/app/model/controle';
 import { ControleService } from 'src/app/services/controle.service';
+import { isNumber, isDate, isRegExp, isString } from 'util';
 
 @Component({
   selector: 'app-controles-form',
@@ -113,18 +114,49 @@ export class ControlesFormComponent implements OnInit {
     }
   }
 
+  validaAno() {
+    if (this.formulario.get('ano').value) {
+      this.formulario
+        .get('ano')
+        .setValue(
+          this.formulario
+            .get('ano')
+            .value.
+            replace(/\D+/g, ''));
+        } else {
+          return '';
+        }
+
+  }
+
   gravar() {
+    this.validaAno();
     const controle = this.formulario.value;
+    const ano = parseInt(this.formulario.get('ano').value, 10);
+    if (isNumber(ano)) {
+      console.log('É numero');
+    }
+
     let id: number = null;
     if (this.editando) {
       id = this.idControle;
     }
-    if (!this.formulario.get('ano').value) {
-      this.alertService.showAlertDanger('O Ano deve ser obrigatório!');
+    if (!ano) {
+      this.alertService.showAlertDanger('O Ano é obrigatório!');
       this.formulario.get('ano').markAsDirty();
+      this.formulario.get('ano').markAsTouched();
       setTimeout(() => {
         this.alertService.closeAlert();
       }, 2000);
+      return;
+    }
+    const date = new Date();
+    if (ano < (date.getFullYear()) - 5 || ano > (date.getFullYear()) + 1) {
+      if (ano < (date.getFullYear()) - 5) {
+        this.alertService.showAlertDanger('O ano não pode ser menor que ' + (date.getFullYear() - 5));
+      } else if (ano > (date.getFullYear()) + 1) {
+        this.alertService.showAlertDanger('O ano não pode ser maior que ' + (date.getFullYear() + 1));
+      }
       return;
     }
     this.service.gravar(controle, id)
@@ -146,7 +178,6 @@ export class ControlesFormComponent implements OnInit {
   }
 
   verificaValidadeCampo(campo) {
-    console.log(this.formulario);
     return {
       'is-invalid':
         this.formulario.get(campo).dirty && this.formulario.get(campo).invalid,

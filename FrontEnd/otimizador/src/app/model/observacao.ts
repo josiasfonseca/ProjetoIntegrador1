@@ -5,4 +5,5 @@ export interface Observacao {
   mes_referencia: string;
   controle_id: Controle;
   controles: Controle;
+  estado: string;
 }

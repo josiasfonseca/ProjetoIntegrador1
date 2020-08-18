@@ -18,7 +18,8 @@ export class ObservacaoService {
 
   // Headers
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json' })
   };
 
   constructor(
@@ -31,10 +32,6 @@ export class ObservacaoService {
     list() {
       return this.http.get<Observacao[]>(this.url).pipe(take(1));
     }
-    // // Lista uma observação pelo seu id
-    // listPorId(id: number) {
-    //   return this.http.get<Observacao>(`${this.url}/${id}`).pipe(take(1));
-    // }
     // Lista as observações de um controle
     listPorControle(id: number) {
       return this.http.get<Observacao>(`${this.url}/${id}`).pipe(take(1));

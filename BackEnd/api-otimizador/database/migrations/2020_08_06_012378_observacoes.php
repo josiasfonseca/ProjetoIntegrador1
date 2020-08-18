@@ -18,6 +18,7 @@ class Observacoes extends Migration
             $table->string('mes_referencia', 45);
             $table->unsignedBigInteger('controle_id');
             $table->foreign('controle_id')->references('id_controle')->on('controles');
+            $table->enum('estado', ['Pendente', 'Concluído']);
             $table->timestamps();
             $table->softDeletes();
 

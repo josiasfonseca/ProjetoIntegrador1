@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Observacao;
+use Dotenv\Result\Result;
 
 class ObservacaoController extends Controller
 {
@@ -50,35 +51,32 @@ class ObservacaoController extends Controller
 
     //Inclui observação
     public function incluir($idControle, Request $request) {
-
         try {
-            $obs = new Observacao();
-            $obs1 = array();
-            $observacao = Observacao::where("controle_id", $idControle)->where("mes_referencia", $request->get("mes_referencia"))->get();
-            if ($observacao) {
-                $obs->controle_id = $idControle;
-                $obs->mes_referencia = $request->mes_referencia;
-                $obs->observacao = $request->observacao;
-                array_push($obs1, ["controle_id" => $idControle, "mes_referencia" => $request->mes_referencia, "observacao" => $request->observacao]);
-                if($observacao->update($obs1)) {
-                    return response()->json($obs, 200);
-                }
-                return response()->json(["msg" => "Erro ao atualizar observaçãoss!", $obs], 400);
-            }
-            else {
-                $obs->controle_id = $idControle;
-                foreach ($request->all() as $key => $value) {
-                    $obs->$key = $value;
-                }
-            }
+            $observacao = Observacao::where("mes_referencia", $request->mes_referencia)->where("controle_id", $idControle)->first();
+            if($observacao) {
+                $observacao->controle_id = $idControle;
+                $observacao->mes_referencia = $request->get('mes_referencia');
+                $observacao->observacao = $request->get('observacao');
+                $observacao->estado = $request->get('estado');
 
-            if ($obs->save()) {
-                return response()->json($obs, 200);
+                if($observacao->save()) {
+                    return response()->json(["msg" => $observacao], 200);
+                } else {
+                    return response()->json(["msg" => "Erro ao atualizar a o observação!"], 400);
+                }
+            }
+            $obs = new Observacao();
+            $obs->controle_id = $idControle;
+            foreach ($request->all() as $key => $value) {
+                $obs->$key = $value;
+            }
+            if($obs->save()) {
+                return response()->json([$obs], 200);
             } else {
-                return response()->json(["msg" => "Erro ao salvar observaçãoss!", $obs], 400);
+                return response()->json(["msg" => "Erro ao inserir observação!"], 400);
             }
         } catch (\Exception $ex) {
-            return response()->json(["msg" => "Erro ao salvar observaçãoooo!", $ex], 402);
+            return response()->json(["asdf" => $ex->getMessage()], 400);
         }
     }
 }

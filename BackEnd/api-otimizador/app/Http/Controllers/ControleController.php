@@ -19,7 +19,7 @@ class ControleController extends Controller
     //Lista controles de uma empresa, pelo id da empresa
     public function listarPorId($id){
         try {
-            $query = Controle::with('observacoes');
+            $query = Controle::with(['observacoes', 'empresa.usuario']);
             $controles = $query->where("empresa_id", $id)->orderBy("ano", "desc")->paginate(10);
             if($controles)
               return response()->json($controles, 200);
@@ -33,7 +33,7 @@ class ControleController extends Controller
     //Lista controle pelo id do controle
     public function listarControle($id) {
         try {
-            $query = Controle::with('empresa');
+            $query = Controle::with('empresa.usuario');
             $controle = $query->find($id);
             if ($controle)
                 return response()->json($controle, 200);
