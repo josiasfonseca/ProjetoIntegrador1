@@ -43,4 +43,7 @@ export class EmpresasListComponent implements OnInit {
     this.router.navigate(['controles/' + id]);
   }
 
+  importador(id) {
+    this.router.navigate(['importador/' + id]);
+  }
 }

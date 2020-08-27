@@ -1,0 +1,82 @@
+<h3 class="text-center">Importador de arquivos</h3>
+
+<div *ngIf="empresa" >
+  <hr>
+    <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+    <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
+    <hr>
+</div>
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            <p class="col-6 text-left"><i class="fas fa-download fa-3x"></i></p>
+            <p class="col-6 text-right"><b>CLIENTES EMPRESAS</b></p>
+          </div>
+          <div class="row">
+            <div class="col-6 text-left">
+              <i class="fas fa-info-circle mr-2"></i>
+              <button class="btn btn-outline-dark">Instruções</button>
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-outline-dark" (click)="clientes()">Começar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            <p class="col-6 text-left"><i class="fas fa-download fa-3x"></i></p>
+            <p class="col-6 text-right"><b>FORNECEDORES EMPRESAS</b></p>
+          </div>
+          <div class="row">
+            <div class="col-6 text-left">
+              <i class="fas fa-info-circle mr-2"></i>
+              <button class="btn btn-outline-dark">Instruções</button>
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-outline-dark">Começar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            <p class="col-6 text-left"><i class="fas fa-download fa-3x"></i></p>
+            <p class="col-6 text-right"><b>CARTÕES</b></p>
+          </div>
+          <div class="row">
+            <div class="col-6 text-left">
+              <i class="fas fa-info-circle mr-2"></i>
+              <button class="btn btn-outline-dark">Instruções</button>
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-outline-dark">Começar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-2"></div>
+</div>
+<button type="button" class="btn btn-primary mb-2" (click)="onBack()" >Voltar</button>

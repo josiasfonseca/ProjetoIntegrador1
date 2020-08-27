@@ -12,7 +12,6 @@ import { AlertModalService } from './../share/alert-modal.service';
 export class ControleService {
 
   url = 'http://localhost:8000/api/controles';
-  nome = 'controleEmpresa';
   controle: Controle;
 
    // Headers

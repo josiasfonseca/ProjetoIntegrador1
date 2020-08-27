@@ -1,5 +1,5 @@
 <h3 class="text-center">Empresas</h3>
-<table class="table table-sm table-striped table-hover table-bordered table-responsive-sm">
+<table class="table table-sm table-striped table-hover table-bordered table-responsive-md">
   <thead class="table-active">
     <th>Empresa</th>
     <th>Código</th>
@@ -11,7 +11,7 @@
       <td>{{ empresa.id_empresa }}</td>
       <td>
         <button type="button" class="btn btn-primary btn-sm mr-2" (click)="controle(empresa.id_empresa)">Controle</button>
-        <button type="button" class="btn btn-secondary btn-sm">Importador</button>
+        <button type="button" class="btn btn-secondary btn-sm" (click)="importador(empresa.id_empresa)">Importador</button>
       </td>
     </tr>
   </tbody>
