@@ -53,9 +53,10 @@ class ObservacaoController extends Controller
     public function incluir($idControle, Request $request) {
         try {
             $observacao = Observacao::where("mes_referencia", $request->mes_referencia)->where("controle_id", $idControle)->first();
+            // dd($observacao);
             if($observacao) {
-                $observacao->controle_id = $idControle;
-                $observacao->mes_referencia = $request->get('mes_referencia');
+                // $observacao->controle_id = $idControle;
+                // $observacao->mes_referencia = $request->get('mes_referencia');
                 $observacao->observacao = $request->get('observacao');
                 $observacao->estado = $request->get('estado');
 
@@ -76,7 +77,7 @@ class ObservacaoController extends Controller
                 return response()->json(["msg" => "Erro ao inserir observação!"], 400);
             }
         } catch (\Exception $ex) {
-            return response()->json(["asdf" => $ex->getMessage()], 400);
+            return response()->json(["msg" => $ex->getMessage()], 400);
         }
     }
 }

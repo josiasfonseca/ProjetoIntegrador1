@@ -12,7 +12,6 @@ class Observacao extends Model
 
     protected $table = "observacoes";
     // protected $primaryKey = ["mes_referencia", "controle_id"];
-    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [

@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 
 $factory->define(TipoUsuario::class, function (Faker $faker) {
     return [
-        'tipo' => strtoupper($faker->word)
+        'tipo' => strtoupper($faker->randomElement($array = array ('FUNCIONARIO','GERENTE')),)
     ];
 });

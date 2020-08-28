@@ -39,4 +39,7 @@ Route::get('observacoes/{id}', 'ObservacaoController@listarPorId')->name('observ
 Route::get('observacoes/{idControle}/{mes}', 'ObservacaoController@listarPorMesReferencia')->name('observacoes.listarPorMesReferencia');
 Route::post('observacoes/{idControle}', 'ObservacaoController@incluir')->name('observacoes.incluir');
 
-
+//Importador
+Route::group(['prefix' => 'importador/clientes'], function () {
+    Route::post('{idEmpresa}', 'ImportadorClienteController@carregarArquivo')->name('importador.clientes.carregarArquivo');
+});
