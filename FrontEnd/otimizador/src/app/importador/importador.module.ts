@@ -6,13 +6,17 @@ import { ImportadorListComponent } from './importador-list/importador-list.compo
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ImportadorClienteComponent } from './importador-cliente/importador-cliente.component';
+import { ImportadorFornecedorComponent } from './importador-fornecedor/importador-fornecedor.component';
+import { ImportadorResultComponent } from './importador-result/importador-result.component';
 
 
 
 @NgModule({
   declarations: [
     ImportadorListComponent,
-    ImportadorClienteComponent
+    ImportadorClienteComponent,
+    ImportadorFornecedorComponent,
+    ImportadorResultComponent
   ],
   imports: [
     CommonModule,

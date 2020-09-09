@@ -3,7 +3,7 @@ import { AlertModalService } from './../../share/alert-modal.service';
 import { AlertModalComponent } from './../../share/alert-modal/alert-modal.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UsuariosService } from '../../services/usuarios.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Usuario } from 'src/app/model/usuario';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, EMPTY } from 'rxjs';
@@ -23,6 +23,12 @@ export class UsuariosListComponent implements OnInit {
   usuarioSelecionado: Usuario;
   totalRegistros: number;
 
+  paginaAtual: number;
+  @Input() id: string;
+  @Input() maxSize: 8;
+  @Output() pageChange: EventEmitter<number>;
+  @Output() pageBoundsCorrection: EventEmitter<number>;
+
   constructor(
     private service: UsuariosService,
     private router: Router, private route: ActivatedRoute,
@@ -36,12 +42,13 @@ export class UsuariosListComponent implements OnInit {
   }
 
 
-  atualizaLista() {
+  atualizaLista(paginaAtual = 1) {
       // Recebe uma lista de usuários de forma assíncrona
-      this.service.list().subscribe(
+      this.service.list(paginaAtual).subscribe(
         (dados: any) => {
           this.usuarios = dados.data;
           this.totalRegistros = dados.total;
+          this.paginaAtual = dados.current_page;
         }, error => {
           this.alertService.showAlertDanger('Erro ao carregar lista!');
         }
@@ -91,6 +98,18 @@ export class UsuariosListComponent implements OnInit {
 
   onNew() {
     this.router.navigate(['usuarios/novo']);
+  }
+
+  previous(paginaAtual: number) {
+    this.atualizaLista(paginaAtual - 1);
+  }
+
+  next(paginaAtual: number) {
+    this.atualizaLista(paginaAtual + 1);
+  }
+
+  setarPagina(pagina) {
+  this.atualizaLista(pagina);
   }
 
 }

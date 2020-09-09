@@ -1,0 +1,64 @@
+<h3 class="text-center">Importador de arquivos</h3>
+
+<div *ngIf="empresa" >
+  <hr>
+    <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+    <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
+    <hr>
+</div>
+
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">
+            <div class="row">
+              <p class="col-12 text-center"><b>FORNECEDORES EMPRESA</b></p>
+            </div>
+            <div class="row">
+              <div class="col-6 text-left">
+               <input type="file" name="arquivo_fornecedor" id="arquivo_fornecedor" (change)="carregaArquivoFornecedor($event)">
+              </div>
+              <div class="col-6 text-right">
+                <button class="btn btn-outline-dark" (click)="enviarArquivoFornecedor()" [disabled]="!this.fileFornecedor">Enviar arquivo</button>
+              </div>
+              <p>{{ msgFornecedor }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            <p class="col-12 text-center"><b>FORNECEDORES ESCRITÓRIO CONTÁBIL</b></p>
+          </div>
+          <div class="row">
+            <div class="col-6 text-left">
+              <input type="file" name="arquivo_fornecedor_escritorio" id="arquivo_fornecedor_escritorio" (change)="carregaArquivoFornecedorEscritorio($event)">
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-outline-dark" (click)="enviarArquivoFornecedorEscritorio()" [disabled]="!this.fileFornecedorEscritorio">Enviar arquivo</button>
+            </div>
+            <p>{{ msgFornecedorEscritorio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button (click)="confrontarFornecedores($event)" class="btn btn-secondary mb-2">Confrontar arquivos de Fornecedores</button>
+<br>
+<button type="button" class="btn btn-primary mb-2" (click)="onBack()" >Voltar</button>
+
+
+
+
+
+
+

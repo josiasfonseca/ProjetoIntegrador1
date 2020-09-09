@@ -71,7 +71,8 @@ export class ImportadorClienteComponent implements OnInit {
     this.msgCliente = 'Enviando arquivo. Aguarde...';
     if (this.fileCliente && this.fileCliente.size > 0) {
       this.service.enviarArquivoCliente(this.idEmpresa, this.fileCliente)
-      .subscribe(response => {
+      .subscribe( (response: any) => {
+        console.log(response);
         this.msgCliente = 'Arquivo enviado com sucesso!';
       });
     }
@@ -87,7 +88,7 @@ export class ImportadorClienteComponent implements OnInit {
   enviarArquivoEscritorio() {
     this.msgCliente = 'Enviando arquivo. Aguarde...';
     if (this.fileEscritorio && this.fileEscritorio.size > 0) {
-      this.service.enviarArquivoEscritorio(this.idEmpresa, this.fileEscritorio)
+      this.service.enviarArquivoClienteEscritorio(this.idEmpresa, this.fileEscritorio)
       .subscribe(response => {
         this.msgEscritorio = 'Arquivo enviado com sucesso!';
       });

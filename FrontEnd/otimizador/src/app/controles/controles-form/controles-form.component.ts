@@ -133,9 +133,6 @@ export class ControlesFormComponent implements OnInit {
     this.validaAno();
     const controle = this.formulario.value;
     const ano = parseInt(this.formulario.get('ano').value, 10);
-    if (isNumber(ano)) {
-      console.log('É numero');
-    }
 
     let id: number = null;
     if (this.editando) {

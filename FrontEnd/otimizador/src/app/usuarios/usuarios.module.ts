@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ShareModule } from './../share/share.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuariosService } from '../services/usuarios.service';
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     FormsModule,
     ShareModule,
+    NgxPaginationModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ]
 })

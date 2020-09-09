@@ -3,7 +3,7 @@ import { AlertModalService } from './../../share/alert-modal.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { Empresa } from './../../model/empresa';
 import { EmpresaService } from '../../services/empresa.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-empresas-list',
@@ -14,6 +14,12 @@ export class EmpresasListComponent implements OnInit {
 
   empresas: Empresa[];
   totalRegistros: number;
+
+  paginaAtual: number;
+  @Input() id: string;
+  @Input() maxSize: 20;
+  @Output() pageChange: EventEmitter<number>;
+  @Output() pageBoundsCorrection: EventEmitter<number>;
 
   constructor(
     private service: EmpresaService,
@@ -27,12 +33,13 @@ export class EmpresasListComponent implements OnInit {
     this.atualizaLista();
   }
 
-  atualizaLista() {
+  atualizaLista(paginaAtual = 1) {
     // Recebe uma lista de empresas de forma assíncrona
-    this.service.list().subscribe(
+    this.service.list(paginaAtual).subscribe(
       (dados: any) => {
         this.empresas = dados.data;
         this.totalRegistros = dados.total;
+        this.paginaAtual = dados.current_page;
       }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');
       }
@@ -45,5 +52,17 @@ export class EmpresasListComponent implements OnInit {
 
   importador(id) {
     this.router.navigate(['importador/' + id]);
+  }
+
+  previous(paginaAtual: number) {
+    this.atualizaLista(paginaAtual - 1);
+  }
+
+  next(paginaAtual: number) {
+    this.atualizaLista(paginaAtual + 1);
+  }
+
+  setarPagina(pagina) {
+  this.atualizaLista(pagina);
   }
 }

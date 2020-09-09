@@ -1,3 +1,4 @@
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './menu/footer/footer.component';
 import { ContentComponent } from './menu/content/content.component';
 import { MenuSidebarComponent } from './menu/menu-sidebar/menu-sidebar.component';
@@ -25,7 +26,7 @@ import { LoginComponent } from './auth/login/login.component';
     MenuSidebarComponent,
     ContentComponent,
     FooterComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,8 @@ import { LoginComponent } from './auth/login/login.component';
     HttpClientModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
-    ShareModule
+    ShareModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

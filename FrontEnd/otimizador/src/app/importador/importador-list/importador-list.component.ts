@@ -34,7 +34,6 @@ export class ImportadorListComponent implements OnInit {
   }
 
   atualizaLista() {
-    // Recebe uma lista de controles de forma assíncrona
     this.serviceEmpresa.listPorId(this.idEmpresa)
     .subscribe( (dados: any) => {
       this.empresa = dados;
@@ -49,5 +48,9 @@ export class ImportadorListComponent implements OnInit {
 
   clientes() {
     this.router.navigate([`/importador/importador-clientes/${this.idEmpresa}`]);
+  }
+
+  fornecedores() {
+    this.router.navigate([`/importador/importador-fornecedores/${this.idEmpresa}`]);
   }
 }

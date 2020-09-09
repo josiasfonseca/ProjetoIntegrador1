@@ -26,8 +26,8 @@ export class EmpresaService {
     private alertService: AlertModalService
     ) { }
 
-    list() {
-      return this.http.get<Empresa[]>(this.url).pipe(take(1));
+    list(paginaAtual = 1) {
+      return this.http.get<Empresa[]>(`${this.url}?page=${paginaAtual}`).pipe(take(1));
     }
 
     listPorId(id: number) {

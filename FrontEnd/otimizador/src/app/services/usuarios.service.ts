@@ -30,8 +30,8 @@ export class UsuariosService {
     private alertService: AlertModalService
     ) { }
 
-  list() {
-    return this.http.get<Usuario[]>(this.url).pipe(take(1));
+  list(paginaAtual = 1) {
+    return this.http.get<Usuario[]>(`${this.url}?page=${paginaAtual}`).pipe(take(1));
   }
 
   listById(id: number) {
