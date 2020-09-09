@@ -24,7 +24,8 @@ class DuplicataReceber extends Model
         'total_pago',
         'numero_nota_fiscal',
         'banco',
-        'observacao'
+        'observacao',
+        'empresa_id'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DuplicataPagar extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     protected $table = "duplicatas_pagar";
     protected $primaryKey = "id_duplicata_pagar";
@@ -24,7 +24,8 @@ class DuplicataPagar extends Model
         'total_pago',
         'numero_nota_fiscal',
         'banco',
-        'observacao'
+        'observacao',
+        'empresa_id'
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

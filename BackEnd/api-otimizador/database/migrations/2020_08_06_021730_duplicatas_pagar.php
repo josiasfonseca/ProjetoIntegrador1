@@ -16,7 +16,7 @@ class DuplicatasPagar extends Migration
         Schema::create('duplicatas_pagar', function (Blueprint $table) {
             $table->id('id_duplicata_pagar');
             $table->dateTime('data');
-            $table->string('cnpj', 14)->unique();
+            $table->string('cnpj', 14);
             $table->integer('cod_fornecedor');
             $table->string('nome_fornecedor', 255);
             $table->decimal('valor_doc', 10, 2);
@@ -26,10 +26,10 @@ class DuplicatasPagar extends Migration
             $table->string('numero_nota_fiscal', 45);
             $table->string('banco', 45);
             $table->string('observacao', 255);
-            $table->unsignedBigInteger('empresa_id');
+            $table->unsignedBigInteger('empresa_id');#->nullable();
             $table->foreign('empresa_id')->references('id_empresa')->on('empresas');
             $table->timestamps();
-            $table->softDeletes();
+            // $table->softDeletes();
 
             $table->index(["cod_fornecedor", "data", "cnpj"]);
         });

@@ -39,7 +39,15 @@ Route::get('observacoes/{id}', 'ObservacaoController@listarPorId')->name('observ
 Route::get('observacoes/{idControle}/{mes}', 'ObservacaoController@listarPorMesReferencia')->name('observacoes.listarPorMesReferencia');
 Route::post('observacoes/{idControle}', 'ObservacaoController@incluir')->name('observacoes.incluir');
 
-//Importador
+//Importador clientes
 Route::group(['prefix' => 'importador/clientes'], function () {
     Route::post('{idEmpresa}', 'ImportadorClienteController@carregarArquivo')->name('importador.clientes.carregarArquivo');
+});
+
+// Importador forncedores
+Route::group(['prefix' => 'importador/fornecedores'], function () {
+    Route::post('{idEmpresa}', 'ImportadorFornecedorController@carregarArquivo')->name('importador.fornecedores.carregarArquivo');
+    Route::get('confrontar/{idEmpresa}', 'ImportadorFornecedorController@confrontar')->name('importador.fornecedores.confrontar');
+    Route::get('download-fornecedores-com-erro/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresComErro')->name('importador.fornecedores.download');
+    Route::get('download-fornecedores-ok/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresOk')->name('importador.fornecedoresok.download');
 });

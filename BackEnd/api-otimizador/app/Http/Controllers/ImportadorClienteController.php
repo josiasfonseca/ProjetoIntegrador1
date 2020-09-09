@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Storage;
+
+use App\Imports\DuplicataPagarImport;
+use App\Models\DuplicataPagar;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportadorClienteController extends Controller
 {
     private $path = "arquivos/cliente/";
-    private $nomeArquivoCliente = "cliente";
+    private $nomeArquivoCliente = "fornecedor";
     private $nomeArquivoEscritorio = "escritorio";
     private $pathBase;
 
@@ -21,14 +24,16 @@ class ImportadorClienteController extends Controller
         try {
             if($request->hasFile("arquivo_cliente")) {
                 if($request->arquivo_cliente->isValid() && $idEmpresa != null ){
-                    $name = $this->nomeArquivoCliente . "." . $request->arquivo_cliente->extension();
+                    $name = $this->nomeArquivoCliente . "." . $request->arquivo_cliente->clientExtension();
+                    // $name = $idEmpresa . "_" . $this->$request->arquivo_cliente->originalName;
                     $request->arquivo_cliente->storeAs("$this->path/$idEmpresa/", $name);
                 } else {
                     return response()->json(["msg" => "Arquivo inválido!"], 500);
                 }
             } else if($request->hasFile("arquivo_escritorio")){
                 if($request->arquivo_escritorio->isValid() && $idEmpresa != null ) {
-                    $name = $this->nomeArquivoEscritorio . "." . $request->arquivo_escritorio->extension();
+                    // $name = $this->nomeArquivoEscritorio . "." . $request->arquivo_escritorio->extension();
+                    $name = $idEmpresa . "_" . $this->nomeArquivoEscritorio . "." . $request->arquivo_escritorio->extension();
                     $request->arquivo_escritorio->storeAs("$this->path/$idEmpresa/", $name);
                 } else {
                     return response()->json(["msg" => "Arquivo inválido!"], 500);
@@ -45,20 +50,13 @@ class ImportadorClienteController extends Controller
     }
 
     public function lerArquivo($idEmpresa) {
-        $diretorio = $this->pathBase . $this->path . "/" . $idEmpresa;
-        // if(!is_dir($diretorio)) {
-            //     return response()->json(["msg" => "Diretório inválido!"], 500);
-            // }
-            $arquivo = fopen("$this->pathBase$this->path/$idEmpresa/$this->nomeArquivoCliente.txt", "r");
-            $dados = [];
-            while(!feof($arquivo)) {
-                $linha = fgets($arquivo);
-                $array = explode("\t", $linha);
-                array_push($dados, mb_convert_encoding($array, "UTF-8", "ASCII"));
-                // array_push($dados, $array);
-            }
-            // var_dump($linha);
-            return $dados;
+        try {
+            Excel::import(new DuplicataPagarImport($idEmpresa), storage_path('app/arquivos/cliente/1/fornecedor.xls', null, \Maatwebsite\Excel\Excel::XLS));
+
+            return response()->json(["msg" => "Arquivo Importado com sucesso!"], 200);
+        } catch (\Exception $ex) {
+            return response()->json(["error" => "Erro ao importar arquivo!", $ex], 500);
+        }
     }
 
     public function salvarRecebimento() {
