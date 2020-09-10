@@ -44,10 +44,12 @@ Route::group(['prefix' => 'importador/clientes'], function () {
     Route::post('{idEmpresa}', 'ImportadorClienteController@carregarArquivo')->name('importador.clientes.carregarArquivo');
 });
 
-// Importador forncedores
+// Importador fornecedores
 Route::group(['prefix' => 'importador/fornecedores'], function () {
     Route::post('{idEmpresa}', 'ImportadorFornecedorController@carregarArquivo')->name('importador.fornecedores.carregarArquivo');
     Route::get('confrontar/{idEmpresa}', 'ImportadorFornecedorController@confrontar')->name('importador.fornecedores.confrontar');
     Route::get('download-fornecedores-com-erro/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresComErro')->name('importador.fornecedores.download');
     Route::get('download-fornecedores-ok/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresOk')->name('importador.fornecedoresok.download');
+    Route::get('gerarArquivoContabilidade/{idEmpresa}', 'ImportadorFornecedorController@gerarArquivoContabilidade')->name('importador.fornecedores.gerarArquivoContabilidade');
+    Route::get('download-fornecedores-contabilidade/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresContabilidade')->name('importador.fornecedoresok.download');
 });

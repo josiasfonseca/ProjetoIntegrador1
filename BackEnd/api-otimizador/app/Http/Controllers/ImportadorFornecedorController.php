@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\FornecedoresContabilidade;
 use App\Exports\ResultFornecedoresComErro;
 use App\Exports\ResultFornecedoresOk;
 use App\Imports\DuplicataPagarImport;
@@ -82,7 +83,14 @@ class ImportadorFornecedorController extends Controller
             foreach ($result[0] as $k) {
                 $dado = array_search($cnpj, $k);
                 if($dado) {
-                    array_push($linha, $k);
+                    $data = $value["data"];
+                    $contadebito = 50 ;
+                    $contacredito = 51;
+                    $valor = $value["total_pago"];
+                    $historico = "PAGAMENTO " . $value["numero_nota_fiscal"];
+                    $lote = 1;
+
+                    array_push($linha, [$data, $contadebito, $contacredito, $valor, $historico, $lote]);
                     break;
                 }
             }
@@ -100,11 +108,14 @@ class ImportadorFornecedorController extends Controller
         $exportComErro = new ResultFornecedoresComErro($linhaComErro);
         Excel::store($exportComErro, "arquivos/fornecedores/$idEmpresa/fornecedoresComErro.xls", 'local', \Maatwebsite\Excel\Excel::XLS);
         Excel::store($exportComErro, "arquivos/fornecedores/$idEmpresa/fornecedoresComErro.pdf", 'local', \Maatwebsite\Excel\Excel::DOMPDF);
-        return  $linhaComErro;
+        $array[] = $linha;
+        $array[] = $linhaComErro;
+        return  $array;
     }
 
     public function baixarArquivoFornecedoresComErro($idEmpresa, $extensao) {
         $array = Excel::toArray(null, storage_path("app/arquivos/fornecedores/$idEmpresa/fornecedoresComErro.xls"));
+        unset($array[0][0]);
         return
         $extensao == 'xls'
         ? Excel::download(new ResultFornecedoresComErro($array), 'fornecedores-com-erro.xls', \Maatwebsite\Excel\Excel::XLS, ['Content-Type' => 'text/xls'])
@@ -113,9 +124,62 @@ class ImportadorFornecedorController extends Controller
 
     public function baixarArquivoFornecedoresOk($idEmpresa, $extensao) {
         $array = Excel::toArray(null, storage_path("app/arquivos/fornecedores/$idEmpresa/fornecedoresOk.xls"));
+        unset($array[0][0]);
         return
         $extensao == 'xls'
         ? Excel::download(new ResultFornecedoresOk($array), 'fornecedores-ok.xls', \Maatwebsite\Excel\Excel::XLS, ['Content-Type' => 'text/xls'])
         : Excel::download(new ResultFornecedoresOk($array), 'fornecedores-ok.pdf', \Maatwebsite\Excel\Excel::DOMPDF, ['Content-Type' => 'application/pdf']);
+    }
+
+    public function gerarArquivoContabilidade($idEmpresa) {
+        try {
+
+            $result = $this->lerArquivoFornecedorEscritorio($idEmpresa);
+            $linha = [];
+            array_shift($result[0]);
+            $duplicatas = DuplicataPagar::select("data", "total_pago", "cnpj", "nome_fornecedor", "numero_nota_fiscal", "banco", "cod_fornecedor")->where("empresa_id", $idEmpresa)->get();
+            $idAtual = "";
+            foreach ($duplicatas as $key => $value){
+                $idTrn = $value["cod_fornecedor"];
+                foreach ($result[0] as $k) {
+                    $cnpj = $value["cnpj"];
+                    if($cnpj == $k[10]){
+                        $data1 = strtotime($value["data"]);
+                        $data = date("d/m/Y", $data1);
+                        $contadebito = $k[2];
+                        $contacredito = strstr($value["banco"], "01601") != null ? 50 : (strstr($value["banco"], "35255") != null ? 51 : (strstr($value["banco"], "IRENE") != null ? 52 : 53));
+                        $valor = number_format($value["total_pago"], 2, ",", ".");
+                        $historico = "PAGAMENTO " . $value["numero_nota_fiscal"] . "  " . $k[5];
+                        $lote = 1;
+                        $idAtual = $idTrn;
+                        array_push($linha, [$data, $contadebito, $contacredito, $valor, $historico, $lote]);
+                        break;
+                    }
+                }
+            }
+            // unlink(storage_path("app/arquivos/fornecedores/$idEmpresa/fornecedoresContabilidade.xls"));
+            $export = new FornecedoresContabilidade($linha);
+            Excel::store($export, "arquivos/fornecedores/$idEmpresa/fornecedoresContabilidade.xls", 'local', \Maatwebsite\Excel\Excel::XLS);
+            Excel::store($export , "arquivos/fornecedores/$idEmpresa/fornecedoresContabilidade.pdf", 'local', \Maatwebsite\Excel\Excel::DOMPDF);
+            return response()->json($linha, 200);
+        } catch (\Exception $ex) {
+            return response()->json(["error" => $ex->getMessage()], 500);
+        }
+    }
+
+    public function baixarArquivoFornecedoresContabilidade($idEmpresa, $extensao) {
+        try {
+
+            $array = Excel::toArray(null, storage_path("app/arquivos/fornecedores/$idEmpresa/fornecedoresContabilidade.xls"));
+            unset($array[0][0]);
+            return
+            $extensao == 'csv'
+            ? Excel::download(new FornecedoresContabilidade($array), 'fornecedoresContabilidade-ok-$idEmpresa.csv', \Maatwebsite\Excel\Excel::CSV,
+            ['Content-Type' => 'text/csv'])
+            : Excel::download(new FornecedoresContabilidade($array), 'fornecedoresContabilidade-ok-$idEmpresa.pdf', \Maatwebsite\Excel\Excel::DOMPDF,
+            ['Content-Type' => 'application/pdf']);
+        } catch (\Exception $ex) {
+            return response()->json(["error" => $ex->getMessage()], 500);
+        }
     }
 }

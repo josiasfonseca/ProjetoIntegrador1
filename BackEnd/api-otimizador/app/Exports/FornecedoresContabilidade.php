@@ -9,11 +9,12 @@ use Maatwebsite\Excel\Concerns\WithProperties;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-
-class ResultFornecedoresOk
+class FornecedoresContabilidade
 extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder
-implements FromArray,WithColumnWidths,WithCustomValueBinder,WithProperties,WithHeadings,WithStyles
+implements FromArray,WithColumnWidths,WithCustomValueBinder,WithProperties,WithHeadings,WithStyles,WithCustomCsvSettings
+
 {
     protected $lista;
 
@@ -30,8 +31,13 @@ implements FromArray,WithColumnWidths,WithCustomValueBinder,WithProperties,WithH
     public function columnWidths(): array
     {
         return [
-            'A' => 60,
+            'A' => 20,
             'B' => 20,
+            'C' => 20,
+            'D' => 20,
+            'E' => 50,
+            'F' => 20,
+            'G' => 40,
         ];
     }
 
@@ -51,8 +57,12 @@ implements FromArray,WithColumnWidths,WithCustomValueBinder,WithProperties,WithH
     public function headings(): array
     {
         return [
-            'Nome do Fornecedor',
-            'CNPJ',
+            'Data',
+            'Conta Debito',
+            'Conta Credito',
+            'Valor',
+            'Historico',
+            'Lote',
         ];
     }
 
@@ -60,7 +70,14 @@ implements FromArray,WithColumnWidths,WithCustomValueBinder,WithProperties,WithH
     {
         return [
             // Style the first row as bold text.
-            1    => ['font' => ['bold' => true]],
+            // 1    => ['font' => ['bold' => true]],
+        ];
+    }
+
+    public function getCsvSettings(): array
+    {
+        return [
+            'delimiter' => ';'
         ];
     }
 }

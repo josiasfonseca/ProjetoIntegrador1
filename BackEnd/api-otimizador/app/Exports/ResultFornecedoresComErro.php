@@ -51,8 +51,8 @@ implements FromArray,WithColumnWidths,WithCustomValueBinder,WithProperties,WithH
     public function headings(): array
     {
         return [
-            // 'Nome do Fornecedor',
-            // 'CNPJ',
+            'Nome do Fornecedor',
+            'CNPJ',
         ];
     }
 
