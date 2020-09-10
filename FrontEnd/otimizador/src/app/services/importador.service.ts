@@ -65,6 +65,17 @@ export class ImportadorService extends BaseServiceService {
       });
   }
 
+  gerarArquivoContabilidade(idEmpresa: number) {
+    return this.http.get(`${this.urlBase}/importador/fornecedores/gerarArquivoContabilidade/${idEmpresa}`);
+  }
+
+  baixarFornecedoresContabilidade(idEmpresa: number, extensao: string): Observable<any> {
+    return this.http.get(
+      `${this.urlBase}/importador/fornecedores/download-fornecedores-contabilidade/${idEmpresa}/${extensao}`, {
+        responseType: 'blob' as 'json'
+      });
+  }
+
   handleFile(res, fileName: string) {
 
     const file = new Blob([res], {

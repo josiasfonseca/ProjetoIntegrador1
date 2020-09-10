@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Controle } from 'src/app/model/controle';
 import { ControleService } from 'src/app/services/controle.service';
 import { isNumber, isDate, isRegExp, isString } from 'util';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-controles-form',
@@ -31,6 +32,7 @@ export class ControlesFormComponent implements OnInit {
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -69,21 +71,26 @@ export class ControlesFormComponent implements OnInit {
     if (id == null) {
       return;
     }
+    this.spinner.show();
     this.serviceEmpresa.listPorId(id)
     .subscribe( (dados: any) => {
       this.empresa = dados;
+      this.spinner.hide();
     });
   }
 
   buscaDados() {
+    this.spinner.show();
     this.service.listaControle(this.idControle).subscribe( (dados: any) => {
       this.controle = dados;
       this.buscaEmpresa(this.controle.empresa_id);
       this.preencheCampos();
+      this.spinner.hide();
     }, error => {
       this.alertService.showAlertDanger('Erro ao carregar dados!');
       setTimeout(() => {
         this.alertService.closeAlert();
+        this.spinner.hide();
         this.onBack();
       }, 2000);
     });
@@ -156,6 +163,7 @@ export class ControlesFormComponent implements OnInit {
       }
       return;
     }
+    this.spinner.show();
     this.service.gravar(controle, id)
       .subscribe( (dados: any) => {
         if (dados) {
@@ -167,7 +175,9 @@ export class ControlesFormComponent implements OnInit {
             }, 1000);
           }, 1500);
         }
+        this.spinner.hide();
       }, (error: any) => {
+        this.spinner.hide();
         this.alertService.showAlertDanger(id != null
           ? `Erro ao atualizar controle!`
           : `Erro ao cadastrar controle!`);

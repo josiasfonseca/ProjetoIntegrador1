@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild, OnDestroy, Input, Output, EventEmitter } 
 import { Usuario } from 'src/app/model/usuario';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, EMPTY } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-usuarios-list',
@@ -33,7 +34,8 @@ export class UsuariosListComponent implements OnInit {
     private service: UsuariosService,
     private router: Router, private route: ActivatedRoute,
     public modalService: BsModalService,
-    public alertService: AlertModalService
+    public alertService: AlertModalService,
+    private spinner: NgxSpinnerService
     ) { }
 
 
@@ -44,12 +46,15 @@ export class UsuariosListComponent implements OnInit {
 
   atualizaLista(paginaAtual = 1) {
       // Recebe uma lista de usuários de forma assíncrona
+      this.spinner.show();
       this.service.list(paginaAtual).subscribe(
         (dados: any) => {
           this.usuarios = dados.data;
           this.totalRegistros = dados.total;
           this.paginaAtual = dados.current_page;
+          this.spinner.hide();
         }, error => {
+          this.spinner.hide();
           this.alertService.showAlertDanger('Erro ao carregar lista!');
         }
       );
@@ -75,7 +80,7 @@ export class UsuariosListComponent implements OnInit {
         this.alertService.showAlertSucess('Usuário excluído com sucesso!');
         setTimeout(() => {
           this.alertService.closeAlert();
-          this.atualizaLista();
+          this.atualizaLista(this.paginaAtual);
         }, 1000);
       }, error => {
         this.alertService.showAlertDanger('Erro na exclusão do usuário!');

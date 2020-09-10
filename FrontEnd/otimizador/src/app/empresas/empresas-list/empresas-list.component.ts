@@ -4,6 +4,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Empresa } from './../../model/empresa';
 import { EmpresaService } from '../../services/empresa.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-empresas-list',
@@ -27,6 +28,7 @@ export class EmpresasListComponent implements OnInit {
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -35,12 +37,15 @@ export class EmpresasListComponent implements OnInit {
 
   atualizaLista(paginaAtual = 1) {
     // Recebe uma lista de empresas de forma assíncrona
+    this.spinner.show();
     this.service.list(paginaAtual).subscribe(
       (dados: any) => {
         this.empresas = dados.data;
         this.totalRegistros = dados.total;
         this.paginaAtual = dados.current_page;
+        this.spinner.hide();
       }, error => {
+        this.spinner.hide();
         this.alertService.showAlertDanger('Erro ao carregar lista!');
       }
     );

@@ -13,6 +13,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -35,7 +36,8 @@ export class UsuariosFormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private alertService: AlertModalService
+    private alertService: AlertModalService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -87,10 +89,12 @@ export class UsuariosFormComponent implements OnInit {
       // Recebe id do usuário pela URL e já transforma em número
 
       // Busca no serviço o usuário pelo id
+      this.spinner.show();
       this.service.listById(this.usuarioUrl).subscribe(
         (usu) => {
           this.usuario = usu;
           this.preencherCampos();
+          this.spinner.hide();
         },
         () => this.router.navigate(['usuarios'])
       );
@@ -127,6 +131,7 @@ export class UsuariosFormComponent implements OnInit {
       id = this.usuarioUrl;
     }
     if (this.formulario.valid) {
+      this.spinner.show();
       this.service.gravarUsuario(usuario, id).subscribe(
         (dados) => {
           this.alertService.showAlertSucess(
@@ -140,23 +145,24 @@ export class UsuariosFormComponent implements OnInit {
               this.router.navigate(['usuarios']);
             }, 1000);
           }, 1000);
+          this.spinner.hide();
         },
         (erro: any) => {
           this.erros = erro.error.errors as Usuario;
           if (this.erros.login[0] === 'validation.unique') {
             this.alertService.showAlertDanger(
               'O campo login já existe! Informe outro valor válido!'
-            );
+              );
             this.formulario.get('login').setValue('');
-          } else {
-            this.alertService.showAlertDanger(
-              id != null
+            } else {
+              this.alertService.showAlertDanger(
+                id != null
                 ? 'Erro ao atualizar usuário!'
                 : 'Erro ao cadastrar usuário!'
-            );
-          }
-        }
-      );
+                );
+              }
+          this.spinner.hide();
+        });
     } else {
       this.alertService.showAlertDanger(
         'Verifique os campos em vermelho e preencha-os corretamente!'

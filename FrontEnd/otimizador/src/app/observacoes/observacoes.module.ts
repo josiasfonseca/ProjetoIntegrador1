@@ -1,3 +1,4 @@
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { ShareModule } from './../share/share.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +20,7 @@ import { ObservacoesFormComponent } from './observacoes-form/observacoes-form.co
     HttpClientModule,
     FormsModule,
     ShareModule,
+    NgxSpinnerModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     ObservacoesRoutingModule
   ]

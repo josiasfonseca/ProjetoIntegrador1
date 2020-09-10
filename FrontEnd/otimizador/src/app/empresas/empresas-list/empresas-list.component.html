@@ -12,16 +12,14 @@
       <td>{{ empresa.nome }} - ({{ empresa.cnpj }})</td>
       <td>{{ empresa.id_empresa }}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2" (click)="controle(empresa.id_empresa)">Controle</button>
-        <button type="button" class="btn btn-secondary btn-sm" (click)="importador(empresa.id_empresa)">Importador</button>
+        <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="controle(empresa.id_empresa)">Controle</button>
+        <button type="button" class="btn btn-secondary btn-sm mb-2" (click)="importador(empresa.id_empresa)">Importador</button>
       </td>
     </tr>
   </tbody>
 </table>
 
-<div class="row">
-  <div class="col-16 text-center">
-    <pagination-template class="pagination text-center" #p="paginationApi"
+    <pagination-template class="pagination justify-content-end mr-5 mb-3" #p="paginationApi"
                        (pageChange)="pageChange.emit($event)"
                        (pageBoundsCorrection)="pageBoundsCorrection.emit($event)">
           <div class="page-item" [class.disabled]="p.isFirstPage()">
@@ -42,8 +40,7 @@
           </div>
 
     </pagination-template>
-
-  </div>
   <div *ngIf="totalRegistros == 0" >
     <h4 class="text-center">Nenhum registro encontrado!</h4>
   </div>
+  <ngx-spinner></ngx-spinner>

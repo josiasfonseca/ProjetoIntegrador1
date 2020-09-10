@@ -6,6 +6,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { ControleService } from './../../services/controle.service';
 import { Controle } from './../../model/controle';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-controles-list',
@@ -26,6 +27,7 @@ export class ControlesListComponent implements OnInit {
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -41,6 +43,7 @@ export class ControlesListComponent implements OnInit {
 
   atualizaLista() {
     // Recebe uma lista de controles de forma assíncrona
+    this.spinner.show();
     this.service.listaPorEmpresa(this.idEmpresa).subscribe(
       (dados: any) => {
         if (dados.total > 0) {
@@ -51,15 +54,17 @@ export class ControlesListComponent implements OnInit {
         } else {
           if (!this.empresa) {
             this.serviceEmpresa.listPorId(this.idEmpresa)
-              .subscribe( (emps: any) => {
-                this.empresa = emps;
-              });
+            .subscribe( (emps: any) => {
+              this.empresa = emps;
+            });
           }
           this.msgDados = 'Não encontrado controles!';
         }
+        this.spinner.hide();
       }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');
         setTimeout(() => {
+          this.spinner.hide();
           this.onBack();
         }, 2000);
       }

@@ -4,6 +4,7 @@ import { EmpresaService } from './../../services/empresa.service';
 import { ImportadorService } from './../../services/importador.service';
 import { Empresa } from './../../model/empresa';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-importador-fornecedor',
@@ -25,6 +26,7 @@ export class ImportadorFornecedorComponent implements OnInit {
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
 
   ) { }
 
@@ -39,10 +41,13 @@ export class ImportadorFornecedorComponent implements OnInit {
 
   atualizaLista() {
     // Recebe uma lista de empresas de forma assíncrona
+    this.spinner.show();
     this.serviceEmpresa.listPorId(this.idEmpresa)
     .subscribe( (dados: any) => {
       this.empresa = dados;
+      this.spinner.hide();
     }, (error: any) => {
+      this.spinner.hide();
       this.onBack();
     });
   }
@@ -56,43 +61,53 @@ export class ImportadorFornecedorComponent implements OnInit {
   }
 
   carregaArquivoFornecedor(event) {
+    this.spinner.show();
     this.msgFornecedor = 'Arquivo carregado! Clique em Enviar arquivo';
     const selectedFiles = event.srcElement.files as File;
     this.fileFornecedor = new Set();
     this.fileFornecedor.add(selectedFiles);
+    this.spinner.hide();
   }
 
   enviarArquivoFornecedor() {
+    this.spinner.show();
     this.msgFornecedor = 'Enviando arquivo. Aguarde...';
     if (this.fileFornecedor && this.fileFornecedor.size > 0) {
       this.service.enviarArquivoFornecedor(this.idEmpresa, this.fileFornecedor)
       .subscribe( (response: any) => {
         this.msgFornecedor = 'Arquivo enviado com sucesso!';
+        this.spinner.hide();
       });
     }
   }
 
   carregaArquivoFornecedorEscritorio(event) {
+    this.spinner.show();
     this.msgFornecedorEscritorio = 'Arquivo carregado! Clique em Enviar arquivo';
     const selectedFiles = event.srcElement.files as File;
     this.fileFornecedorEscritorio = new Set();
     this.fileFornecedorEscritorio.add(selectedFiles);
+    this.spinner.hide();
   }
 
   enviarArquivoFornecedorEscritorio() {
+    this.spinner.show();
     this.msgFornecedorEscritorio = 'Enviando arquivo. Aguarde...';
     if (this.fileFornecedorEscritorio && this.fileFornecedorEscritorio.size > 0) {
       this.service.enviarArquivoFornecedorEscritorio(this.idEmpresa, this.fileFornecedorEscritorio)
       .subscribe(response => {
         this.msgFornecedorEscritorio = 'Arquivo enviado com sucesso!';
+        this.spinner.hide();
       });
     }
   }
 
   confrontarFornecedores(event) {
+    this.spinner.show();
     this.service.confrontarFornecedores(this.idEmpresa)
     .subscribe((resp: any) => {
       localStorage.setItem('resultConfrontoFornecedores', JSON.stringify(resp));
+      this.spinner.hide();
       this.alertService.showAlertSucess('Confronto realizado com sucesso!');
       setTimeout(() => {
         this.alertService.closeAlert();

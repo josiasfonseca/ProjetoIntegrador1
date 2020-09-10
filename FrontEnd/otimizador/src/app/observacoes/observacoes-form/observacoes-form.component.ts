@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { trimTrailingNulls } from '@angular/compiler/src/render3/view/util';
 import { ControleService } from 'src/app/services/controle.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-observacoes-form',
@@ -34,6 +35,7 @@ export class ObservacoesFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -54,14 +56,17 @@ export class ObservacoesFormComponent implements OnInit {
 
     this.formulario.get('mes_referencia').valueChanges
     .subscribe( (dados: string) => {
+      this.spinner.show();
       this.service.listPorMesReferencia(this.idControle, dados)
       .subscribe((obs: any) => {
         this.observacao = obs;
         this.preencheCampos();
         this.msgErro = '';
+        this.spinner.hide();
       }, (erro: any) => {
         this.msgErro = 'Não encontrado dados para esse mês informado!';
         this.formulario.get('observacao').setValue('');
+        this.spinner.hide();
       });
     });
 
@@ -69,6 +74,7 @@ export class ObservacoesFormComponent implements OnInit {
 
   atualizaLista() {
     // Recebe uma lista de observações de forma assíncrona
+    this.spinner.show();
     this.service.listPorControle(this.idControle).subscribe(
       (dados: any) => {
         if (dados.total > 0) {
@@ -79,17 +85,19 @@ export class ObservacoesFormComponent implements OnInit {
         } else {
           if (!this.empresa) {
             this.serviceControle.listaControle(this.idControle)
-              .subscribe( (conts: any) => {
+            .subscribe( (conts: any) => {
                 this.empresa = conts.empresa;
               });
-          }
+            }
           this.msgDados = 'Não encontrado observações!';
         }
+        this.spinner.hide();
       }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');
         setTimeout(() => {
           this.onBack();
         }, 2000);
+        this.spinner.hide();
       }
     );
   }

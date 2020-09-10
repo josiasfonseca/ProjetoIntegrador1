@@ -3,6 +3,8 @@ import { AlertModalService } from './../../share/alert-modal.service';
 import { EmpresaService } from './../../services/empresa.service';
 import { Empresa } from './../../model/empresa';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-importador-list',
@@ -20,7 +22,8 @@ export class ImportadorListComponent implements OnInit {
     private serviceEmpresa: EmpresaService,
     public alertService: AlertModalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -34,10 +37,13 @@ export class ImportadorListComponent implements OnInit {
   }
 
   atualizaLista() {
+    this.spinner.show();
     this.serviceEmpresa.listPorId(this.idEmpresa)
     .subscribe( (dados: any) => {
       this.empresa = dados;
+      this.spinner.hide();
     }, (error: any) => {
+      this.spinner.hide();
       this.onBack();
     });
   }

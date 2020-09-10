@@ -8,6 +8,7 @@ import { ObservacaoService } from './../../services/observacao.service';
 import { Empresa } from './../../model/empresa';
 import { Component, OnInit } from '@angular/core';
 import { ControleService } from 'src/app/services/controle.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-observacoes-list',
@@ -29,6 +30,7 @@ export class ObservacoesListComponent implements OnInit {
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -48,6 +50,7 @@ export class ObservacoesListComponent implements OnInit {
 
   atualizaLista() {
     // Recebe uma lista de controles de forma assíncrona
+    this.spinner.show();
     this.service.listPorControle(this.idControle).subscribe(
       (dados: any) => {
         if (dados.total > 0) {
@@ -61,11 +64,13 @@ export class ObservacoesListComponent implements OnInit {
             this.onBack();
           }, 2000);
         }
+        this.spinner.hide();
       }, error => {
         this.alertService.showAlertDanger('Erro ao carregar lista!');
         setTimeout(() => {
           this.onBack();
         }, 2000);
+        this.spinner.hide();
       }
     );
   }

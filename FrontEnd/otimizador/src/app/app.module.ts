@@ -16,6 +16,8 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EmpresasListComponent } from './empresas/empresas-list/empresas-list.component';
 import { LoginComponent } from './auth/login/login.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { LoginComponent } from './auth/login/login.component';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     ShareModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

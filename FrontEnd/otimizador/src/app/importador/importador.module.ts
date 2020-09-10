@@ -1,3 +1,4 @@
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { ShareModule } from './../share/share.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImportadorRoutingModule } from './importador-routing.module';
@@ -24,6 +25,7 @@ import { ImportadorResultComponent } from './importador-result/importador-result
     ImportadorRoutingModule,
     FormsModule,
     ShareModule,
+    NgxSpinnerModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ]
 })
