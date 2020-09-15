@@ -76,6 +76,28 @@ export class ImportadorService extends BaseServiceService {
       });
   }
 
+    confrontarClientes(idEmpresa: number) {
+      return this.http.get(`${this.urlBase}/importador/clientes/confrontar/${idEmpresa}`);
+    }
+
+    baixarClientesComErro(idEmpresa: number, extensao: string): Observable<any> {
+      return this.http.get(
+        `${this.urlBase}/importador/clientes/download-clientes-com-erro/${idEmpresa}/${extensao}`, {
+          responseType: 'blob' as 'json'
+        });
+      }
+
+  gerarArquivoContabilidadeClientes(idEmpresa: number) {
+    return this.http.get(`${this.urlBase}/importador/clientes/gerarArquivoContabilidade/${idEmpresa}`);
+  }
+
+  baixarClientesContabilidade(idEmpresa: number, extensao: string): Observable<any> {
+    return this.http.get(
+      `${this.urlBase}/importador/clientes/download-clientes-contabilidade/${idEmpresa}/${extensao}`, {
+        responseType: 'blob' as 'json'
+      });
+  }
+
   handleFile(res, fileName: string) {
 
     const file = new Blob([res], {

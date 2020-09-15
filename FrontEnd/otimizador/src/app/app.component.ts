@@ -12,6 +12,5 @@ export class AppComponent implements OnInit {
   url = this.route.snapshot.url;
   title = 'otimizador';
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 }

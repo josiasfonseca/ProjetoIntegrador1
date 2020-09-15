@@ -1,0 +1,40 @@
+<h3 class="text-center">{{ usuarioUrl == null ? 'Inclusão de Usuário' : 'Edição de usuário' }}</h3>
+
+<form [formGroup]="formulario" class="needs-validation">
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <app-input-field id="nome" label="Nome Completo" place="Nome completo" type="text" readOnly="!!isReadOnly" formControlName="nome" [classeValidacao]="verificaValidadeCampo('nome')">
+      </app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('nome')" [mostrarErro]="mostraErro('nome')"></app-input-control-erro>
+    </div>
+    <div class="col-md-4 mb-3">
+      <app-input-field [disabled]="editando" id="login" label="Login" place="Login" type="text" readOnly="!!isReadOnly" formControlName="login" [classeValidacao]="verificaValidadeCampo('login')"></app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('login')" [mostrarErro]="mostraErro('login')"></app-input-control-erro>
+    </div>
+    <div class="col-md-4 mb-3" *ngIf="!editando" >
+      <app-input-field id="senha" label="Senha" place="*****" type="password" readOnly="!!isReadOnly" formControlName="senha" [classeValidacao]="verificaValidadeCampo('senha')"></app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('senha')" [mostrarErro]="mostraErro('senha')"></app-input-control-erro>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="tipo-usuario">Tipo Usuário</label>
+      <select class="custom-select custom-select-sm" name="tipo_usuario_id" id="tipo_usuario_id" formControlName="tipo_usuario_id" [ngClass]="verificaValidadeCampo('tipo_usuario_id')">
+        <option selected value="">Selecione o tipo do usuário</option>
+        <option *ngFor="let t of tiposUsuarios" value="{{ t.id_tipo_usuario }}"> {{ t.tipo }} </option>
+      </select>
+      <app-input-control-erro [msgErro]="imprimeErro('tipo_usuario_id')" [mostrarErro]="mostraErro('tipo_usuario_id')"></app-input-control-erro>
+    </div>
+    <div class="col-md-4 mb-3">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <p>*Campo login não pode conter espaços e/ou caracter especial.</p>
+    </div>
+  </div>
+  <input type="text" class="form-control" formControlName="id_usuario" hidden id="id" name="id_usuario" />
+  <button class="btn btn-primary mb-2 mr-2" type="button" (click)="gravarForm()">Gravar</button>
+  <button class="btn btn-danger mb-2" type="button" (click)="cancelarForm()">Cancelar</button>
+</form>
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,66 @@
+<h3 class="text-center">Importador de arquivos</h3>
+
+<div *ngIf="empresa" >
+  <hr>
+    <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+    <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
+    <hr>
+</div>
+
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">
+            <div class="row">
+              <p class="col-12 text-center"><b>CLIENTES EMPRESA</b></p>
+            </div>
+            <div class="row">
+              <div class="col-6 text-left">
+               <input type="file" name="arquivo_cliente" id="arquivo_cliente" (change)="carregaArquivoCliente($event)">
+              </div>
+              <div class="col-6 text-right">
+                <button class="btn btn-outline-dark" (click)="enviarArquivoCliente()" [disabled]="!this.fileCliente">Enviar arquivo</button>
+              </div>
+              <p>{{ msgCliente }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-text">
+          <div class="row">
+            <p class="col-12 text-center"><b>CLIENTES ESCRITÓRIO CONTÁBIL</b></p>
+          </div>
+          <div class="row">
+            <div class="col-6 text-left">
+              <input type="file" name="arquivo_escritorio" id="arquivo_escritorio" (change)="carregaArquivoEscritorio($event)">
+            </div>
+            <div class="col-6 text-right">
+              <button class="btn btn-outline-dark" (click)="enviarArquivoEscritorio()" [disabled]="!this.fileEscritorio">Enviar arquivo</button>
+            </div>
+            <p>{{ msgEscritorio }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button (click)="confrontarClientes($event)" class="btn btn-secondary mb-2">Confrontar arquivos de Cliente</button>
+<br>
+<button type="button" class="btn btn-primary mb-2" (click)="onBack()" >Voltar</button>
+<ngx-spinner></ngx-spinner>
+
+
+
+
+
+
+
+

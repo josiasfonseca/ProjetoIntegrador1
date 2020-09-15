@@ -1,30 +1,34 @@
-<div class="containter">
-  <div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-header">Login</div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-12">
-              <label for="login">Login</label>
-              <input class="form-control" type="text" name="login" id="login">
-            </div>
+
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6">
+
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <div class="fadeIn first mb-3 mt-3">
+          <img src="assets/imagens/logo-light.png" alt="Otimizador Contábil" class="brand-image img-circle elevation-3"
+         style="opacity: 1">
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="errorCredential" >
+         Usuário ou senha inválidos!
+        </div>
+        <form [formGroup]="f" method="POST">
+          <div class="form-group">
+            <input type="text" id="login" class="fadeIn second form-control" name="login" placeholder="login" formControlName="login">
           </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <label for="login">Senha</label>
-              <input class="form-control" type="password" name="senha" id="senha">
-            </div>
+          <div class="form-group">
+            <input type="password" id="password" class="fadeIn third form-control" name="login" placeholder="password" formControlName="password" size="25">
           </div>
-          <div class="row mt-2">
-            <div class="col-sm-12">
-              <button class="btn btn-primary">Logar</button>
-            </div>
+          <button class="btn btn-primary btn-block fadeIn fourth mb-2 mt-2" (click)="logar()" >Entrar</button>
+        </form>
+        <div class="row">
+          <div class="col">
+            <strong>
+              {{ msg }}
+            </strong>
           </div>
         </div>
+      </div>
     </div>
     <div class="col-sm-3"></div>
   </div>
-  </div>
-</div>
