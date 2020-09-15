@@ -80,7 +80,7 @@ class ImportadorFornecedorController extends Controller
         foreach ($duplicatas as $key => $value){
             $cnpj = $value["cnpj"];
             $dado = null;
-            foreach ($result[0] as $k) {
+            foreach ($result[0] as $k => $v) {
                 $dado = array_search($cnpj, $k);
                 if($dado) {
                     $data = $value["data"];
@@ -89,7 +89,6 @@ class ImportadorFornecedorController extends Controller
                     $valor = $value["total_pago"];
                     $historico = "PAGAMENTO " . $value["numero_nota_fiscal"];
                     $lote = 1;
-
                     array_push($linha, [$data, $contadebito, $contacredito, $valor, $historico, $lote]);
                     break;
                 }

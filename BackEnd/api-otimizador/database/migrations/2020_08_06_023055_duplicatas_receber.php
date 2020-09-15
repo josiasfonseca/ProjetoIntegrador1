@@ -16,7 +16,7 @@ class DuplicatasReceber extends Migration
         Schema::create('duplicatas_receber', function (Blueprint $table) {
             $table->id('id_duplicata_receber');
             $table->dateTime('data');
-            $table->string('cnpj', 14)->unique();
+            $table->string('cnpj', 14);
             $table->integer('cod_cliente');
             $table->string('nome_cliente', 255);
             $table->decimal('valor_doc', 10, 2);

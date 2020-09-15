@@ -6,8 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use SoftDeletes;
@@ -30,6 +31,25 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value){
         $this->attributes['senha'] = bcrypt($value);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->login;
+    }
+    public function getAuthPassword()
+    {
+        return $this->senha;
     }
 
     public function tipoUsuario() {
