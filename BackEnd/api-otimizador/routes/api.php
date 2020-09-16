@@ -70,5 +70,12 @@ Route::group(['middleware' => ['apiJwt']], function () {
         Route::get('gerarArquivoContabilidade/{idEmpresa}', 'ImportadorFornecedorController@gerarArquivoContabilidade')->name('importador.fornecedores.gerarArquivoContabilidade');
         Route::get('download-fornecedores-contabilidade/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresContabilidade')->name('importador.fornecedoresok.download');
     });
+
+    //Importador cartões
+    Route::group(['prefix' => 'importador/cartoes'], function () {
+        Route::post('{idEmpresa}', 'ImportadorCartaoController@carregarArquivo')->name('importador.cartoes.carregarArquivo');
+        Route::get('gerarArquivoContabilidade/{idEmpresa}', 'ImportadorCartaoController@gerarArquivoContabilidade')->name('importador.cartao.gerarArquivoContabilidade');
+        Route::get('download-cartao/{idEmpresa}/{extensao}', 'ImportadorCartaoController@baixarArquivoCartao')->name('importador.cartoes.download');
+    });
 });
 
