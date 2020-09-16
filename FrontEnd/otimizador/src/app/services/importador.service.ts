@@ -20,24 +20,7 @@ export class ImportadorService extends BaseServiceService {
     super();
   }
 
-  // envia arquivo do cliente
-  enviarArquivoCliente(id, file: Set<File>) {
-    const formData = new FormData();
-    file.forEach(f => {
-      formData.append('arquivo_cliente', f[0], f.name);
-    });
-    return this.http.post(`${this.urlBase}/importador/clientes/${id}`, formData);
-  }
-
-  enviarArquivoClienteEscritorio(id, file: Set<File>) {
-    const formData = new FormData();
-    file.forEach(f => {
-      formData.append('arquivo_escritorio', f[0], f.name);
-    });
-    return this.http.post(`${this.urlBase}/importador/clientes/${id}`, formData);
-  }
-
-  // envia arquivos de fornecedor
+  // ARQUIVOS FORNECEDORES
   enviarArquivoFornecedor(id, file: Set<File>) {
     const formData = new FormData();
     file.forEach(f => {
@@ -76,6 +59,23 @@ export class ImportadorService extends BaseServiceService {
       });
   }
 
+  // ARQUIVOS CLIENTES
+  enviarArquivoCliente(id, file: Set<File>) {
+    const formData = new FormData();
+    file.forEach(f => {
+      formData.append('arquivo_cliente', f[0], f.name);
+    });
+    return this.http.post(`${this.urlBase}/importador/clientes/${id}`, formData);
+  }
+
+  enviarArquivoClienteEscritorio(id, file: Set<File>) {
+    const formData = new FormData();
+    file.forEach(f => {
+      formData.append('arquivo_escritorio', f[0], f.name);
+    });
+    return this.http.post(`${this.urlBase}/importador/clientes/${id}`, formData);
+  }
+
     confrontarClientes(idEmpresa: number) {
       return this.http.get(`${this.urlBase}/importador/clientes/confrontar/${idEmpresa}`);
     }
@@ -94,6 +94,34 @@ export class ImportadorService extends BaseServiceService {
   baixarClientesContabilidade(idEmpresa: number, extensao: string): Observable<any> {
     return this.http.get(
       `${this.urlBase}/importador/clientes/download-clientes-contabilidade/${idEmpresa}/${extensao}`, {
+        responseType: 'blob' as 'json'
+      });
+    }
+
+    // ARQUIVOS CARTAO
+    enviarArquivoCartao(id, file: Set<File>) {
+      const formData = new FormData();
+      file.forEach(f => {
+        formData.append('arquivo_cartao', f[0], f.name);
+      });
+      return this.http.post(`${this.urlBase}/importador/cartoes/${id}`, formData);
+  }
+
+  enviarArquivoCartaoEscritorio(id, file: Set<File>) {
+    const formData = new FormData();
+    file.forEach(f => {
+      formData.append('arquivo_cartao_escritorio', f[0], f.name);
+    });
+    return this.http.post(`${this.urlBase}/importador/cartoes/${id}`, formData);
+  }
+
+  gerarArquivoCartaoContabilidade(idEmpresa: number) {
+    return this.http.get(`${this.urlBase}/importador/cartoes/gerarArquivoContabilidade/${idEmpresa}`);
+  }
+
+  baixarCartoesContabilidade(idEmpresa: number, extensao: string) {
+    return this.http.get(
+      `${this.urlBase}/importador/cartoes/download-cartao/${idEmpresa}/${extensao}`, {
         responseType: 'blob' as 'json'
       });
   }

@@ -10,6 +10,7 @@ import { ImportadorClienteComponent } from './importador-cliente/importador-clie
 import { ImportadorFornecedorComponent } from './importador-fornecedor/importador-fornecedor.component';
 import { ImportadorResultFornecedorErroComponent } from './importador-result-fornecedor-erro/importador-result-fornecedor-erro.component';
 import { ImportadorResultClienteErroComponent } from './importador-result-cliente-erro/importador-result-cliente-erro.component';
+import { ImportadorCartaoComponent } from './importador-cartao/importador-cartao.component';
 
 
 
@@ -19,7 +20,8 @@ import { ImportadorResultClienteErroComponent } from './importador-result-client
     ImportadorClienteComponent,
     ImportadorFornecedorComponent,
     ImportadorResultFornecedorErroComponent,
-    ImportadorResultClienteErroComponent
+    ImportadorResultClienteErroComponent,
+    ImportadorCartaoComponent
   ],
   imports: [
     CommonModule,

@@ -59,4 +59,8 @@ export class ImportadorListComponent implements OnInit {
   fornecedores() {
     this.router.navigate([`/importador/importador-fornecedores/${this.idEmpresa}`]);
   }
+
+  cartoes() {
+    this.router.navigate([`/importador/importador-cartoes/${this.idEmpresa}`]);
+  }
 }

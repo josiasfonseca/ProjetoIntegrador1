@@ -1,4 +1,4 @@
-<h3 class="text-center">Importador de arquivos - CLIENTES</h3>
+<h3 class="text-center">Importador de arquivos - CARTÕES</h3>
 
 <div *ngIf="empresa" >
   <hr>
@@ -14,23 +14,23 @@
         <div class="card-body">
           <div class="card-text">
             <div class="row">
-              <p class="col-12 text-center"><b>CLIENTES EMPRESA</b></p>
+              <p class="col-12 text-center"><b>CARTÕES EMPRESA</b></p>
             </div>
             <div class="row">
               <div class="col-6 text-left">
-               <input type="file" name="arquivo_cliente" id="arquivo_cliente" (change)="carregaArquivoCliente($event)">
+               <input type="file" name="arquivo_cartao" id="arquivo_cartao" (change)="carregaArquivoCartao($event)">
               </div>
               <div class="col-6 text-right">
-                <button class="btn btn-outline-dark" (click)="enviarArquivoCliente()" [disabled]="!this.fileCliente">Enviar arquivo</button>
+                <button class="btn btn-outline-dark" (click)="enviarArquivoCartao()" [disabled]="!this.fileCartao">Enviar arquivo</button>
               </div>
-              <p>{{ msgCliente }}</p>
+              <p>{{ msgCartao }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
@@ -40,7 +40,7 @@
           </div>
           <div class="row">
             <div class="col-6 text-left">
-              <input type="file" name="arquivo_escritorio" id="arquivo_escritorio" (change)="carregaArquivoEscritorio($event)">
+              <input type="file" name="arquivo_cartao_escritorio" id="arquivo_cartao_escritorio" (change)="carregaArquivoEscritorio($event)">
             </div>
             <div class="col-6 text-right">
               <button class="btn btn-outline-dark" (click)="enviarArquivoEscritorio()" [disabled]="!this.fileEscritorio">Enviar arquivo</button>
@@ -51,8 +51,9 @@
       </div>
     </div>
   </div>
-</div>
-<button (click)="confrontarClientes($event)" class="btn btn-secondary mb-2">Confrontar arquivos de Cliente</button>
+</div> -->
+<button class="btn btn-primary mb-2 mt-2 mr-2 mb-2" (click)="gerarArquivoContabilidade(idEmpresa)" >Gerar Arquivo Contabilidade</button>
+<button class="btn btn-primary mb-2 mt-2 mb-2 " (click)="baixarArquivoContabilidade(idEmpresa)" *ngIf="baixarArquivoCartao" >Download Arquivo Contabilidade (.csv)</button>
 <br>
 <button type="button" class="btn btn-primary mb-2" (click)="onBack()" >Voltar</button>
 <ngx-spinner></ngx-spinner>

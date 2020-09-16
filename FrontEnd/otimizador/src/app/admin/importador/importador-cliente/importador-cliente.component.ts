@@ -44,7 +44,6 @@ export class ImportadorClienteComponent implements OnInit {
   }
 
   atualizaLista() {
-    // Recebe uma lista de controles de forma assíncrona
     this.serviceEmpresa.listPorId(this.idEmpresa)
     .subscribe( (dados: any) => {
       this.empresa = dados;
