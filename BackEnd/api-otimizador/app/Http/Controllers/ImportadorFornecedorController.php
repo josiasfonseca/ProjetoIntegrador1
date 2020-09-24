@@ -81,7 +81,7 @@ class ImportadorFornecedorController extends Controller
             $cnpj = $value["cnpj"];
             $dado = null;
             foreach ($result[0] as $k => $v) {
-                $dado = array_search($cnpj, $k);
+                $dado = array_search($cnpj, $v);
                 if($dado) {
                     $data = $value["data"];
                     $contadebito = 50 ;

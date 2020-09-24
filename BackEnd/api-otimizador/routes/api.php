@@ -36,6 +36,9 @@ Route::group(['middleware' => ['apiJwt']], function () {
     //Empresas
     Route::get('empresas', 'EmpresaController@listar')->name('empresas.listar');
     Route::get('empresas/{id}', 'EmpresaController@listarPorId')->name('empresas.listarPorId');
+    Route::delete('empresas/{id}', 'EmpresaController@excluir')->name('empresas.excluir');
+    Route::post('empresas', 'EmpresaController@incluir')->name('empresas.incluir');
+    Route::put('empresas/{id}', 'EmpresaController@atualizar')->name('empresas.atualizar');
 
     //Controles
     Route::get('controles', 'ControleController@listar')->name('controles.listar');

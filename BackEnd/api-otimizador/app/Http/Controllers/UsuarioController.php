@@ -3,18 +3,31 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\UsuarioRequest;
 use App\User;
+use App\Models\TipoUsuario;
 
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    public function listar(){
+    public function listar(Request $request){
         try {
+            $filtro = ($request->filtro && $request->filtro != null) ? $request->filtro : null;
             $query = User::with(["tipoUsuario"]);
-            $usuarios = $query->paginate(10);
+            if($filtro) {
+                $query = $query->where('nome', "LIKE", "%" . $filtro . "%")->orWhere('login', "LIKE", "%" . $filtro . "%");
+                $query = $query->orWhere(function ($q) {
+                    $q->select("tipo")
+                    ->from('tipo_usuarios')
+                    ->whereColumn('id_tipo_usuario', 'usuarios.tipo_usuario_id')->limit(1);
+                }, 'LIKE', "%" . $filtro . "%");
+                // $query = $query->addSelect(["tipo" => TipoUsuario::whereColumn("tipo_usuario_id", "tipo_usuarios.id_tipo_usuari")])->limit(1);
+                $usuarios = $query->paginate(10);
+            } else {
+                $usuarios = $query->paginate(10);
+            }
                 return response()->json($usuarios, 200);
         } catch (\Exception $ex) {
-            return response()->json(["msg", "Erro ao listar usuários!"], 406);
+            return response()->json(["msg", "Erro ao listar usuários!", $ex->getMessage()], 400);
         }
     }
 
@@ -49,7 +62,6 @@ class UsuarioController extends Controller
                     }
                 }
             }
-
             if($usuario->save())
                 return response()->json($usuario, 200);
             else
@@ -60,14 +72,21 @@ class UsuarioController extends Controller
     }
 
     public function excluir($id){
-        $usuario = User::findOrFail($id);
+        try {
+            $user = $this->listarPorId(auth('api')->user()->id_usuario)->original;
+            if(!$user->tipo_usuario->tipo == 'GERENTE') {
+                return  response()->json(["error" => "Usuário não autorizado!"], 401);
+            }
+            $usuario = User::findOrFail($id);
 
-        if($usuario){
-            $usuario->delete();
-            return  response()->json($usuario, 200);
+            if($usuario){
+                $usuario->delete();
+                return  response()->json($usuario, 200);
+            }
+        } catch (\Throwable $th) {
+            return  response()->json(["msg" => "Erro na exclusao"], 400);
         }
 
-        return  response()->json(["msg" => "Erro na exclusao"], 400);
     }
 
     public function atualizar($id, UsuarioRequest $request){
