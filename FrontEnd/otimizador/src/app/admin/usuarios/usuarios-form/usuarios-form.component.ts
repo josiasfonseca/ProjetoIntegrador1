@@ -29,6 +29,7 @@ export class UsuariosFormComponent implements OnInit {
   editando = false;
   erros: Usuario;
   classeErro = {};
+  usuarioLogado: Usuario;
 
   constructor(
     private service: UsuariosService,
@@ -45,6 +46,7 @@ export class UsuariosFormComponent implements OnInit {
     this.serviceTipoUsuario.list().subscribe((dados: any) => {
       this.tiposUsuarios = dados.data;
     });
+    this.usuarioLogado = JSON.parse(atob(localStorage.getItem('user')));
 
     this.usuarioUrl = this.route.snapshot.params.id
       ? parseInt(this.route.snapshot.params.id, 10)
@@ -62,7 +64,7 @@ export class UsuariosFormComponent implements OnInit {
         ],
       ],
       login: [
-        null,
+        {value: null, disabled: (this.usuarioLogado.tipo_usuario.tipo !== 'GERENTE' && this.usuarioUrl != null) ? true : false},
         [
           Validators.required,
           Validators.minLength(3),
@@ -70,7 +72,7 @@ export class UsuariosFormComponent implements OnInit {
         ],
       ],
       senha: [
-        null,
+        {value: null, disabled: (this.usuarioUrl != null && this.usuarioLogado.tipo_usuario.tipo !== 'GERENTE') ? true : false},
         [
           this.usuarioUrl == null
             ? Validators.required
@@ -79,7 +81,8 @@ export class UsuariosFormComponent implements OnInit {
           Validators.maxLength(25),
         ],
       ],
-      tipo_usuario_id: ['', [Validators.required]],
+      tipo_usuario_id: [{value: '',
+      disabled: (this.usuarioLogado.tipo_usuario.tipo !== 'GERENTE' && this.usuarioUrl != null) ? true : false }, [Validators.required]],
     });
 
     // Se for edição preenche os campos com os dados do usuário
@@ -123,6 +126,22 @@ export class UsuariosFormComponent implements OnInit {
         return '';
       }
   }
+
+  formataData(data) {
+    const date = new Date(data);
+    const dia = date.getDate();
+    const mes = date.getMonth();
+    const ano = date.getFullYear();
+    const hora = date.getHours();
+    const minutos  = date.getMinutes();
+    const segundos = date.getSeconds();
+
+    const diaF = (dia < 10) ? '0' + dia : dia;
+    const mesF = (mes < 10) ? '0' + (mes + 1) : (mes + 1);
+
+    return diaF + '/' + mesF + '/' + ano + ' ' + hora + ':' + minutos + ':' + segundos;
+  }
+
   gravarForm() {
     this.formataLogin();
     const usuario = this.formulario.value;

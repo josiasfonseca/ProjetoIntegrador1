@@ -9,12 +9,12 @@
 
 <div class="row">
   <div class="col-6">
-    <button class="btn btn-primary mb-2 mt-2 mr-0" (click)="baixarFornecedoresComErroExcel()" >Download Excel</button>
-    <button class="btn btn-primary ml-2 mb-2 mt-2 mr-0" (click)="baixarFornecedoresComErroPDF()" >Download PDF</button>
+    <button class="btn btn-primary mb-2 mt-2 mr-0" (click)="baixarFornecedoresComErroExcel()" ><i class="fas fa-file-excel"></i> Download Excel</button>
+    <button class="btn btn-primary ml-2 mb-2 mt-2 mr-0" (click)="baixarFornecedoresComErroPDF()" ><i class="fas fa-file-pdf"></i> Download PDF</button>
   </div>
   <div class="col-6">
-    <button class="btn btn-primary mb-2 mt-2 mr-2 mb-2" (click)="gerarArquivoContabilidade(idEmpresa)" >Gerar Arquivo Contabilidade</button>
-    <button class="btn btn-primary mb-2 mt-2 mb-2 " (click)="baixarArquivoContabilidade(idEmpresa)" *ngIf="baixarArquivoContab" >Download Arquivo Contabilidade (.csv)</button>
+    <button class="btn btn-primary mb-2 mt-2 mr-2 mb-2" (click)="gerarArquivoContabilidade(idEmpresa)" ><i class="fas fa-play"></i> Gerar Arquivo Contabilidade</button>
+    <button class="btn btn-primary mb-2 mt-2 mb-2 " (click)="baixarArquivoContabilidade(idEmpresa)" *ngIf="baixarArquivoContab" ><i class="fas fa-file-csv"></i>  Download Arquivo Contabilidade (.csv)</button>
   </div>
 </div>
 <table class="table table-sm table-striped table-hover table-bordered table-responsive-md">

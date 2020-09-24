@@ -1,11 +1,25 @@
 
 
   <h3 class="text-center">Usuários</h3>
-  <button class="btn btn-primary" (click)="onNew()">Novo</button>
+  <button class="btn btn-primary mb-2" (click)="onNew()" *ngIf="usuarioLogado.tipo_usuario.tipo == 'GERENTE'" ><i class="fas fa-plus"></i> Novo usuário</button>
+  <div class="row">
+
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4 mb-2 form-inline justify-content-end">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-search"></i></span>
+        </div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Busca" (input)="buscaDados()" [(ngModel)]="campoBusca">
+      </div>
+      <!-- <button class="btn btn-outline-primary mt-2 my-2 my-sm-0">Buscar</button> -->
+    </div>
+  </div>
   <h6 *ngIf="this.usuarios != null ? this.usuarios.length : '' " >Total de registros: {{ this.totalRegistros }}</h6>
 
-  <table class="table table-hover table-striped table-responsive-md" *ngIf="this.usuarios != null" >
-    <thead>
+  <table class="table table-sm table-hover table-striped table-responsive-md" *ngIf="this.usuarios != null" >
+    <thead class="table-active">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nome</th>
@@ -15,14 +29,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let u of usuarios | paginate: { itemsPerPage: 10, currentPage: paginaAtual , totalItems: totalRegistros }" >
+      <tr *ngFor="let u of usuarios | paginate: { itemsPerPage: 10, currentPage: paginaAtual , totalItems: totalRegistros }" class="align-self-center">
         <th scope="row">{{ u.id_usuario }}</th>
         <td>{{ u.nome }}</td>
         <td>{{ u.login }}</td>
         <td>{{ u.tipo_usuario.tipo }}</td>
         <td>
-          <button type="button" class="btn btn-primary mr-2 mb-2" (click)="onEdit(u.id_usuario)">Editar</button>
-          <button type="button" class="btn btn-danger mb-2" (click)="onDelete(u)">Excluir</button>
+          <button type="button" class="btn btn-primary mr-2 mb-2" (click)="onEdit(u.id_usuario)"><i class="fas fa-edit"></i> Editar</button>
+          <button type="button" class="btn btn-danger mb-2" (click)="onDelete(u)" *ngIf="usuarioLogado.tipo_usuario.tipo == 'GERENTE'"><i class="fas fa-trash-alt"></i> Excluir</button>
         </td>
       </tr>
     </tbody>

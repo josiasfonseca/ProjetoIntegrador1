@@ -6,18 +6,19 @@
       <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
     </li>
   </ul>
-  <h5 class="m-0 text-dark">
-    Otimizador</h5>
+  <h5 class="m-0 text-dark">Otimizador</h5>
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
     <!-- Messages Dropdown Menu -->
+    <!-- Usuário logado: {{ usuarioLogado.nome }} -->
     <li class="nav-item dropdown">
 
       <!-- <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"></a> -->
-        <a class="nav-link" routerLink="/login">
-          <!-- {{ usuario.nome }} -->
-        <i class="fas fa-user fa-2x"></i>
-        <a (click)="logout($event)" >Logout</a>
+      <a class="nav-link" routerLink="/login">
+        <p>
+          <i class="fas fa-user fa-2x"></i>
+          <a (click)="logout($event)" > {{ usuarioLogado.nome }}</a>
+        </p>
       </a>
     </li>
   </ul>

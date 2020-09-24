@@ -1,11 +1,76 @@
-<!-- <div class="wrapper">
+<div class="container">
+  <h3 class="text-center">Empresas</h3>
 
-  <app-menu-sidebar></app-menu-sidebar>
-  <app-menu-navbar></app-menu-navbar>
-  <app-content></app-content> -->
-  <div class="container">
-    <app-empresas-list></app-empresas-list>
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4 mb-2 form-inline justify-content-end">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-search"></i></span>
+        </div>
+        <input class="form-control" type="search" placeholder="Pesquisar..." aria-label="Busca" (input)="buscaDados()"
+          [(ngModel)]="campoBusca" />
+      </div>
+    </div>
   </div>
-    <!-- <app-footer></app-footer> -->
-<!-- </div> -->
 
+  <h6 *ngIf="this.empresas != null ? this.empresas.length : ''">
+    Total de registros: {{ this.totalRegistros }}
+  </h6>
+  <table class="table table-sm table-striped table-hover table-bordered table-responsive-sm">
+    <thead class="table-active">
+      <th>Empresa</th>
+      <th>Código</th>
+      <th>Ação</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let empresa of empresas | paginate
+              : {
+                  itemsPerPage: 15,
+                  currentPage: paginaAtual,
+                  totalItems: totalRegistros
+                }
+        ">
+        <td>{{ empresa.nome }} - ({{ empresa.cnpj }})</td>
+        <td>{{ empresa.id_empresa }}</td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="controle(empresa.id_empresa)">
+            <i class="fas fa-tasks"></i> Controle
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm mb-2" (click)="importador(empresa.id_empresa)">
+            <i class="fas fa-file-import"></i> Importador
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-template class="pagination justify-content-end mr-5 mb-3" #p="paginationApi"
+    (pageChange)="pageChange.emit($event)" (pageBoundsCorrection)="pageBoundsCorrection.emit($event)">
+    <div class="page-item" [class.disabled]="p.isFirstPage()">
+      <a class="page-link" *ngIf="!p.isFirstPage()" (click)="previous(paginaAtual)">
+        &laquo;
+      </a>
+    </div>
+
+    <div class="page-item" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+      <a class="page-link" (click)="setarPagina(page.value)" *ngIf="p.getCurrent() !== page.value">
+        <span>{{ page.label }}</span>
+      </a>
+      <div class="page-item" *ngIf="p.getCurrent() === page.value">
+        <span class="page-link">{{ page.label }}</span>
+      </div>
+    </div>
+
+    <div class="page-item" class="page-item" [class.disabled]="p.isLastPage()">
+      <a class="page-link" *ngIf="!p.isLastPage()" (click)="next(paginaAtual)">
+        &raquo;
+      </a>
+    </div>
+  </pagination-template>
+  <div *ngIf="totalRegistros == 0">
+    <h4 class="text-center">Nenhum registro encontrado!</h4>
+  </div>
+  <ngx-spinner></ngx-spinner>
+</div>

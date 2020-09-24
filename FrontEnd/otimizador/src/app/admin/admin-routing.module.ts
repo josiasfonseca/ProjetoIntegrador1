@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'usuarios', loadChildren: () => import('./usuarios/usuarios.module').then(m => m.UsuariosModule) },
+      { path: 'empresas', loadChildren: () => import('./empresas/empresas.module').then(m => m.EmpresasModule) },
       { path: 'controles', loadChildren: () => import('./controles/controles.module').then(m => m.ControlesModule) },
       { path: 'observacoes', loadChildren: () => import('./observacoes/observacoes.module').then(m => m.ObservacoesModule) },
       { path: 'importador', loadChildren: () => import('./importador/importador.module').then(m => m.ImportadorModule) },

@@ -22,6 +22,9 @@ export class UsuariosListComponent implements OnInit {
   // @ViewChild('deleteModal', {static: false}) deleteModal;
   usuarioSelecionado: Usuario;
   totalRegistros: number;
+  campoBusca = '';
+  timer = null;
+  usuarioLogado: Usuario;
 
   paginaAtual: number;
   @Input() id: string;
@@ -39,14 +42,21 @@ export class UsuariosListComponent implements OnInit {
 
 
   ngOnInit() {
+   this.usuarioLogado = JSON.parse(atob(localStorage.getItem('user')));
    this.atualizaLista();
   }
 
+  buscaDados() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.atualizaLista();
+    }, 500);
+  }
 
   atualizaLista(paginaAtual = 1) {
       // Recebe uma lista de usuários de forma assíncrona
       this.spinner.show();
-      this.service.list(paginaAtual).subscribe(
+      this.service.list(paginaAtual, this.campoBusca).subscribe(
         (dados: any) => {
           this.usuarios = dados.data;
           this.totalRegistros = dados.total;

@@ -13,7 +13,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     return next.handle(request).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         const error = (typeof  errorResponse.error !== 'object') ? JSON.parse(errorResponse.error) : errorResponse;
@@ -33,7 +33,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
             localStorage.removeItem('user');
             this.router.navigate(['/']);
         }
-        return Observable.throw(errorResponse);
+        return throwError(errorResponse);
       })
     );
   }

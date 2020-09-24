@@ -1,19 +1,39 @@
 <h3 class="text-center">Empresas</h3>
+<button class="btn btn-primary" (click)="onNew()"><i class="fas fa-plus"></i> Nova empresa</button>
+
+<div class="row">
+  <div class="col-sm-4">
+
+  </div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4 form-inline justify-content-end">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupPrepend2"><i class="fas fa-search"></i></span>
+      </div>
+      <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Busca" (input)="buscaDados()" [(ngModel)]="campoBusca">
+    </div>
+    <!-- <button class="btn btn-outline-primary mt-2 my-2 my-sm-0">Buscar</button> -->
+  </div>
+</div>
 
 <h6 *ngIf="this.empresas != null ? this.empresas.length : '' " >Total de registros: {{ this.totalRegistros }}</h6>
+
 <table class="table table-sm table-striped table-hover table-bordered table-responsive-md">
   <thead class="table-active">
     <th>Empresa</th>
     <th>Código</th>
+    <th>CNPJ</th>
     <th>Ação</th>
   </thead>
   <tbody>
-    <tr *ngFor="let empresa of empresas | paginate: { itemsPerPage: 15, currentPage: paginaAtual , totalItems: totalRegistros }" >
-      <td>{{ empresa.nome }} - ({{ empresa.cnpj }})</td>
+    <tr *ngFor="let empresa of empresas | paginate: { itemsPerPage: 10, currentPage: paginaAtual , totalItems: totalRegistros }" >
+      <td>{{ empresa.nome }}</td>
       <td>{{ empresa.id_empresa }}</td>
+      <td>({{ empresa.cnpj }})</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="controle(empresa.id_empresa)">Controle</button>
-        <button type="button" class="btn btn-secondary btn-sm mb-2" (click)="importador(empresa.id_empresa)">Importador</button>
+        <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="onEdit(empresa.id_empresa)"><i class="fas fa-edit"></i> Editar</button>
+        <button type="button" class="btn btn-danger btn-sm mb-2" (click)="onDelete(empresa)"><i class="fas fa-trash-alt"></i> Excluir</button>
       </td>
     </tr>
   </tbody>

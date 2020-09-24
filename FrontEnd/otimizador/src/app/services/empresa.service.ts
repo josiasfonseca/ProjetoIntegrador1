@@ -26,11 +26,25 @@ export class EmpresaService {
     private alertService: AlertModalService
     ) { }
 
-    list(paginaAtual = 1) {
-      return this.http.get<Empresa[]>(`${this.url}?page=${paginaAtual}`).pipe(take(1));
+    list(paginaAtual = 1, filtro: string) {
+      return this.http.get<Empresa[]>(`${this.url}?page=${paginaAtual}&filtro=${filtro}`).pipe(take(1));
     }
 
     listPorId(id: number) {
       return this.http.get<Empresa>(`${this.url}/${id}`).pipe(take(1));
+    }
+
+    deleteEmpresa(id: number) {
+      return this.http.delete(`${this.url}/${id}`).pipe(take(1));
+    }
+
+    gravarEmpresa(empresa: Empresa, id: number) {
+      if (id == null) {
+        return this.http.post(this.url, empresa)
+        .pipe(take(1));
+      } else {
+        return this.http.put(`${this.url}/${id}`, JSON.stringify(empresa), this.httpOptions)
+        .pipe(take(1));
+      }
     }
 }

@@ -10,10 +10,15 @@ import { Component, OnInit } from '@angular/core';
 export class MenuNavbarComponent implements OnInit {
 
   usuario: Usuario;
+  usuarioLogado: Usuario;
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.usuario = this.authService.getUser();
+
+    this.usuarioLogado = JSON.parse(atob(localStorage.getItem('user')));
+
   }
 
   logout(e) {

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
           this.errorCredential = true;
           this.msg = '';
       });
-    }, 1000);
+    }, 0);
   }
 
 }

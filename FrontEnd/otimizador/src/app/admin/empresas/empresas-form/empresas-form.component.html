@@ -1,0 +1,27 @@
+<h3 class="text-center">{{ idEmpresa == null ? 'Inclusão de Empresa' : 'Edição de Empresa' }}</h3>
+
+<form [formGroup]="formulario" class="needs-validation">
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <app-input-field id="nome" label="Nome" place="Nome" type="text" readOnly="!!isReadOnly" formControlName="nome" [classeValidacao]="verificaValidadeCampo('nome')">
+      </app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('nome')" [mostrarErro]="mostraErro('nome')"></app-input-control-erro>
+    </div>
+    <div class="col-md-4 mb-3">
+      <app-input-field id="cnpj" (input)="formataCNPJ()"  label="CNPJ" place="CNPJ" type="text" readOnly="!!isReadOnly" formControlName="cnpj" [classeValidacao]="verificaValidadeCampo('cnpj')"></app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('cnpj')" [mostrarErro]="mostraErro('cnpj')"></app-input-control-erro>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <p>*Todos campos são obrigatórios!</p>
+    </div>
+  </div>
+  <p *ngIf="empresa" >Data de criação: {{  formataData(empresa.created_at) }}</p>
+  <p *ngIf="empresa" >Data de atualizaçâo: {{  formataData(empresa.updated_at) }}</p>
+  <!-- <p *ngIf="empresa.deleted_at" >Data de Exclusão: {{  formataData(empresa.deleted_at) }}</p> -->
+  <input type="text" class="form-control" formControlName="id_empresa" hidden id="id" name="id_empresa" />
+  <button class="btn btn-primary mb-2 mr-2" type="button" (click)="gravarForm()"><i class="fas fa-save"></i> Gravar</button>
+  <button class="btn btn-danger mb-2" type="button" (click)="cancelarForm()"><i class="fas fa-undo-alt"></i> Cancelar</button>
+</form>
+<ngx-spinner></ngx-spinner>

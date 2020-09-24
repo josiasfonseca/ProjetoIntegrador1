@@ -5,4 +5,7 @@ export interface Empresa {
   nome: string;
   cnpj: string;
   usuario: Usuario;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
 }

@@ -6,4 +6,7 @@ export interface Usuario  {
   login: string;
   senha: string;
   tipo_usuario: TipoUsuario;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
 }
