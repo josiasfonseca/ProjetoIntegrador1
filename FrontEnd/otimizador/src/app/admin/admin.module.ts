@@ -24,7 +24,6 @@ import { CommonModule } from '@angular/common';
     FooterComponent,
     HomeComponent,
     StarterComponent,
-
   ],
   imports: [
     CommonModule,
