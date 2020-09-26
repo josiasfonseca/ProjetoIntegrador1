@@ -26,7 +26,7 @@ class Empresa extends Model
     }
 
     public function controles() {
-        return $this->hasMany('App\Models\Controle', 'id_empresa', 'empresa_id');
+        return $this->hasMany('App\Models\Controle', 'empresa_id', 'id_empresa');
     }
 
     public function pagamentos() {

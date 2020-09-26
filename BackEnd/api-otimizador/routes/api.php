@@ -80,5 +80,11 @@ Route::group(['middleware' => ['apiJwt']], function () {
         Route::get('gerarArquivoContabilidade/{idEmpresa}', 'ImportadorCartaoController@gerarArquivoContabilidade')->name('importador.cartao.gerarArquivoContabilidade');
         Route::get('download-cartao/{idEmpresa}/{extensao}', 'ImportadorCartaoController@baixarArquivoCartao')->name('importador.cartoes.download');
     });
+
+    //Relatorios
+    Route::group(['prefix' => 'relatorios/controle'], function () {
+        Route::get('relatorio-geral', 'Relatorios\Controle\RelatorioGeralController@listarGeral')->name('relatorio-geral.listarGeral');
+    });
+
 });
 
