@@ -10,19 +10,19 @@ use DB;
 class RelatorioGeralController extends Controller
 {
     private $filtro;
+    private $filtro2;
 
     public function listarGeral(Request $request) {
         try {
-            $this->filtro = $request->filtro ?? null;
             $query = Controle::with(['empresa.usuario', 'observacoes']);
-            if ($this->filtro) {
+
+            $req = $request->filtro ?? null;
+            $result = explode(" ", $req);
+            if(sizeof($result) == 2 ){
+                $this->filtro = $result[0];
+                $this->filtro2 = $result[1];
                 $query = $query->where("ano", $this->filtro);
-                $query = $query->orWhere(function ($q) {
-                    $q->select("nome")
-                    ->from('empresas')
-                    ->whereColumn('id_empresa', 'controles.empresa_id')->limit(1);
-                }, 'LIKE', "%" . $this->filtro . "%");
-                $query = $query->orWhere(function ($a) {
+                $query = $query->where(function ($a) {
                     $a->select("u.nome")
                     ->from('usuarios', 'u')
                     ->where('id_usuario', function($b) {
@@ -30,7 +30,26 @@ class RelatorioGeralController extends Controller
                         ->from('empresas', 'e')
                         ->whereColumn('e.id_empresa', 'controles.empresa_id')->limit(1);
                     });
-                }, 'LIKE', "%" . $this->filtro . "%");
+                }, 'LIKE', "%" . $this->filtro2 . "%");
+            } else if(sizeof($result) == 1) {
+                $this->filtro = $result[0];
+                if ($this->filtro) {
+                    $query = $query->where("ano", $this->filtro);
+                    $query = $query->orWhere(function ($q) {
+                        $q->select("nome")
+                        ->from('empresas')
+                        ->whereColumn('id_empresa', 'controles.empresa_id')->limit(1);
+                    }, 'LIKE', "%" . $this->filtro . "%");
+                    $query = $query->orWhere(function ($a) {
+                        $a->select("u.nome")
+                        ->from('usuarios', 'u')
+                        ->where('id_usuario', function($b) {
+                            $b->select('usuario_id')
+                            ->from('empresas', 'e')
+                            ->whereColumn('e.id_empresa', 'controles.empresa_id')->limit(1);
+                        });
+                    }, 'LIKE', "%" . $this->filtro . "%");
+                }
             }
 
             $controles = $query->paginate(30);
