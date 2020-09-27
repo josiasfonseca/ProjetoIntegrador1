@@ -19,7 +19,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         const error = (typeof  errorResponse.error !== 'object') ? JSON.parse(errorResponse.error) : errorResponse;
-        console.error('erro', error);
+        // console.error('erro', error);
         if (errorResponse.status === 401 && error.error.status === 'token_expired') {
           const http = this.http.get(HttpClient);
           return http.post<any>('http://localhost:8000/api/auth/refresh', {})
@@ -30,8 +30,6 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
               return next.handle(cloneRequest);
             })
             );
-        } else if (errorResponse.status === 401 && error.error.status === 'token_expired_time') {
-            console.log('Arrrrr');
         } else if (errorResponse.status === 500 && error.error.message === 'Token has expired and can no longer be refreshed') {
             this.alert.closeAlert();
             localStorage.removeItem('token');
