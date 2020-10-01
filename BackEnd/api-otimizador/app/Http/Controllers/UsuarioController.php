@@ -13,18 +13,28 @@ class UsuarioController extends Controller
         try {
             $filtro = ($request->filtro && $request->filtro != null) ? $request->filtro : null;
             $query = User::with(["tipoUsuario"]);
-            if($filtro) {
+            if($filtro != 'todos') {
                 $query = $query->where('nome', "LIKE", "%" . $filtro . "%")->orWhere('login', "LIKE", "%" . $filtro . "%");
                 $query = $query->orWhere(function ($q) {
                     $q->select("tipo")
                     ->from('tipo_usuarios')
                     ->whereColumn('id_tipo_usuario', 'usuarios.tipo_usuario_id')->limit(1);
                 }, 'LIKE', "%" . $filtro . "%");
-                // $query = $query->addSelect(["tipo" => TipoUsuario::whereColumn("tipo_usuario_id", "tipo_usuarios.id_tipo_usuari")])->limit(1);
                 $usuarios = $query->paginate(10);
             } else {
-                $usuarios = $query->paginate(10);
+                    $usuarios = $query->paginate(10);
             }
+                return response()->json($usuarios, 200);
+            } catch (\Exception $ex) {
+                return response()->json(["msg", "Erro ao listar usuários!", $ex->getMessage()], 400);
+            }
+        }
+
+        public function listarTodos(Request $request) {
+            try {
+                $filtro = ($request->filtro && $request->filtro != null) ? $request->filtro : null;
+                $query = User::where('nome', "LIKE", "%" . $filtro . "%")->orWhere('login', "LIKE", "%" . $filtro . "%");
+                $usuarios = $query->get();
                 return response()->json($usuarios, 200);
         } catch (\Exception $ex) {
             return response()->json(["msg", "Erro ao listar usuários!", $ex->getMessage()], 400);

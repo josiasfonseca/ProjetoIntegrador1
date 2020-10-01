@@ -11,10 +11,20 @@ class EmpresaController extends Controller
     public function listar(Request $request){
         try {
                 $filtro = ($request->filtro && $request->filtro != null) ? $request->filtro : null;
+                $query = Empresa::with('usuario');
                 if($filtro) {
-                    $empresas = Empresa::where("nome", "LIKE", "%" . $filtro . "%")->orWhere("cnpj", "LIKE", "%" . $filtro . "%")->orWhere("id_empresa", $filtro)->paginate(10);
+                    $query = $query->where("nome", "LIKE", "%" . $filtro . "%")
+                    ->orWhere("cnpj", "LIKE", "%" . $filtro . "%")
+                    ->orWhere("id_empresa", $filtro);
+                    // return $query->paginate(10);
+                    $query = $query->orWhere(function($q) {
+                        $q->select('u.nome')
+                        ->from('usuarios', 'u')
+                        ->whereColumn('u.id_usuario', 'empresas.usuario_id')->limit(1);
+                    }, 'LIKE', "%". $filtro . "%"  );
+                    $empresas = $query->paginate(10);
                 } else {
-                    $empresas = Empresa::paginate(10);
+                    $empresas = $query->paginate(10);
                 }
                 if ($empresas)
                     return response()->json($empresas, 200);
@@ -65,7 +75,7 @@ class EmpresaController extends Controller
                        $empresa->$key = strtoupper($value);
                 }
             }
-            $empresa->usuario_id = $id;
+            $empresa->usuario_id = $empresa->usuario_id ?? $id;
             if($empresa->save())
                 return response()->json($empresa, 200);
             else

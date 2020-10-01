@@ -34,12 +34,21 @@ class RelatorioGeralController extends Controller
             } else if(sizeof($result) == 1) {
                 $this->filtro = $result[0];
                 if ($this->filtro) {
+                    // filtro pelo ano do controle
                     $query = $query->where("ano", $this->filtro);
+                    // filtro pelo nome da empresa
                     $query = $query->orWhere(function ($q) {
                         $q->select("nome")
                         ->from('empresas')
                         ->whereColumn('id_empresa', 'controles.empresa_id')->limit(1);
                     }, 'LIKE', "%" . $this->filtro . "%");
+                    // filtro pelo tipo da empresa (L.P. ou L.R. ou S.N.)
+                    $query = $query->orWhere(function ($q) {
+                        $q->select("tipo")
+                        ->from('empresas')
+                        ->whereColumn('id_empresa', 'controles.empresa_id')->limit(1);
+                    }, 'LIKE', "%" . $this->filtro . "%");
+                    // filtro pelo nome do responsável
                     $query = $query->orWhere(function ($a) {
                         $a->select("u.nome")
                         ->from('usuarios', 'u')
@@ -51,7 +60,7 @@ class RelatorioGeralController extends Controller
                     }, 'LIKE', "%" . $this->filtro . "%");
                 }
             }
-
+            $query = $query->orderBy("ano", "DESC");
             $controles = $query->paginate(30);
             return response()->json($controles, 200);
         } catch (\Exception $ex) {

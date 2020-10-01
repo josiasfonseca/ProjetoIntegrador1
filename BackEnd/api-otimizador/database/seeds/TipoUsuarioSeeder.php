@@ -11,7 +11,7 @@ class TipoUsuarioSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\TipoUsuario::class, 5)->create()->each(function ($tipoUsuario) {
+        factory(App\Models\TipoUsuario::class, 2)->create()->each(function ($tipoUsuario) {
             $tipoUsuario->save();
         });
     }

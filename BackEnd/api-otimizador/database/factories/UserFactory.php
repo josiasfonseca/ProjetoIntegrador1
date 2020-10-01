@@ -22,6 +22,19 @@ $factory->define(User::class, function (Faker $faker) {
         'login' => strtolower($faker->unique()->firstName),
         'nome' => $faker->name,
         'senha' => bcrypt($faker->firstName()),
-        'tipo_usuario_id' => $faker->numberBetween($min = 1, $max = 5)
+        'cpf' => $faker->randomElement($array = array ('07945665410','07545638545','07565485918')),
+        'tipo_usuario_id' => $faker->numberBetween($min = 1, $max = 2),
+        // 'email' =>  strtolower($faker->word) . strtolower($faker->randomElement($array = array ('@gmail.com','@hotmail.com'))),
+        'email' =>  $faker->email,
+        'telefone' =>  $faker->tollFreePhoneNumber,
+        'whatsapp' =>  $faker->tollFreePhoneNumber,
+        'cep' =>  $faker->randomElement($array = array ('85851000','85851150','85851200')),
+        'endereco' =>  $faker->streetName,
+        'numero' =>  $faker->numberBetween($min = 1, $max = 10),
+        'complemento' =>  'complemento',
+        'bairro' =>  'Bairro ' . $faker->word,
+        'uf' =>  $faker->randomElement($array = array ('PR','SP','AM')),
+        'codigo_municipio' =>  $faker->randomElement($array = array ('4108304','4108308','4108340')),
+        'cidade' =>  $faker->city,
     ];
 });

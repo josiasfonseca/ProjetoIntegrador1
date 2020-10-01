@@ -11,7 +11,7 @@ class EmpresaSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Empresa::class, 20)->create()->each(function ($empresa) {
+        factory(App\Models\Empresa::class, 50)->create()->each(function ($empresa) {
             try {
                 $empresa->save();
             } catch (\Throwable $th) {

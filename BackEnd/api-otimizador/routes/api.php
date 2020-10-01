@@ -28,6 +28,7 @@ Route::group(['middleware' => ['apiJwt']], function () {
     // Route::get('auth/me', 'AuthController@me');
 
     Route::get('usuarios', 'UsuarioController@listar')->name('usuarios.listar');
+    Route::get('usuarios/todos', 'UsuarioController@listarTodos')->name('usuarios.listarTodos');
     Route::post('usuarios', 'UsuarioController@incluir')->name('usuarios.incluir');
     Route::put('usuarios/{id}', 'UsuarioController@atualizar')->name('usuarios.atualizar');
     Route::delete('usuarios/{id}', 'UsuarioController@excluir')->name('usuarios.excluir');
