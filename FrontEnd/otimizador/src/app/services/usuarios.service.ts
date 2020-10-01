@@ -1,3 +1,4 @@
+import { BaseServiceService } from './base-service.service';
 import { TipoUsuario } from './../model/tipo-usuario';
 import { AlertModalService } from '../share/alert-modal.service';
 import { AlertModalComponent } from '../share/alert-modal/alert-modal.component';
@@ -11,12 +12,12 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class UsuariosService extends BaseServiceService {
 
   static excluiuUsuario = new EventEmitter();
   bsModalRef: BsModalRef;
 
-  url = 'http://localhost:8000/api/usuarios';
+  url = this.urlBase + '/usuarios';
 
   // Headers
   httpOptions = {
@@ -28,7 +29,9 @@ export class UsuariosService {
     private router: Router,
     // private modalService: BsModalService
     private alertService: AlertModalService
-    ) { }
+    ) {
+      super();
+     }
 
   list(paginaAtual = 1, filtro: string) {
     return this.http.get<Usuario[]>(`${this.url}?page=${paginaAtual}&filtro=${filtro}`).pipe(take(1));

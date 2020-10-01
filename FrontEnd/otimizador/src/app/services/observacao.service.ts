@@ -1,3 +1,4 @@
+import { BaseServiceService } from './base-service.service';
 import { Observacao } from './../model/observacao';
 
 import { Injectable, EventEmitter } from '@angular/core';
@@ -12,9 +13,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 @Injectable({
   providedIn: 'root'
 })
-export class ObservacaoService {
+export class ObservacaoService extends BaseServiceService {
 
-  url = 'http://localhost:8000/api/observacoes';
+  url = this.urlBase + '/observacoes';
 
   // Headers
   httpOptions = {
@@ -26,7 +27,9 @@ export class ObservacaoService {
     private http: HttpClient,
     private router: Router,
     private alertService: AlertModalService
-    ) { }
+    ) {
+      super();
+    }
 
     // Lista todas as observações
     list() {

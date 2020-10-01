@@ -1,3 +1,4 @@
+import { BaseServiceService } from './base-service.service';
 import { Controle } from 'src/app/model/controle';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -9,9 +10,9 @@ import { AlertModalService } from './../share/alert-modal.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ControleService {
+export class ControleService extends BaseServiceService {
 
-  url = 'http://localhost:8000/api/controles';
+  url = this.urlBase + '/controles';
   controle: Controle;
 
    // Headers
@@ -22,7 +23,9 @@ export class ControleService {
     private http: HttpClient,
     private router: Router,
     private alertService: AlertModalService
-  ) { }
+  ) {
+    super();
+  }
 
   // @param id da empresa
   listaPorEmpresa(id: number) {
