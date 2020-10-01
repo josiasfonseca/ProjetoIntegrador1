@@ -1,7 +1,8 @@
+import { EstadosService } from './../../../services/estados.service';
+import { Estado } from './../../../model/estado';
+import { CepService } from './../../../services/externo/cep.service';
 import { TipoUsuarioService } from './../../../services/tipo-usuario.service';
 import { AlertModalService } from './../../../share/alert-modal.service';
-import { AlertModalComponent } from './../../../share/alert-modal/alert-modal.component';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Usuario } from './../../../model/usuario';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-usuarios-form',
@@ -30,6 +32,9 @@ export class UsuariosFormComponent implements OnInit {
   erros: Usuario;
   classeErro = {};
   usuarioLogado: Usuario;
+  timer = null;
+  erroCep = '';
+  estados: Estado[];
 
   constructor(
     private service: UsuariosService,
@@ -38,7 +43,9 @@ export class UsuariosFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertModalService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private cepService: CepService,
+    private estadoService: EstadosService
   ) {}
 
   ngOnInit() {
@@ -48,6 +55,9 @@ export class UsuariosFormComponent implements OnInit {
     });
     this.usuarioLogado = JSON.parse(atob(localStorage.getItem('user')));
 
+    // recebe os estados
+    this.estados = this.estadoService.getEstados();
+
     this.usuarioUrl = this.route.snapshot.params.id
       ? parseInt(this.route.snapshot.params.id, 10)
       : null;
@@ -55,34 +65,28 @@ export class UsuariosFormComponent implements OnInit {
     // this.usuario = {id: null, nome: null, login: null, senha: null, tipo: null, ativo: null};
     this.formulario = this.fb.group({
       id_usuario: [null],
-      nome: [
-        null,
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(255),
-        ],
-      ],
+      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(255) ] ],
       login: [
         {value: null, disabled: (this.usuarioLogado.tipo_usuario.tipo !== 'GERENTE' && this.usuarioUrl != null) ? true : false},
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(20),
-        ],
-      ],
+        [ Validators.required, Validators.minLength(3), Validators.maxLength(20), ] ],
       senha: [
-        {value: null, disabled: (this.usuarioUrl != null && this.usuarioLogado.tipo_usuario.tipo !== 'GERENTE') ? true : false},
+        {value: null, disabled: (this.usuarioUrl != null) ? true : false},
         [
-          this.usuarioUrl == null
-            ? Validators.required
-            : Validators.minLength(0),
-          Validators.minLength(6),
-          Validators.maxLength(25),
-        ],
-      ],
+          this.usuarioUrl == null ? Validators.required : Validators.minLength(0), Validators.minLength(6), Validators.maxLength(25), ], ],
       tipo_usuario_id: [{value: '',
       disabled: (this.usuarioLogado.tipo_usuario.tipo !== 'GERENTE' && this.usuarioUrl != null) ? true : false }, [Validators.required]],
+      cpf: [null, [Validators.maxLength(11)]],
+      email: [null, [Validators.maxLength(100), Validators.email]],
+      telefone: [null, [Validators.maxLength(30)]],
+      whatsapp: [null, [Validators.maxLength(30)]],
+      cep: [null, [Validators.maxLength(8)]],
+      endereco: [null, [Validators.maxLength(150)]],
+      numero: [null, [Validators.maxLength(10)]],
+      complemento: [null, [Validators.maxLength(50)]],
+      bairro: [null, [Validators.maxLength(50)]],
+      uf: [null, [Validators.maxLength(2)]],
+      codigo_municipio: [null, Validators.maxLength(8)],
+      cidade: [null, [Validators.maxLength(150)]],
     });
 
     // Se for edição preenche os campos com os dados do usuário
@@ -107,10 +111,54 @@ export class UsuariosFormComponent implements OnInit {
   preencherCampos() {
     this.formulario.get('login').setValue(this.usuario.login);
     this.formulario.get('nome').setValue(this.usuario.nome);
+    this.formulario.get('cpf').setValue(this.usuario.cpf);
+    this.formulario.get('email').setValue(this.usuario.email);
+    this.formulario.get('telefone').setValue(this.usuario.telefone);
+    this.formulario.get('whatsapp').setValue(this.usuario.whatsapp);
+    this.formulario.get('cep').setValue(this.usuario.cep);
+    this.formulario.get('endereco').setValue(this.usuario.endereco);
+    this.formulario.get('numero').setValue(this.usuario.numero);
+    this.formulario.get('complemento').setValue(this.usuario.complemento);
+    this.formulario.get('bairro').setValue(this.usuario.bairro);
+    this.formulario.get('uf').setValue(this.usuario.uf);
+    this.formulario.get('codigo_municipio').setValue(this.usuario.codigo_municipio);
+    this.formulario.get('cidade').setValue(this.usuario.cidade);
     this.formulario
-      .get('tipo_usuario_id')
-      .setValue(this.usuario.tipo_usuario.id_tipo_usuario);
+    .get('tipo_usuario_id')
+    .setValue(this.usuario.tipo_usuario.id_tipo_usuario);
     this.formulario.get('id_usuario').setValue(this.usuario.id_usuario);
+  }
+
+  pesquisaCep(e) {
+    clearTimeout(this.timer);
+    const cep  = e.target.value.replace(/\D/g, '');
+    this.formulario.get('cep').setValue(cep);
+    if (cep.length === 8) {
+      this.spinner.show();
+      this.timer = setTimeout(() => {
+        this.cepService.consultaCep(cep)
+        .subscribe((resp: any) => {
+          this.erroCep = '';
+          this.preencheEndereco(resp);
+          this.spinner.hide();
+          if (resp.erro) {
+            this.erroCep = 'CEP não encontrado!';
+          }
+        }, (error: any) => {
+          this.spinner.hide();
+          this.alertService.showAlertDanger('Erro ao buscar cep');
+        });
+      }, 500);
+    }
+  }
+
+  preencheEndereco(dados) {
+    this.formulario.get('endereco').setValue(dados.logradouro);
+    this.formulario.get('complemento').setValue(dados.complemento);
+    this.formulario.get('bairro').setValue(dados.bairro);
+    this.formulario.get('uf').setValue(dados.uf);
+    this.formulario.get('cidade').setValue(dados.localidade);
+    this.formulario.get('codigo_municipio').setValue(dados.ibge);
   }
 
   formataLogin() {
@@ -142,9 +190,29 @@ export class UsuariosFormComponent implements OnInit {
     return diaF + '/' + mesF + '/' + ano + ' ' + hora + ':' + minutos + ':' + segundos;
   }
 
+  mascaraCPF(e) {
+    // let result = '';
+    // const cpf = e.target.value;
+    // const tamanho = (cpf.replace(/[^\d]+/g, '')).length;
+    // const a = cpf.replace(/[^\d]+/g, '');
+    // for (let i = 0; i < tamanho; i++) {
+    //   if (i === 2) {
+    //     result = a.replace(a[i], a[i] + '.');
+    //     this.formulario.get('cpf').setValue(result);
+    //     console.log('2', i);
+    //   }
+    //   if (i === 5) {
+    //     result = a.replace(a[i], a[i] + '.');
+    //     this.formulario.get('cpf').setValue(result);
+    //     console.log('7', i);
+    //   }
+    // }
+  }
+
   gravarForm() {
     this.formataLogin();
     const usuario = this.formulario.value;
+    console.log(usuario);
     let id: number;
     if (this.usuarioUrl) {
       id = this.usuarioUrl;
@@ -182,7 +250,8 @@ export class UsuariosFormComponent implements OnInit {
               }
           this.spinner.hide();
         });
-    } else {
+      } else {
+      this.spinner.hide();
       this.alertService.showAlertDanger(
         'Verifique os campos em vermelho e preencha-os corretamente!'
       );
@@ -231,6 +300,8 @@ export class UsuariosFormComponent implements OnInit {
       return `${field} deve ter no mínimo ${tipoErro.minlength.requiredLength} caracteres.`;
     } else if (tipoErro.maxlength) {
       return `${field} deve ter no máximo ${tipoErro.maxlength.requiredLength} caracteres.`;
+    } else if (tipoErro.email) {
+      return `${field} inválido.`;
     }
   }
 }

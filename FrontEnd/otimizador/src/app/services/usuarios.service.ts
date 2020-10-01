@@ -34,6 +34,10 @@ export class UsuariosService {
     return this.http.get<Usuario[]>(`${this.url}?page=${paginaAtual}&filtro=${filtro}`).pipe(take(1));
   }
 
+  listAll(filtro: string) {
+    return this.http.get<Usuario[]>(`${this.url}/todos?filtro=${filtro}`).pipe(take(1));
+  }
+
   listById(id: number) {
     return this.http.get<Usuario>(`${this.url}/${id}`).pipe(take(1));
   }

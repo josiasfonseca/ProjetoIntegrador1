@@ -18,41 +18,43 @@
 
 <table class="table table-sm table-striped table-hover table-bordered table-responsive-sm">
   <thead>
+    <th>Tipo</th>
     <th>Empresa</th>
-    <th>Ano</th>
-    <th>JAN</th>
-    <th>FEV</th>
-    <th>MAR</th>
-    <th>ABR</th>
-    <th>MAI</th>
-    <th>JUN</th>
-    <th>JUL</th>
-    <th>AGO</th>
-    <th>SET</th>
-    <th>OUT</th>
-    <th>NOV</th>
-    <th>DEZ</th>
-    <th>RESPONSÁVEL</th>
-    <th>OBSERVAÇÕES</th>
+    <th class="text-center">Ano</th>
+    <th class="text-center">JAN</th>
+    <th class="text-center">FEV</th>
+    <th class="text-center">MAR</th>
+    <th class="text-center">ABR</th>
+    <th class="text-center">MAI</th>
+    <th class="text-center">JUN</th>
+    <th class="text-center">JUL</th>
+    <th class="text-center">AGO</th>
+    <th class="text-center">SET</th>
+    <th class="text-center">OUT</th>
+    <th class="text-center">NOV</th>
+    <th class="text-center">DEZ</th>
+    <th class="text-center">RESPONSÁVEL</th>
+    <!-- <th class="text-center">OBSERVAÇÕES</th> -->
   </thead>
   <tbody>
     <tr *ngFor="let c of controles | paginate: { itemsPerPage: 30, currentPage: paginaAtual , totalItems: totalRegistros }" >
+      <td *ngIf="c.empresa" >{{ c.empresa.tipo }}</td>
       <td *ngIf="c.empresa" >{{ c.empresa.nome }}</td>
-          <td>{{  c.ano }}</td>
-          <td>{{ c.jan }}</td>
-          <td>{{ c.fev }}</td>
-          <td>{{ c.mar }}</td>
-          <td>{{ c.abr }}</td>
-          <td>{{ c.mai }}</td>
-          <td>{{ c.jun }}</td>
-          <td>{{ c.jul }}</td>
-          <td>{{ c.ago }}</td>
-          <td>{{ c.set }}</td>
-          <td>{{ c.out }}</td>
-          <td>{{ c.nov}}</td>
-          <td>{{ c.dez}}</td>
-          <td>{{ c.empresa.usuario.nome }}</td>
-          <td>OBS</td>
+          <td class="text-center">{{  c.ano }}</td>
+          <td class="text-center">{{ c.jan }}</td>
+          <td class="text-center">{{ c.fev }}</td>
+          <td class="text-center">{{ c.mar }}</td>
+          <td class="text-center">{{ c.abr }}</td>
+          <td class="text-center">{{ c.mai }}</td>
+          <td class="text-center">{{ c.jun }}</td>
+          <td class="text-center">{{ c.jul }}</td>
+          <td class="text-center">{{ c.ago }}</td>
+          <td class="text-center">{{ c.set }}</td>
+          <td class="text-center">{{ c.out }}</td>
+          <td class="text-center">{{ c.nov}}</td>
+          <td class="text-center">{{ c.dez}}</td>
+          <td class="text-center">{{ c.empresa.usuario.nome }}</td>
+          <!-- <td class="text-center">OBS</td> -->
     </tr>
   </tbody>
 

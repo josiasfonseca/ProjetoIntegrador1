@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpresasFormComponent } from './empresas-form/empresas-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -24,6 +25,7 @@ import { EmpresasFormComponent } from './empresas-form/empresas-form.component';
     FormsModule,
     HttpClientModule,
     ShareModule,
+    NgSelectModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ]
 })

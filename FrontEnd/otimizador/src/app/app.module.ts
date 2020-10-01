@@ -10,7 +10,7 @@ import { ShareModule } from './share/share.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminModule } from './admin/admin.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,9 @@ import { AdminModule } from './admin/admin.module';
     NgxSpinnerModule,
     BrowserAnimationsModule,
     AuthModule,
-    AdminModule
+    AdminModule,
+    NgSelectModule,
+    FormsModule
   ],
   providers: [
     AuthGuard,

@@ -1,32 +1,93 @@
-<h3 class="text-center">{{ usuarioUrl == null ? 'Inclusão de Usuário' : 'Edição de usuário' }}</h3>
+<h4 class="text-center mb-3">{{ usuarioUrl == null ? 'Inclusão de Usuário' : 'Edição usuário: ' + usuarioUrl }}</h4>
 
-<form [formGroup]="formulario" class="needs-validation">
+<form [formGroup]="formulario" class="needs-validation ml-2 mb-2 mt-2 mr-2">
   <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <app-input-field id="nome" label="Nome Completo" place="Nome completo" type="text" readOnly="!!isReadOnly" formControlName="nome" [classeValidacao]="verificaValidadeCampo('nome')">
+    <div class="col-md-8 mb-3">
+      <app-input-field id="nome" label="*Nome Completo" place="Nome completo" type="text" readOnly="!!isReadOnly" formControlName="nome" [classeValidacao]="verificaValidadeCampo('nome')">
       </app-input-field>
       <app-input-control-erro [msgErro]="imprimeErro('nome')" [mostrarErro]="mostraErro('nome')"></app-input-control-erro>
     </div>
     <div class="col-md-4 mb-3">
-      <app-input-field id="login" label="Login" place="Login" type="text" readOnly="!!isReadOnly" formControlName="login" [classeValidacao]="verificaValidadeCampo('login')"></app-input-field>
+      <app-input-field id="login" label="*Login" place="Login" type="text" readOnly="!!isReadOnly" formControlName="login" [classeValidacao]="verificaValidadeCampo('login')"></app-input-field>
       <app-input-control-erro [msgErro]="imprimeErro('login')" [mostrarErro]="mostraErro('login')"></app-input-control-erro>
     </div>
-    <div class="col-md-4 mb-3">
-      <app-input-field id="senha" label="Senha" place="*****" type="password" readOnly="!!isReadOnly" formControlName="senha" [classeValidacao]="verificaValidadeCampo('senha')"></app-input-field>
+  </div>
+  <div class="form-row">
+    <div class="col-md-3 mb-3">
+      <app-input-field id="senha" label="*Senha" place="*****" type="password" readOnly="!!isReadOnly" formControlName="senha" [classeValidacao]="verificaValidadeCampo('senha')"></app-input-field>
       <app-input-control-erro [msgErro]="imprimeErro('senha')" [mostrarErro]="mostraErro('senha')"></app-input-control-erro>
+    </div>
+    <div class="col-md-3 mb-3">
+      <app-input-field id="cpf" (keyup)="mascaraCPF($event)" label="CPF" place="CPF" type="text" readOnly="!!isReadOnly" formControlName="cpf" [classeValidacao]="verificaValidadeCampo('cpf')">
+      </app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('cpf')"  [mostrarErro]="mostraErro('cpf')"></app-input-control-erro>
+    </div>
+    <div class="col-md-6 mb-3">
+      <app-input-field id="email" label="Email" place="Email" type="email" readOnly="!!isReadOnly" formControlName="email" [classeValidacao]="verificaValidadeCampo('email')"></app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('email')" [mostrarErro]="mostraErro('email')"></app-input-control-erro>
     </div>
   </div>
   <div class="form-row">
     <div class="col-md-4 mb-3">
-      <label for="tipo-usuario">Tipo Usuário</label>
-      <select class="custom-select custom-select-sm" name="tipo_usuario_id" id="tipo_usuario_id" formControlName="tipo_usuario_id" [ngClass]="verificaValidadeCampo('tipo_usuario_id')">
+      <label for="tipo-usuario">*Tipo Usuário</label>
+      <select class="custom-select custom-select" name="tipo_usuario_id" id="tipo_usuario_id" formControlName="tipo_usuario_id" [ngClass]="verificaValidadeCampo('tipo_usuario_id')">
         <option selected value="">Selecione o tipo do usuário</option>
         <option *ngFor="let t of tiposUsuarios" value="{{ t.id_tipo_usuario }}"> {{ t.tipo }} </option>
       </select>
       <app-input-control-erro [msgErro]="imprimeErro('tipo_usuario_id')" [mostrarErro]="mostraErro('tipo_usuario_id')"></app-input-control-erro>
     </div>
     <div class="col-md-4 mb-3">
+      <app-input-field id="telefone" label="Telefone" place="(xx) xxxx-xxxx" type="tel" readOnly="!!isReadOnly" formControlName="telefone" [classeValidacao]="verificaValidadeCampo('telefone')"></app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('telefone')" [mostrarErro]="mostraErro('telefone')"></app-input-control-erro>
     </div>
+    <div class="col-md-4 mb-3">
+      <app-input-field id="whatsapp" label="WhastApp" place="(xx) xxxx-xxxx" type="tel" readOnly="!!isReadOnly" formControlName="whatsapp" [classeValidacao]="verificaValidadeCampo('whatsapp')"></app-input-field>
+      <app-input-control-erro [msgErro]="imprimeErro('whatsapp')" [mostrarErro]="mostraErro('whatsapp')"></app-input-control-erro>
+    </div>
+  </div>
+  <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <app-input-field id="cep" (input)="pesquisaCep($event)"  label="CEP" place="CEP" type="text" readOnly="!!isReadOnly" formControlName="cep" [classeValidacao]="verificaValidadeCampo('cep')"></app-input-field>
+          {{ erroCep }}
+          <app-input-control-erro [msgErro]="imprimeErro('cep')" [mostrarErro]="mostraErro('cep')"></app-input-control-erro>
+        </div>
+        <div class="col-md-7 mb-3">
+          <app-input-field id="endereco" label="Endereço" place="Endereco" type="text" readOnly="!!isReadOnly" formControlName="endereco" [classeValidacao]="verificaValidadeCampo('endereco')"></app-input-field>
+          <app-input-control-erro [msgErro]="imprimeErro('endereco')" [mostrarErro]="mostraErro('endereco')"></app-input-control-erro>
+        </div>
+        <div class="col-md-2 mb-3">
+          <app-input-field id="numero" label="Número" place="Número" type="text" readOnly="!!isReadOnly" formControlName="numero" [classeValidacao]="verificaValidadeCampo('numero')"></app-input-field>
+          <app-input-control-erro [msgErro]="imprimeErro('numero')" [mostrarErro]="mostraErro('numero')"></app-input-control-erro>
+        </div>
+  </div>
+  <div class="form-row">
+        <div class="col-md-5 mb-3">
+          <app-input-field id="complemento" label="Complemento" place="Complemento" type="text" readOnly="!!isReadOnly" formControlName="complemento" [classeValidacao]="verificaValidadeCampo('complemento')"></app-input-field>
+          <app-input-control-erro [msgErro]="imprimeErro('complemento')" [mostrarErro]="mostraErro('complemento')"></app-input-control-erro>
+        </div>
+        <div class="col-md-5 mb-3">
+          <app-input-field id="bairro" label="Bairro" place="Bairro" type="text" readOnly="!!isReadOnly" formControlName="bairro" [classeValidacao]="verificaValidadeCampo('bairro')"></app-input-field>
+          <app-input-control-erro [msgErro]="imprimeErro('bairro')" [mostrarErro]="mostraErro('bairro')"></app-input-control-erro>
+        </div>
+        <div class="col-md-2 mb-3">
+          <label for="uf">UF</label>
+          <select name="uf" id="uf" class="custom-select custom-select" formControlName="uf" [ngClass]="verificaValidadeCampo('uf')">
+            <option *ngFor="let uf of estados"  value="{{ uf.nome }}">{{ uf.nome }}</option>
+          </select>
+          <!-- <app-input-field id="uf" label="UF" place="UF" type="text" readOnly="!!isReadOnly" formControlName="uf" [classeValidacao]="verificaValidadeCampo('uf')"></app-input-field> -->
+            <app-input-control-erro [msgErro]="imprimeErro('uf')" [mostrarErro]="mostraErro('uf')"></app-input-control-erro>
+        </div>
+  </div>
+  <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <app-input-field id="codigo_municipio" label="Cod. Município" place="Código do Município" type="text" readOnly="!!isReadOnly" formControlName="codigo_municipio" [classeValidacao]="verificaValidadeCampo('codigo_municipio')"></app-input-field>
+          <app-input-control-erro [msgErro]="imprimeErro('codigo_municipio')" [mostrarErro]="mostraErro('codigo_municipio')"></app-input-control-erro>
+        </div>
+        <div class="col-md-6 mb-3">
+          <app-input-field id="cidade" label="Cidade" place="Cidade" type="text" readOnly="!!isReadOnly" formControlName="cidade" [classeValidacao]="verificaValidadeCampo('cidade')"></app-input-field>
+          <app-input-control-erro [msgErro]="imprimeErro('cidade')" [mostrarErro]="mostraErro('cidade')"></app-input-control-erro>
+        </div>
+        <div class="col-md-3 mb-3"></div>
   </div>
   <div class="form-row">
     <div class="col-md-4 mb-3">
