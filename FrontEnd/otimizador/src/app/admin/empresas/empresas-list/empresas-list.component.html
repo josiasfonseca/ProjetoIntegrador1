@@ -28,7 +28,7 @@
     <th>Ação</th>
   </thead>
   <tbody>
-    <tr *ngFor="let empresa of empresas | paginate: { itemsPerPage: 10, currentPage: paginaAtual , totalItems: totalRegistros }" >
+    <tr *ngFor="let empresa of empresas | paginate: { itemsPerPage: 15, currentPage: paginaAtual , totalItems: totalRegistros }" >
       <td>{{ empresa.nome }}</td>
       <td>{{ empresa.id_empresa }}</td>
       <td>{{ empresa.cnpj }}</td>

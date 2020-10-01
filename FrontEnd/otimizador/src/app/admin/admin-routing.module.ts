@@ -16,6 +16,7 @@ const routes: Routes = [
       { path: 'observacoes', loadChildren: () => import('./observacoes/observacoes.module').then(m => m.ObservacoesModule) },
       { path: 'importador', loadChildren: () => import('./importador/importador.module').then(m => m.ImportadorModule) },
       { path: 'relatorios', loadChildren: () => import('./relatorios/relatorios.module').then(m => m.RelatoriosModule) },
+      { path: 'layouts', loadChildren: () => import('./layouts/layouts.module').then(m => m.LayoutsModule) },
     ]
   },
 ];

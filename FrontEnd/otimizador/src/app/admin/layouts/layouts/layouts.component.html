@@ -1,5 +1,5 @@
 <div class="container">
-  <h3 class="text-center">Controles e Importador</h3>
+  <h3 class="text-center">Layouts de Empresas</h3>
 
   <div class="row">
     <div class="col-sm-4"></div>
@@ -35,11 +35,14 @@
         <td>{{ empresa.nome }} - ({{ empresa.cnpj }})</td>
         <td>{{ empresa.id_empresa }}</td>
         <td>
-          <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="controle(empresa.id_empresa)">
-            <i class="fas fa-tasks"></i> Controle
+          <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="pagamento(empresa.id_empresa)" >
+            <i class="fas fa-arrow-alt-circle-up"></i> Pagamentos
           </button>
-          <button type="button" class="btn btn-secondary btn-sm mb-2" (click)="importador(empresa.id_empresa)">
-            <i class="fas fa-file-import"></i> Importador
+          <button type="button" class="btn btn-secondary btn-sm mb-2 mr-2">
+            <i class="fas fa-arrow-alt-circle-down"></i> Recebimento
+          </button>
+          <button type="button" class="btn btn-info btn-sm mb-2 mr-2">
+            <i class="far fa-credit-card"></i> Cartões
           </button>
         </td>
       </tr>
