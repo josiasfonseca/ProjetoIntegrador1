@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use LayoutController;
 
-class RecebimentoController extends Controller
+class LayoutRecebimentoController extends LayoutController
 {
     //
 }

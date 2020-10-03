@@ -87,5 +87,11 @@ Route::group(['middleware' => ['apiJwt']], function () {
         Route::get('relatorio-geral', 'Relatorios\Controle\RelatorioGeralController@listarGeral')->name('relatorio-geral.listarGeral');
     });
 
+    //Layouts
+    Route::group(['prefix' => 'layouts'], function () {
+            Route::get('layouts-pagamentos/{idEmpresa}', 'Layouts\LayoutPagamentoController@listaLayoutPagamentos')->name('layouts-pagamento.listaLayoutPagamentos');
+            Route::get('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@listaLayoutPagamento')->name('layouts-pagamento.listaLayoutPagamento');
+    });
+
 });
 

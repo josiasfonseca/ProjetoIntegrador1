@@ -16,15 +16,14 @@ class EmpresaController extends Controller
                     $query = $query->where("nome", "LIKE", "%" . $filtro . "%")
                     ->orWhere("cnpj", "LIKE", "%" . $filtro . "%")
                     ->orWhere("id_empresa", $filtro);
-                    // return $query->paginate(10);
                     $query = $query->orWhere(function($q) {
                         $q->select('u.nome')
                         ->from('usuarios', 'u')
                         ->whereColumn('u.id_usuario', 'empresas.usuario_id')->limit(1);
                     }, 'LIKE', "%". $filtro . "%"  );
-                    $empresas = $query->paginate(10);
+                    $empresas = $query->paginate(15);
                 } else {
-                    $empresas = $query->paginate(10);
+                    $empresas = $query->paginate(15);
                 }
                 if ($empresas)
                     return response()->json($empresas, 200);

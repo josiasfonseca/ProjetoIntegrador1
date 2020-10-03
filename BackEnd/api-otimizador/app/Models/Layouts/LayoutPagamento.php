@@ -1,30 +1,31 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Layouts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Layout;
 
-class Recebimento extends Model
+class LayoutPagamento extends Layout
 {
     use SoftDeletes;
 
-    protected $table = "recebimentos";
-    protected $primaryKey = "id_recebimento";
+    protected $table = "pagamentos";
+    protected $primaryKey = "id_pagamento";
 
     protected $fillable = [
-        'id_recebimento',
+        'id_pagamento',
         'id_empresa',
         'id_layout',
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    public function empresa() {
+    public function usuario() {
         return $this->hasOne('App\Models\Empresa', 'id_empresa');
     }
 
-    public function layouts() {
-        return $this->belongsTo('App\Models\Layout', 'id_layout');
+    public function layout() {
+        return $this->hasOne('App\Models\Layout', 'id_layout');
     }
 }
