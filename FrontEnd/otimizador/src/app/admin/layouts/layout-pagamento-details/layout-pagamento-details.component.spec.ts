@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayoutPagamentoComponent } from './layout-pagamento.component';
+import { LayoutPagamentoDetailsComponent } from './layout-pagamento-details.component';
 
 describe('LayoutPagamentoComponent', () => {
-  let component: LayoutPagamentoComponent;
-  let fixture: ComponentFixture<LayoutPagamentoComponent>;
+  let component: LayoutPagamentoDetailsComponent;
+  let fixture: ComponentFixture<LayoutPagamentoDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutPagamentoComponent ]
+      declarations: [ LayoutPagamentoDetailsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LayoutPagamentoComponent);
+    fixture = TestBed.createComponent(LayoutPagamentoDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

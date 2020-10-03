@@ -26,9 +26,6 @@ export class UsuariosService extends BaseServiceService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
-    // private modalService: BsModalService
-    private alertService: AlertModalService
     ) {
       super();
      }

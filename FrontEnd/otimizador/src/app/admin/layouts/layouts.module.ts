@@ -5,16 +5,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutsRoutingModule } from './layouts-routing.module';
-import { LayoutPagamentoComponent } from './layout-pagamento/layout-pagamento.component';
+import { LayoutPagamentoDetailsComponent } from './layout-pagamento-details/layout-pagamento-details.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LayoutPagamentoFormComponent } from './layout-pagamento-form/layout-pagamento-form.component';
+import { LayoutPagamentoListComponent } from './layout-pagamento-list/layout-pagamento-list.component';
 
 
 @NgModule({
   declarations: [
     LayoutsComponent,
-    LayoutPagamentoComponent
+    LayoutPagamentoDetailsComponent,
+    LayoutPagamentoFormComponent,
+    LayoutPagamentoListComponent
   ],
   imports: [
     CommonModule,

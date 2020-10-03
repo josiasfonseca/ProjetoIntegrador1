@@ -1,0 +1,20 @@
+<h3 class="text-center">Lista de layouts de pagamentos</h3>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>ID Pagamento</th>
+    <th>Descrição</th>
+    <th>Acão</th>
+  </thead>
+  <tbody>
+    <tr *ngIf="layout" >
+      <td>{{ layout[0].id_pagamento}}</td>
+      <td>{{ layout[0].descricao }}</td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="details(layout[0].layout_id)"><i class="fas fa-edit"></i> Detalhes</button>
+        <!-- <button type="button" class="btn btn-danger btn-sm mb-2" (click)="onDelete(empresa)"><i class="fas fa-trash-alt"></i> Excluir</button> -->
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ngx-spinner></ngx-spinner>
