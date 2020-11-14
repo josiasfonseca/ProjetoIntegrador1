@@ -121,7 +121,7 @@
       <p *ngIf="empresa" >Data de criação: {{  formataData(empresa.created_at) }}</p>
       <p *ngIf="empresa" >Data de atualizaçâo: {{  formataData(empresa.updated_at) }}</p>
       <input type="text" class="form-control" formControlName="id_empresa" hidden id="id" name="id_empresa" />
-      <button class="btn btn-primary mb-2 mr-2" type="button" (click)="gravarForm()"><i class="fas fa-save"></i> Gravar</button>
+      <button class="btn btn-secondary mb-2 mr-2" type="button" (click)="gravarForm()"><i class="fas fa-save"></i> Gravar</button>
       <button class="btn btn-danger mb-2" type="button" (click)="cancelarForm()"><i class="fas fa-undo-alt"></i> Cancelar</button>
     </form>
     <ngx-spinner></ngx-spinner>

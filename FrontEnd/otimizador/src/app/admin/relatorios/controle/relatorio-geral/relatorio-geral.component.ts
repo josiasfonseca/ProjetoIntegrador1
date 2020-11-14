@@ -15,6 +15,7 @@ export class RelatorioGeralComponent implements OnInit {
   timer = null;
   campoBusca = '';
   totalRegistros: number;
+  meses = [{}];
 
   paginaAtual: number;
   @Input() id: string;
@@ -32,6 +33,9 @@ export class RelatorioGeralComponent implements OnInit {
 
   ngOnInit() {
     this.atualizaLista();
+    this.meses = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    // this.meses = [{jan : 'jan', fev: 'fev', mar: 'mar', abr: 'abr', mai: 'mai',
+    // jun: 'jun', jul: 'jul', ago: 'ago', set: 'set', out: 'out', nov: 'nov', dez: 'dez'}];
   }
 
   atualizaLista(paginaAtual = 1) {
@@ -67,5 +71,13 @@ export class RelatorioGeralComponent implements OnInit {
 
   setarPagina(pagina) {
   this.atualizaLista(pagina);
+  }
+
+  verObservacoes(idControle) {
+    this.router.navigate([`/observacoes/${idControle}`]);
+  }
+
+verControle(idControle) {
+    this.router.navigate([`/controles/${idControle}`]);
   }
 }

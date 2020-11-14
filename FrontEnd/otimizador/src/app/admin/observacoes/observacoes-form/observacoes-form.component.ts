@@ -155,6 +155,6 @@ export class ObservacoesFormComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['../../../controles/' + this.empresa.id_empresa], { relativeTo: this.route });
+    this.router.navigate(['/../../observacoes/' + this.observacoes[0].controle_id], { relativeTo: this.route });
   }
 }

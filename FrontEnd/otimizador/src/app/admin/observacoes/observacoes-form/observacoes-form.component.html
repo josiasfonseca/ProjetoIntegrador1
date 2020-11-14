@@ -53,7 +53,7 @@
 </div>
 <div class="row mb-2">
   <div class="col-sm-12">
-    <button type="button" class="btn btn-primary btn-sm btn-block" (click)="gravarObservacao()" ><i class="fas fa-save"></i> Gravar observação</button>
+    <button type="button" class="btn btn-secondary btn-sm btn-block" (click)="gravarObservacao()" ><i class="fas fa-save"></i> Gravar observação</button>
   </div>
 </div>
 </form>
@@ -62,11 +62,13 @@
   <thead class="table-active">
     <th class="align-middle text-center">Mês Referência</th>
     <th class="align-middle text-center ">Observação</th>
+    <th class="align-middle text-center ">Estado</th>
   </thead>
   <tbody>
-    <tr *ngFor="let o of observacoes" >
+    <tr *ngFor="let o of observacoes" [ngClass]="{ 'table-danger' : o.estado == 'Pendente', 'table-success' : o.estado == 'Concluído'} ">
       <td class="text-center">{{ o.mes_referencia }}</td>
       <td class="text-center">{{ o.observacao }}</td>
+      <td class="text-center">{{ o.estado }}</td>
     </tr>
   </tbody>
 </table>

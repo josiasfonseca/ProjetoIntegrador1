@@ -1,3 +1,4 @@
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RelatoriosRoutingModule } from './relatorios-routing.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     NgxSpinnerModule,
     NgxPaginationModule,
-    RelatoriosRoutingModule
+    RelatoriosRoutingModule,
+    TooltipModule
   ]
 })
 export class RelatoriosModule { }

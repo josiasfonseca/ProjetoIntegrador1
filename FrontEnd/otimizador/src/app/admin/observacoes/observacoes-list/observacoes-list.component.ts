@@ -9,6 +9,7 @@ import { Empresa } from './../../../model/empresa';
 import { Component, OnInit } from '@angular/core';
 import { ControleService } from 'src/app/services/controle.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {LocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'app-observacoes-list',
@@ -21,8 +22,10 @@ export class ObservacoesListComponent implements OnInit {
   observacoes: Observacao[];
   idControle: number;
   totalRegistros: number;
+  location: LocationStrategy;
 
   constructor(
+    private platformStrategy: LocationStrategy,
     private service: ObservacaoService,
     private serviceControle: ControleService,
     private serviceEmpresa: EmpresaService,
@@ -31,7 +34,9 @@ export class ObservacoesListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {
+    this.location = platformStrategy;
+  }
 
   ngOnInit() {
     this.idControle = this.route.snapshot.params.id ? parseInt(this.route.snapshot.params.id, 10) : null;
@@ -76,10 +81,11 @@ export class ObservacoesListComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['../../controles/' + this.observacoes[0].controles.empresa_id], { relativeTo: this.route });
+    // this.router.navigate(['../../controles/' + this.observacoes[0].controles.empresa_id], { relativeTo: this.route });
+    this.location.back();
   }
 
-  editarObservacao(idControle: number) {
+  editarObservacao(idControle) {
     this.router.navigate([`/observacoes/${idControle}/editar`]);
   }
 }

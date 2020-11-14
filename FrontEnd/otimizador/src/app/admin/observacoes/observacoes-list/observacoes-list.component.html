@@ -15,7 +15,7 @@
     <th>Estado</th>
   </thead>
   <tbody>
-    <tr *ngFor="let o of observacoes" >
+    <tr *ngFor="let o of observacoes" [ngClass]="{ 'table-danger' : o.estado == 'Pendente', 'table-success' : o.estado == 'Concluído'} ">
       <td class="text-center">{{ o.mes_referencia }}</td>
       <td class="text-center">{{ o.observacao }}</td>
       <td class="text-center">{{ o.estado }}</td>

@@ -18,7 +18,7 @@
   </div>
   <h6 *ngIf="this.usuarios != null ? this.usuarios.length : '' " >Total de registros: {{ this.totalRegistros }}</h6>
 
-  <table class="table table-sm table-hover table-striped table-responsive-md" *ngIf="this.usuarios != null" >
+  <table class="table table-sm table-striped table-hover table-bordered table-responsive-md" *ngIf="this.usuarios != null" >
     <thead class="table-active">
       <tr>
         <th scope="col">#</th>
@@ -35,7 +35,7 @@
         <td>{{ u.login }}</td>
         <td>{{ u.tipo_usuario.tipo }}</td>
         <td>
-          <button type="button" class="btn btn-primary mr-2 mb-2" (click)="onEdit(u.id_usuario)"><i class="fas fa-edit"></i> Editar</button>
+          <button type="button" class="btn btn-info mr-2 mb-2" (click)="onEdit(u.id_usuario)"><i class="fas fa-edit"></i> Editar</button>
           <button type="button" class="btn btn-danger mb-2" (click)="onDelete(u)" *ngIf="usuarioLogado.tipo_usuario.tipo == 'GERENTE'"><i class="fas fa-trash-alt"></i> Excluir</button>
         </td>
       </tr>

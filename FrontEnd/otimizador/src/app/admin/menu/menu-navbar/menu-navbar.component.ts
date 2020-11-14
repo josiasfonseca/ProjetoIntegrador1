@@ -1,4 +1,4 @@
-import { Usuario } from 'src/app/model/usuario';
+import { Usuario } from '../../../../app/model/usuario';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 

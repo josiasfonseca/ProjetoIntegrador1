@@ -59,4 +59,8 @@ export class LayoutPagamentoListComponent implements OnInit {
   details(idLayoutPagamento: number) {
     this.router.navigate(['/layouts/pagamentos/detalhes/' + idLayoutPagamento]);
   }
+
+  novoLayoutPagamento() {
+    this.router.navigate(['/layouts/pagamentos/' + this.idEmpresa + '/novo']);
+  }
 }

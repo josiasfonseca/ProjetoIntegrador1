@@ -1,3 +1,4 @@
+import { LocationStrategy } from '@angular/common';
 import { EmpresaService } from './../../../services/empresa.service';
 import { Empresa } from './../../../model/empresa';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,7 +21,10 @@ export class ControlesListComponent implements OnInit {
   idEmpresa: number;
   empresa: Empresa;
   msgDados = '';
+  location: LocationStrategy;
+
   constructor(
+    private platformStrategy: LocationStrategy,
     private service: ControleService,
     private serviceEmpresa: EmpresaService,
     public modalService: BsModalService,
@@ -28,7 +32,9 @@ export class ControlesListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) { }
+  ) {
+    this.location = platformStrategy;
+   }
 
   ngOnInit() {
     this.idEmpresa = this.route.snapshot.params.id ? parseInt(this.route.snapshot.params.id, 10) : null;
@@ -90,7 +96,8 @@ export class ControlesListComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    // this.router.navigate(['../../'], { relativeTo: this.route });
+    this.location.back();
   }
 
   verObservacoes(idControle: number) {

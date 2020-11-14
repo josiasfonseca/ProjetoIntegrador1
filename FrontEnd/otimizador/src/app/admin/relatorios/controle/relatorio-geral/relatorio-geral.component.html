@@ -34,28 +34,32 @@
     <th class="text-center">NOV</th>
     <th class="text-center">DEZ</th>
     <th class="text-center">RESPONSÁVEL</th>
-    <!-- <th class="text-center">OBSERVAÇÕES</th> -->
+    <th class="text-center">OBS</th>
+    <th class="text-center">CONTROLES</th>
   </thead>
   <tbody>
     <tr *ngFor="let c of controles | paginate: { itemsPerPage: 30, currentPage: paginaAtual , totalItems: totalRegistros }" >
-      <td *ngIf="c.empresa" >{{ c.empresa.tipo }}</td>
-      <td *ngIf="c.empresa" >{{ c.empresa.nome }}</td>
-          <td class="text-center">{{  c.ano }}</td>
-          <td class="text-center">{{ c.jan }}</td>
-          <td class="text-center">{{ c.fev }}</td>
-          <td class="text-center">{{ c.mar }}</td>
-          <td class="text-center">{{ c.abr }}</td>
-          <td class="text-center">{{ c.mai }}</td>
-          <td class="text-center">{{ c.jun }}</td>
-          <td class="text-center">{{ c.jul }}</td>
-          <td class="text-center">{{ c.ago }}</td>
-          <td class="text-center">{{ c.set }}</td>
-          <td class="text-center">{{ c.out }}</td>
-          <td class="text-center">{{ c.nov}}</td>
-          <td class="text-center">{{ c.dez}}</td>
-          <td class="text-center">{{ c.empresa.usuario.nome }}</td>
-          <!-- <td class="text-center">OBS</td> -->
+      <td *ngIf="c.empresa" class="text-center align-middle">{{ c.empresa.tipo }}</td>
+      <td *ngIf="c.empresa" class="align-middle" >{{ c.empresa.nome }}</td>
+      <td class="text-center align-middle">{{  c.ano }}</td>
+      <td class="text-center align-middle" [ngClass]="{ 'table-success': c[m] == 'OK', 'table-danger': c[m] == 'X', 'table-secondary': c[m] == ''}"
+      *ngFor="let m of meses" >
+      <div *ngIf="c.observacoes" >
+        <div *ngFor="let ob of c.observacoes" >
+          <div *ngIf="ob.mes_referencia == m && ob.estado == 'Pendente'" [tooltip]="ob.observacao" placement="auto"><i class="fas fa-eye"></i></div>
+        </div>
+      </div>
+      {{ c[m] }}
+      </td>
+      <td class="text-center align-middle">{{ c.empresa.usuario.nome }}</td>
+      <td class="text-center align-middle">
+        <button *ngIf="c.observacoes && c.observacoes[0]"  class="btn btn-secondary btn-sm ml-0 mb-2" (click)="verObservacoes(c.id_controle)" ><i class="fas fa-eye"></i> Obs</button>
+      </td>
+      <td class="text-center align-middle">
+        <button class="btn btn-info btn-sm mr-0 mb-2" (click)="verControle(c.empresa.id_empresa)" ><i class="fas fa-eye"></i> Controle</button>
+      </td>
     </tr>
+
   </tbody>
 
 </table>

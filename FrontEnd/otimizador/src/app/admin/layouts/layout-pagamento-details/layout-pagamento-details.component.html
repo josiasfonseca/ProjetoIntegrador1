@@ -1,3 +1,12 @@
+<div class="row" *ngIf="empresa" >
+  <div class="col-sm-12">
+    <hr>
+      <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+      <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
+    <hr>
+  </div>
+</div>
+
 <h3 class="text-center">Lista de layouts de pagamentos</h3>
 
 <button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="onEdit(layout[0].layout_id)"><i class="fas fa-edit"></i> Editar</button>
@@ -13,3 +22,4 @@
     </tr>
     </tbody>
 </table>
+<button type="button" class="btn btn-primary" (click)="onBack()" ><i class="fas fa-undo-alt"></i>  Voltar</button>

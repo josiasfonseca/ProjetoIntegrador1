@@ -9,6 +9,7 @@ import { LayoutPagamentoDetailsComponent } from './layout-pagamento-details/layo
 const routes: Routes = [
   {path: '', component: LayoutsComponent },
   {path: 'pagamentos/:id', component: LayoutPagamentoListComponent},
+  {path: 'pagamentos/:id/novo', component: LayoutPagamentoFormComponent},
   {path: 'pagamentos/detalhes/:id', component: LayoutPagamentoDetailsComponent},
   {path: 'pagamentos/:id/editar', component: LayoutPagamentoFormComponent}
 ];

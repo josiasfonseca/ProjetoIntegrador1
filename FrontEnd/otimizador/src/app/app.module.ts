@@ -21,6 +21,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminModule } from './admin/admin.module';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AuthModule,
     AdminModule,
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    TooltipModule.forRoot()
   ],
   providers: [
     AuthGuard,

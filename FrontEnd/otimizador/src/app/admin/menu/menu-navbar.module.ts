@@ -10,10 +10,6 @@ import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
-    MenuNavbarComponent,
-    MenuSidebarComponent,
-    ContentComponent,
-    FooterComponent
   ],
   imports: [
     CommonModule,

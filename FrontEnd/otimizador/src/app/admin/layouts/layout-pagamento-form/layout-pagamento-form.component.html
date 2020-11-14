@@ -6,11 +6,108 @@
       <th>Campo</th>
       <th>Coluna</th>
     </thead>
-    <tbody>
-      <tr *ngFor="let l of listaLayout" >
-        <td>{{ l[0] }}</td>
-        <input name="posicao" type="text" size="5" class="text-center" formControlName="posicao" value="{{ l[1] }}">
+    <tbody *ngIf="listaLayout" >
+      <tr>
+        <td>
+         Descrição do Layout
+        </td>
+        <td>
+          <input name="descricao" type="text" size="5" class="text-center form-control" formControlName="descricao">
+        </td>
       </tr>
-      </tbody>
+      <tr>
+        <td>
+         Código Fornecedor
+        </td>
+        <td>
+          <input name="cod_fornecedor" type="text" size="5" class="text-center form-control" formControlName="cod_fornecedor">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Nome Fornecedor
+        </td>
+        <td>
+          <input name="nome_fornecedor" type="text" size="5" class="text-center form-control" formControlName="nome_fornecedor">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Data
+        </td>
+        <td>
+          <input name="data" type="text" size="5" class="text-center form-control" formControlName="data">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          CNPJ
+        </td>
+        <td>
+          <input name="cnpj" type="text" size="5" class="text-center form-control" formControlName="cnpj">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Valor Juros
+        </td>
+        <td>
+          <input name="valor_juros" type="text" size="5" class="text-center form-control" formControlName="valor_juros">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Valor Desconto
+        </td>
+        <td>
+          <input name="valor_desc" type="text" size="5" class="text-center form-control" formControlName="valor_desc">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total Pago
+        </td>
+        <td>
+          <input name="total_pago" type="text" size="5" class="text-center form-control" formControlName="total_pago">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Valor Documento
+        </td>
+        <td>
+          <input name="valor_doc" type="text" size="5" class="text-center form-control" formControlName="valor_doc">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Observação
+        </td>
+        <td>
+          <input name="observacao" type="text" size="5" class="text-center form-control" formControlName="observacao">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Número nota fiscal
+        </td>
+        <td>
+          <input name="numero_nota_fiscal" type="text" size="5" class="text-center form-control" formControlName="numero_nota_fiscal">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Banco
+        </td>
+        <td>
+          <input name="banco" type="text" size="5" class="text-center form-control" formControlName="banco">
+        </td>
+      </tr>
+    </tbody>
   </table>
+  <div class="form-row">
+    <button class="btn btn-primary mt-2 mr-2 mb-2" (click)="gravar()" >Gravar</button>
+    <button class="btn btn-danger mt-2 mr-2 mb-2" (click)="onBack()">Cancelar</button>
+  </div>
 </form>
+<ngx-spinner></ngx-spinner>

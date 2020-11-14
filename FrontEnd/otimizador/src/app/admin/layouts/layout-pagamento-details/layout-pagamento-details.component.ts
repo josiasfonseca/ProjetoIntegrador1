@@ -1,3 +1,5 @@
+import { EmpresaService } from './../../../services/empresa.service';
+import { Empresa } from './../../../model/empresa';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LayoutService } from '../../../services/layout.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,9 +15,11 @@ export class LayoutPagamentoDetailsComponent implements OnInit {
   idLayoutPagamento: number;
   layout: LayoutPagamento[];
   listaLayout = [];
+  empresa: Empresa;
 
   constructor(
     private layoutPagamentoService: LayoutService,
+    private empresaService: EmpresaService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -33,7 +37,10 @@ export class LayoutPagamentoDetailsComponent implements OnInit {
     this.layoutPagamentoService.listaLayoutPagamento(this.idLayoutPagamento)
     .subscribe((resp: LayoutPagamento[]) => {
       this.layout = resp;
+      this.empresaService.listPorId(this.layout[0].empresa_id)
+      .subscribe(resposta => this.empresa = resposta);
       const array = this.layout[0].layout.campos.split(';');
+      this.listaLayout.push(['descricao', this.layout[0].descricao]);
       array.forEach(elemento => {
         const dados = elemento.split('=');
         const campo = dados[0];
@@ -45,7 +52,7 @@ export class LayoutPagamentoDetailsComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    this.router.navigate(['../../' + this.empresa.id_empresa], { relativeTo: this.route });
   }
 
   onEdit(idLayoutPagamento: number) {
