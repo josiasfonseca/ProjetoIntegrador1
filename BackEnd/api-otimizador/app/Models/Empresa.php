@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Empresa extends Model
 {
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = "empresas";
     protected $primaryKey = "id_empresa";
@@ -20,6 +22,11 @@ class Empresa extends Model
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+     //Sistema de log
+     protected static $logAttributes = [ '*' ];
+     protected static $logOnlyDirty = true;
+     protected static $submitEmptyLogs = false;
 
     public function usuario() {
         return $this->hasOne('App\User', 'id_usuario', 'usuario_id');

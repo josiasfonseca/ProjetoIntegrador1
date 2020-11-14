@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\LayoutController;
 use App\Models\Layouts\LayoutPagamento;
+use App\Models\Layout;
+use DB;
 
 class LayoutPagamentoController extends LayoutController
 {
@@ -18,7 +20,33 @@ class LayoutPagamentoController extends LayoutController
 
     public function listaLayoutPagamento($idLayoutPagamento) {
         $query = LayoutPagamento::with('layout');
+        $query = $query->where('layout_id', $idLayoutPagamento);
         $layout = $query->get();
         return $layout;
+    }
+
+    public function atualizaLayoutPagamento(Request $request, $idLayoutPagamento = null) {
+        try {
+            $descricao = '';
+            if($idLayoutPagamento) {
+                $layoutPagamento = Layout::findOrFail($idLayoutPagamento);
+            } else {
+                $layoutPagamento = new Layout();
+            }
+            $campos = '';
+            foreach($request->all() as $key => $value) {
+                if($key === 'descricao') {
+                    $descricao = $value;
+                } else {
+                    $campos .= $key . '=' . $value . ';';
+                }
+            }
+            DB::update('UPDATE layouts SET campos=? where id_layout=?', [$campos, $idLayoutPagamento]);
+            DB::update('UPDATE pagamentos SET descricao=? where layout_id=?', [$descricao, $idLayoutPagamento]);
+
+            return response()->json(['msg' => 'Layout gravado com sucesso!'], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['msg' => 'Erro ao gravar layout', $ex->getMessage()], 500);
+        }
     }
 }

@@ -7,11 +7,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use SoftDeletes;
+    use LogsActivity;
 
     protected $table = "usuarios";
     protected $primaryKey = "id_usuario";
@@ -28,6 +30,11 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
+    //Sistema de log
+    protected static $logAttributes = [ '*' ];
+    protected static $logOnlyDirty = true;
+    protected static $submitEmptyLogs = false;
 
     public function setPasswordAttribute($value){
         $this->attributes['senha'] = bcrypt($value);

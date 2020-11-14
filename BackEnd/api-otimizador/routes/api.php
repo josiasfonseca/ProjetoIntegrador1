@@ -91,6 +91,12 @@ Route::group(['middleware' => ['apiJwt']], function () {
     Route::group(['prefix' => 'layouts'], function () {
             Route::get('layouts-pagamentos/{idEmpresa}', 'Layouts\LayoutPagamentoController@listaLayoutPagamentos')->name('layouts-pagamento.listaLayoutPagamentos');
             Route::get('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@listaLayoutPagamento')->name('layouts-pagamento.listaLayoutPagamento');
+            Route::put('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@atualizaLayoutPagamento')->name('layouts-pagamento.atualizaLayoutPagamento');
+    });
+
+    //Logs
+    Route::group(['prefix' => 'logs'], function () {
+        Route::get('logs', 'LogSpatieController@index')->name('logs.index');
     });
 
 });
