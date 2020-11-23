@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class BaseServiceService {
 
-  urlBase = 'http://localhost:8000/api';
+  urlBase = 'https://otimizador.rodacutiastore.com.br/api';
 
    // Headers
    httpOptions = {
