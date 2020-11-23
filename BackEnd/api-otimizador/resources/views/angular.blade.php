@@ -68,11 +68,6 @@
 <script src="assets/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="assets/adminlte/js/adminlte.js"></script>
-<script src="runtime-es2015.b2fdcf17c923b2a3a016.js" type="module"></script>
-<script src="runtime-es5.b2fdcf17c923b2a3a016.js" nomodule defer></script>
-<script src="polyfills-es5.6c4e7bfba6b56a4844dd.js" nomodule defer></script>
-<script src="polyfills-es2015.2c41aad3e9055a1e148a.js" type="module"></script>
-<script src="main-es2015.0fbc6ea0e56876c3ecfe.js" type="module"></script>
-<script src="main-es5.0fbc6ea0e56876c3ecfe.js" nomodule defer></script>
+<script src="runtime-es2015.b2fdcf17c923b2a3a016.js" type="module"></script><script src="runtime-es5.b2fdcf17c923b2a3a016.js" nomodule defer></script><script src="polyfills-es5.6c4e7bfba6b56a4844dd.js" nomodule defer></script><script src="polyfills-es2015.2c41aad3e9055a1e148a.js" type="module"></script><script src="main-es2015.dd2cf7edb0b26439db00.js" type="module"></script><script src="main-es5.dd2cf7edb0b26439db00.js" nomodule defer></script>
 </body>
 </html>
