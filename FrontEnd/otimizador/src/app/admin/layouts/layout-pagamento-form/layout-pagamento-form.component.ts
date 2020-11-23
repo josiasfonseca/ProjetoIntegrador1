@@ -1,3 +1,5 @@
+import { AlertModalService } from './../../../share/alert-modal.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LayoutService } from './../../../services/layout.service';
@@ -7,11 +9,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-layout-pagamento-form',
   templateUrl: './layout-pagamento-form.component.html',
-  styleUrls: ['./layout-pagamento-form.component.css']
+  styleUrls: ['./layout-pagamento-form.component.css'],
 })
 export class LayoutPagamentoFormComponent implements OnInit {
-
   idLayoutPagamento: number;
+  idEmpresa: number;
   layout: LayoutPagamento[];
   listaLayout = [];
   formulario: FormGroup;
@@ -20,12 +22,12 @@ export class LayoutPagamentoFormComponent implements OnInit {
     private layoutPagamentoService: LayoutService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private alertService: AlertModalService
+  ) {}
 
   ngOnInit() {
-    this.idLayoutPagamento = this.route.snapshot.params.id ? parseInt(this.route.snapshot.params.id, 10) : null;
-
     this.formulario = this.fb.group({
       descricao: [null, Validators.required],
       cod_fornecedor: [null, Validators.required],
@@ -41,16 +43,20 @@ export class LayoutPagamentoFormComponent implements OnInit {
       banco: [null, Validators.required],
     });
 
-    if (this.idLayoutPagamento == null) {
-      this.onBack();
-    } else {
-      // Se for edição preenche os campos com os dados do layout
-      const url: string = this.router.url;
-      if (url.indexOf('novo') === -1) {
-        this.editando = true;
-        // Busca no serviço o layout pelo id
-        this.atualizaLista();
-      }
+    // Se for edição preenche os campos com os dados do layout
+    const url: string = this.router.url;
+    if (url.indexOf('novo') === -1) {
+      this.idLayoutPagamento = this.route.snapshot.params.id
+        ? parseInt(this.route.snapshot.params.id, 10)
+        : null;
+      this.editando = true;
+      // Busca no serviço o layout pelo id
+      this.atualizaLista();
+    } else if (url.indexOf('editar') === -1) {
+      this.idLayoutPagamento = null;
+      this.idEmpresa = this.route.snapshot.params.id
+        ? parseInt(this.route.snapshot.params.id, 10)
+        : null;
     }
   }
 
@@ -70,31 +76,53 @@ export class LayoutPagamentoFormComponent implements OnInit {
   }
 
   atualizaLista() {
-    this.layoutPagamentoService.listaLayoutPagamento(this.idLayoutPagamento)
-    .subscribe((resp: LayoutPagamento[]) => {
-      this.layout = resp;
-      console.log('Layout', this.layout);
-      this.listaLayout.push(['descricao', this.layout[0].descricao]);
-      const array = this.layout[0].layout.campos.split(';');
-      array.forEach(elemento => {
-        const dados = elemento.split('=');
-        const campo = dados[0];
-        const posicao = dados[1];
-        this.listaLayout.push([campo, posicao]);
+    this.spinner.show();
+    this.layoutPagamentoService
+      .listaLayoutPagamento(this.idLayoutPagamento)
+      .subscribe((resp: LayoutPagamento[]) => {
+        this.layout = resp;
+        this.idEmpresa = this.layout[0].empresa_id;
+        this.listaLayout.push(['descricao', this.layout[0].descricao]);
+        const array = this.layout[0].layout.campos.split(';');
+        array.forEach((elemento) => {
+          const dados = elemento.split('=');
+          const campo = dados[0];
+          const posicao = dados[1];
+          this.listaLayout.push([campo, posicao]);
+        });
+        this.preencherCampos();
+        this.spinner.hide();
       });
-      this.preencherCampos();
-    });
   }
 
   gravar() {
-    this.layoutPagamentoService.gravarLayoutPagamento(this.idLayoutPagamento, this.formulario.value)
-    .subscribe( (resp => {
-      console.log(resp);
-    }));
+    this.layoutPagamentoService
+      .gravarLayoutPagamento(this.idLayoutPagamento, this.idEmpresa, this.formulario.value)
+      .subscribe((resp) => {
+        this.alertService.showAlertSucess('Layout gravado com sucesso!');
+        setTimeout(() => {
+          this.alertService.closeAlert();
+          this.router.navigate(['/layouts/pagamentos/' + this.idEmpresa]);
+        }, 2000);
+      }, (erro: any) => {
+        this.alertService.showAlertSucess('Erro ao gravar layout. ' + erro);
+        setTimeout(() => {
+          this.alertService.closeAlert();
+        }, 2000);
+      });
   }
 
   onBack() {
-    this.router.navigate(['../../' + this.layout[0].empresa_id], { relativeTo: this.route });
+    if (this.idLayoutPagamento) {
+      console.log('PagamentoId', this.idLayoutPagamento);
+      this.router.navigate(['../../detalhes/' + this.idLayoutPagamento], {
+        relativeTo: this.route,
+      });
+    } else {
+        console.log('Empresaid', this.idEmpresa);
+        this.router.navigate(['../../' + this.idEmpresa], {
+          relativeTo: this.route,
+        });
+    }
   }
-
 }

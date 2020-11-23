@@ -36,12 +36,13 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.service.login(this.f.value)
       .subscribe((response: any) => {
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
+        window.location.href = '/';
       }, (error: any) => {
           this.errorCredential = true;
           this.msg = '';
       });
-    }, 0);
+    }, 300);
   }
 
 }

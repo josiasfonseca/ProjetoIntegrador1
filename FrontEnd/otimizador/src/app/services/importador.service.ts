@@ -21,12 +21,12 @@ export class ImportadorService extends BaseServiceService {
   }
 
   // ARQUIVOS FORNECEDORES
-  enviarArquivoFornecedor(id, file: Set<File>) {
+  enviarArquivoFornecedor(idEmpresa, idLayout, file: Set<File>) {
     const formData = new FormData();
     file.forEach(f => {
       formData.append('arquivo_fornecedor', f[0], f.name);
     });
-    return this.http.post(`${this.urlBase}/importador/fornecedores/${id}`, formData);
+    return this.http.post(`${this.urlBase}/importador/fornecedores/${idEmpresa}/${idLayout}`, formData);
   }
 
   enviarArquivoFornecedorEscritorio(id, file: Set<File>) {
@@ -34,7 +34,7 @@ export class ImportadorService extends BaseServiceService {
     file.forEach(f => {
       formData.append('arquivo_fornecedor_escritorio', f[0], f.name);
     });
-    return this.http.post(`${this.urlBase}/importador/fornecedores/${id}`, formData);
+    return this.http.post(`${this.urlBase}/importador/fornecedores/${id}/1`, formData);
   }
 
   confrontarFornecedores(idEmpresa) {

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BaseServiceService } from './base-service.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,11 @@ export class LayoutService extends BaseServiceService {
   }
 
   // Gravar layout de pagamento
-  gravarLayoutPagamento(idLayoutPagamento, dados) {
+  gravarLayoutPagamento(idLayoutPagamento, idEmpresa, dados) {
     if (idLayoutPagamento) {
       return this.http.put(`${this.url}/layouts-pagamento/${idLayoutPagamento}`, dados);
-    } else {
-      return this.http.post(`${this.url}/layouts-pagamento/incluir`, dados);
+    } else if (idEmpresa) {
+      return this.http.post(`${this.url}/layouts-pagamento/${idEmpresa}`, dados);
     }
   }
 }

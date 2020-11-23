@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { EmpresaService } from './../../../services/empresa.service';
 import { Empresa } from './../../../model/empresa';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +22,8 @@ export class LayoutPagamentoDetailsComponent implements OnInit {
     private layoutPagamentoService: LayoutService,
     private empresaService: EmpresaService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -29,7 +31,9 @@ export class LayoutPagamentoDetailsComponent implements OnInit {
     if (this.idLayoutPagamento == null) {
       this.onBack();
     } else {
+      this.spinner.show();
       this.atualizaLista();
+      this.spinner.hide();
     }
   }
 
@@ -47,7 +51,6 @@ export class LayoutPagamentoDetailsComponent implements OnInit {
         const posicao = dados[1];
         this.listaLayout.push([campo, posicao]);
       });
-      console.log(this.listaLayout);
     });
   }
 

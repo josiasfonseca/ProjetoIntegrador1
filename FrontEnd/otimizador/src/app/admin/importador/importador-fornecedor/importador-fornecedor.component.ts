@@ -1,3 +1,5 @@
+import { LayoutPagamento } from './../../../model/layout-pagamento';
+import { LayoutService } from './../../../services/layout.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertModalService } from './../../../share/alert-modal.service';
 import { EmpresaService } from './../../../services/empresa.service';
@@ -14,6 +16,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ImportadorFornecedorComponent implements OnInit {
 
   idEmpresa: number;
+  layoutPagamento: LayoutPagamento[];
+  idLayoutPagamento: number;
   empresa: Empresa;
   msgFornecedor = '';
   msgFornecedorEscritorio = '';
@@ -23,6 +27,7 @@ export class ImportadorFornecedorComponent implements OnInit {
   constructor(
     private service: ImportadorService,
     private serviceEmpresa: EmpresaService,
+    private serviceLayoutPag: LayoutService,
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
@@ -45,6 +50,13 @@ export class ImportadorFornecedorComponent implements OnInit {
     this.serviceEmpresa.listPorId(this.idEmpresa)
     .subscribe( (dados: any) => {
       this.empresa = dados;
+      this.serviceLayoutPag.listaLayoutPagamentos(this.idEmpresa)
+      .subscribe((resp: any) => {
+        this.layoutPagamento = resp;
+        if (this.layoutPagamento) {
+          this.idLayoutPagamento = this.layoutPagamento[0].id_pagamento;
+        }
+      });
       this.spinner.hide();
     }, (error: any) => {
       this.spinner.hide();
@@ -73,7 +85,7 @@ export class ImportadorFornecedorComponent implements OnInit {
     this.spinner.show();
     this.msgFornecedor = 'Enviando arquivo. Aguarde...';
     if (this.fileFornecedor && this.fileFornecedor.size > 0) {
-      this.service.enviarArquivoFornecedor(this.idEmpresa, this.fileFornecedor)
+      this.service.enviarArquivoFornecedor(this.idEmpresa, this.idLayoutPagamento, this.fileFornecedor)
       .subscribe( (response: any) => {
         this.msgFornecedor = 'Arquivo enviado com sucesso!';
         this.spinner.hide();
@@ -114,5 +126,9 @@ export class ImportadorFornecedorComponent implements OnInit {
         this.router.navigate(['/importador/importador-fornecedores/resultado-confronto/' + this.idEmpresa]);
       }, 2000);
     });
+  }
+
+  atualizaIdLayout(e) {
+    this.idLayoutPagamento = e.target.value;
   }
 }

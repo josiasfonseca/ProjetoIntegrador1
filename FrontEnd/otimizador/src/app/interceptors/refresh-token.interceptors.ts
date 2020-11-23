@@ -35,7 +35,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             localStorage.clear();
-            this.router.navigate(['/']);
+            this.router.navigate(['/login']);
         }
         return throwError(errorResponse);
       })

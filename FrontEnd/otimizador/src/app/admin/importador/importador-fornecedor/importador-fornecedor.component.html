@@ -8,6 +8,17 @@
 </div>
 
 
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row">
+      <p class="col-12 text-center">
+        <select name="layout-pagamento" id="layout-pagamento" class="form-control" (change)="atualizaIdLayout($event)">
+          <option *ngFor="let l of layoutPagamento"  value="{{ l.id_pagamento }}"> {{ l.descricao }}</option>
+        </select>
+      </p>
+    </div>
+  </div>
+</div>
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
