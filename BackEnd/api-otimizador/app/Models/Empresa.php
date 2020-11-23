@@ -55,4 +55,8 @@ class Empresa extends Model
     public function duplicatasReceber() {
         return $this->belongsTo('App\Models\DuplicataReceber', 'id_duplicata_receber');
     }
+
+    public function layoutPagamento() {
+        return $this->belongsTo('App\Models\Layouts\LayoutPagamento', 'id_empresa', 'empresa_id');
+    }
 }

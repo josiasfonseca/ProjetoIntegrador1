@@ -67,7 +67,7 @@ Route::group(['middleware' => ['apiJwt']], function () {
 
     // Importador fornecedores
     Route::group(['prefix' => 'importador/fornecedores'], function () {
-        Route::post('{idEmpresa}', 'ImportadorFornecedorController@carregarArquivo')->name('importador.fornecedores.carregarArquivo');
+        Route::post('{idEmpresa}/{idLayoutPagamento}', 'ImportadorFornecedorController@carregarArquivo')->name('importador.fornecedores.carregarArquivo');
         Route::get('confrontar/{idEmpresa}', 'ImportadorFornecedorController@confrontar')->name('importador.fornecedores.confrontar');
         Route::get('download-fornecedores-com-erro/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresComErro')->name('importador.fornecedores.download');
         Route::get('download-fornecedores-ok/{idEmpresa}/{extensao}', 'ImportadorFornecedorController@baixarArquivoFornecedoresOk')->name('importador.fornecedoresok.download');
@@ -92,6 +92,7 @@ Route::group(['middleware' => ['apiJwt']], function () {
             Route::get('layouts-pagamentos/{idEmpresa}', 'Layouts\LayoutPagamentoController@listaLayoutPagamentos')->name('layouts-pagamento.listaLayoutPagamentos');
             Route::get('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@listaLayoutPagamento')->name('layouts-pagamento.listaLayoutPagamento');
             Route::put('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@atualizaLayoutPagamento')->name('layouts-pagamento.atualizaLayoutPagamento');
+            Route::post('layouts-pagamento/{idEmpresa}', 'Layouts\LayoutPagamentoController@incluiLayoutPagamento')->name('layouts-pagamento.incluiLayoutPagamento');
     });
 
     //Logs

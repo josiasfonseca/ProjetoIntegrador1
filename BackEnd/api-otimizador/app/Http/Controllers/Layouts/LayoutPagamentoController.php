@@ -28,11 +28,8 @@ class LayoutPagamentoController extends LayoutController
     public function atualizaLayoutPagamento(Request $request, $idLayoutPagamento = null) {
         try {
             $descricao = '';
-            if($idLayoutPagamento) {
-                $layoutPagamento = Layout::findOrFail($idLayoutPagamento);
-            } else {
-                $layoutPagamento = new Layout();
-            }
+            $layout = Layout::findOrFail($idLayoutPagamento);
+            $layoutPagamento = LayoutPagamento::where('layout_id', $idLayoutPagamento)->first();
             $campos = '';
             foreach($request->all() as $key => $value) {
                 if($key === 'descricao') {
@@ -41,11 +38,52 @@ class LayoutPagamentoController extends LayoutController
                     $campos .= $key . '=' . $value . ';';
                 }
             }
-            DB::update('UPDATE layouts SET campos=? where id_layout=?', [$campos, $idLayoutPagamento]);
-            DB::update('UPDATE pagamentos SET descricao=? where layout_id=?', [$descricao, $idLayoutPagamento]);
+
+            DB::beginTransaction();
+
+                $layout->campos = $campos;
+                $layout->save();
+                $layoutPagamento->descricao = $descricao;
+                $layoutPagamento->layout_id = $layout->id_layout;
+                $layoutPagamento->save();
+
+            DB::commit();
 
             return response()->json(['msg' => 'Layout gravado com sucesso!'], 200);
         } catch (\Exception $ex) {
+            DB::rollback();
+            return response()->json(['msg' => 'Erro ao gravar layout', $ex->getMessage()], 500);
+        }
+    }
+
+    public function incluiLayoutPagamento(Request $request, $idEmpresa) {
+        try {
+            $descricao = '';
+            $layout = new Layout();
+            $layoutPagamento = new LayoutPagamento();
+            $campos = '';
+            foreach($request->all() as $key => $value) {
+                if($key === 'descricao') {
+                    $descricao = $value;
+                } else {
+                    $campos .= $key . '=' . $value . ';';
+                }
+            }
+
+            DB::beginTransaction();
+
+            $layout->campos = $campos;
+            $layout->save();
+            $layoutPagamento->descricao = $descricao;
+            $layoutPagamento->layout_id = $layout->id_layout;
+            $layoutPagamento->empresa_id = $idEmpresa;
+            $layoutPagamento->save();
+
+            DB::commit();
+
+            return response()->json(['msg' => 'Layout gravado com sucesso!'], 200);
+        } catch (\Exception $ex) {
+            DB::rollback();
             return response()->json(['msg' => 'Erro ao gravar layout', $ex->getMessage()], 500);
         }
     }

@@ -38,7 +38,7 @@ class EmpresaController extends Controller
         try {
                 // $id = $request->get("id") ? $request->get("id") : null;
                 if($id!= null) {
-                    $query = Empresa::with('usuario');
+                    $query = Empresa::with(['usuario']);
                     $empresas = $query->findOrFail($id);
 
                     if($empresas)

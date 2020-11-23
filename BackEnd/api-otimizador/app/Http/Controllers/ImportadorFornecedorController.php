@@ -10,6 +10,7 @@ use App\Models\DuplicataPagar;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Dompdf\Dompdf;
+use App\Models\Layouts\LayoutPagamento;
 
 class ImportadorFornecedorController extends Controller
 {
@@ -23,13 +24,13 @@ class ImportadorFornecedorController extends Controller
         $this->pathBase  = storage_path() . "/app/";
     }
 
-    public function carregarArquivo(Request $request, $idEmpresa = null) {
+    public function carregarArquivo(Request $request, $idEmpresa = null, $idLayoutPagamento = null) {
         try {
             if($request->hasFile("arquivo_fornecedor")) {
                 if($request->arquivo_fornecedor->isValid() && $idEmpresa != null ){
                     $name = $this->nomeArquivoFornecedor . "." . $request->arquivo_fornecedor->clientExtension();
                     $request->arquivo_fornecedor->storeAs("$this->path/$idEmpresa/", $name);
-                    $result = $this->lerArquivoFornecedor($idEmpresa);
+                    $result = $this->lerArquivoFornecedor($idEmpresa, $idLayoutPagamento);
                 } else {
                     return response()->json(["msg" => "Arquivo inválido!"], 500);
                 }
@@ -51,10 +52,10 @@ class ImportadorFornecedorController extends Controller
         }
     }
 
-    public function lerArquivoFornecedor($idEmpresa) {
+    public function lerArquivoFornecedor($idEmpresa, $idLayoutPagamento) {
         try {
             $duplicatas = DuplicataPagar::where("empresa_id", $idEmpresa)->delete();
-            Excel::import(new DuplicataPagarImport($idEmpresa), storage_path("app/arquivos/fornecedores/$idEmpresa/$this->nomeArquivoFornecedor.xls", null, \Maatwebsite\Excel\Excel::XLS));
+            Excel::import(new DuplicataPagarImport($idEmpresa, $idLayoutPagamento), storage_path("app/arquivos/fornecedores/$idEmpresa/$this->nomeArquivoFornecedor.xls", null, \Maatwebsite\Excel\Excel::XLS));
             return "";
         } catch (\Exception $ex) {
             return $ex->getMessage();

@@ -29,7 +29,7 @@ class LayoutPagamento extends Layout
     protected static $submitEmptyLogs = false;
 
 
-    public function usuario() {
+    public function empresa() {
         return $this->hasOne('App\Models\Empresa', 'id_empresa');
     }
 

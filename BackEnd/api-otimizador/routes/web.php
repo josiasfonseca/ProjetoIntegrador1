@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('angular')->where('any', '.*');
+// });
+// Route::get('/login', function () {
+//     return view('angular')->where('any', '.*');
+// });
+
+Route::group([],
+    function () {
+        Route::get('/{any}', function() {
+            return view('angular');
+        })->where('any', '.*');
+        Route::get('/', function() {
+            return view('angular');
+        })->where('any', '.*');
+    }
+);
