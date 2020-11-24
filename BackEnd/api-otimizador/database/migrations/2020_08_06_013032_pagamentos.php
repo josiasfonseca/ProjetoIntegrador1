@@ -15,6 +15,7 @@ class Pagamentos extends Migration
     {
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->id('id_pagamento');
+            $table->string('descricao', 255);
             $table->unsignedBigInteger('layout_id');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('layout_id')->references('id_layout')->on('layouts');

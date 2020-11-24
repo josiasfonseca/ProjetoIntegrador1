@@ -15,6 +15,7 @@ class Recebimentos extends Migration
     {
         Schema::create('recebimentos', function (Blueprint $table) {
             $table->id('id_recebimento');
+            $table->string('descricao', 255);
             $table->unsignedBigInteger('empresa_id');
             $table->unsignedBigInteger('layout_id');
             $table->foreign('layout_id')->references('id_layout')->on('layouts');

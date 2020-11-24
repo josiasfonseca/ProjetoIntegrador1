@@ -15,10 +15,7 @@ class Layouts extends Migration
     {
         Schema::create('layouts', function (Blueprint $table) {
             $table->id('id_layout');
-            $table->string('comand_create', 255);
-            $table->string('comand_insert', 255);
-            $table->string('comand_select', 255);
-            $table->string('comand_delete', 255);
+            $table->string('campos', 255);
             $table->timestamps();
             $table->softDeletes();
         });
