@@ -11,6 +11,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutPagamentoFormComponent } from './layout-pagamento-form/layout-pagamento-form.component';
 import { LayoutPagamentoListComponent } from './layout-pagamento-list/layout-pagamento-list.component';
+import { LayoutRecebimentoListComponent } from './layout-recebimento-list/layout-recebimento-list.component';
+import { LayoutRecebimentoDetailsComponent } from './layout-recebimento-details/layout-recebimento-details.component';
+import { LayoutRecebimentoFormComponent } from './layout-recebimento-form/layout-recebimento-form.component';
 
 
 @NgModule({
@@ -18,7 +21,10 @@ import { LayoutPagamentoListComponent } from './layout-pagamento-list/layout-pag
     LayoutsComponent,
     LayoutPagamentoDetailsComponent,
     LayoutPagamentoFormComponent,
-    LayoutPagamentoListComponent
+    LayoutPagamentoListComponent,
+    LayoutRecebimentoListComponent,
+    LayoutRecebimentoDetailsComponent,
+    LayoutRecebimentoFormComponent
   ],
   imports: [
     CommonModule,

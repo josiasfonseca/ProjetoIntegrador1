@@ -11,10 +11,15 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="row">
-      <p class="col-12 text-center">
+      <p class="col-12 text-center" *ngIf="layoutPagamento && layoutPagamento[0]" >
         <select name="layout-pagamento" id="layout-pagamento" class="form-control" (change)="atualizaIdLayout($event)">
           <option *ngFor="let l of layoutPagamento"  value="{{ l.id_pagamento }}"> {{ l.descricao }}</option>
         </select>
+      </p>
+      <p class="col-12 text-center" *ngIf="layoutPagamento && !layoutPagamento[0]" >
+        Esta empresa não possui layout cadastrado. <br />Favor cadastrar e depois realizar essa operação!
+        <br>
+        <button class="btn btn-primary" (click)="novoLayout()">Novo Layout</button>
       </p>
     </div>
   </div>
@@ -63,7 +68,7 @@
     </div>
   </div>
 </div>
-<button (click)="confrontarFornecedores($event)" class="btn btn-secondary mb-2">Confrontar arquivos de Fornecedores</button>
+<button (click)="confrontarFornecedores($event)" class="btn btn-secondary mb-2" [disabled]="layoutPagamento && !layoutPagamento[0]">Confrontar arquivos de Fornecedores</button>
 <br>
 <button type="button" class="btn btn-primary mb-2" (click)="onBack()" >Voltar</button>
 <ngx-spinner></ngx-spinner>

@@ -73,7 +73,6 @@ export class ImportadorCartaoComponent implements OnInit {
     if (this.fileCartao && this.fileCartao.size > 0) {
       this.service.enviarArquivoCartao(this.idEmpresa, this.fileCartao)
       .subscribe( (response: any) => {
-        console.log(response);
         this.msgCartao = 'Arquivo enviado com sucesso!';
         this.spinner.hide();
       });

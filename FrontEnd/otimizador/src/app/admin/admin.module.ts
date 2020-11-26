@@ -13,6 +13,7 @@ import { MenuNavbarComponent } from './menu/menu-navbar/menu-navbar.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LogListComponent } from './logs/log-list/log-list.component';
 
 
 
@@ -24,6 +25,7 @@ import { CommonModule } from '@angular/common';
     FooterComponent,
     HomeComponent,
     StarterComponent,
+    LogListComponent,
   ],
   imports: [
     CommonModule,

@@ -2,5 +2,5 @@
 
 
   <label [attr.for]="id">{{ label }}</label>
-  <input [type]="type" class="form-control" [id]="id" [placeholder]="place" [readonly]="!!isReadOnly" [ngClass]="classeValidacao" [disabled]="disabled"
+  <input [type]="type" class="form-control" [id]="id" [placeholder]="place" [readonly]="!!isReadOnly" [ngClass]="classeValidacao" [disabled]="disabled" autocomplete="off"
   [(ngModel)]="value" />

@@ -1,24 +1,24 @@
-import { Empresa } from './../../../model/empresa';
-import { EmpresaService } from './../../../services/empresa.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LayoutPagamento } from 'src/app/model/layout-pagamento';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmpresaService } from './../../../services/empresa.service';
 import { LayoutService } from './../../../services/layout.service';
+import { Empresa } from './../../../model/empresa';
+import { LayoutRecebimento } from './../../../model/layout-recebimento';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-layout-pagamento-list',
-  templateUrl: './layout-pagamento-list.component.html',
-  styleUrls: ['./layout-pagamento-list.component.css']
+  selector: 'app-layout-recebimento-list',
+  templateUrl: './layout-recebimento-list.component.html',
+  styleUrls: ['./layout-recebimento-list.component.css']
 })
-export class LayoutPagamentoListComponent implements OnInit {
+export class LayoutRecebimentoListComponent implements OnInit {
 
   idEmpresa: number;
-  layout: LayoutPagamento[];
+  layout: LayoutRecebimento[];
   empresa: Empresa;
 
   constructor(
-    private layoutPagamentoService: LayoutService,
+    private layoutRecebimentoService: LayoutService,
     private serviceEmpresa: EmpresaService,
     private route: ActivatedRoute,
     private router: Router,
@@ -45,8 +45,8 @@ export class LayoutPagamentoListComponent implements OnInit {
       this.onBack();
     });
 
-    this.layoutPagamentoService.listaLayoutPagamentos(this.idEmpresa)
-    .subscribe((resp: LayoutPagamento[]) => {
+    this.layoutRecebimentoService.listaLayoutRecebimentos(this.idEmpresa)
+    .subscribe((resp: LayoutRecebimento[]) => {
       this.layout = resp;
     });
   }
@@ -55,11 +55,12 @@ export class LayoutPagamentoListComponent implements OnInit {
     this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
-  details(idLayoutPagamento: number) {
-    this.router.navigate(['/layouts/pagamentos/detalhes/' + idLayoutPagamento]);
+  details(idLayoutRecebimento: number) {
+    this.router.navigate(['/layouts/recebimentos/detalhes/' + idLayoutRecebimento]);
   }
 
-  novoLayoutPagamento() {
-    this.router.navigate(['/layouts/pagamentos/' + this.idEmpresa + '/novo']);
+  novoLayoutRecebimento() {
+    this.router.navigate(['/layouts/recebimentos/' + this.idEmpresa + '/novo']);
   }
+
 }

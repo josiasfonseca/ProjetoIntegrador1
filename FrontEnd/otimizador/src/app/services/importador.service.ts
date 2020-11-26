@@ -60,12 +60,12 @@ export class ImportadorService extends BaseServiceService {
   }
 
   // ARQUIVOS CLIENTES
-  enviarArquivoCliente(id, file: Set<File>) {
+  enviarArquivoCliente(id, idLayout, file: Set<File>) {
     const formData = new FormData();
     file.forEach(f => {
       formData.append('arquivo_cliente', f[0], f.name);
     });
-    return this.http.post(`${this.urlBase}/importador/clientes/${id}`, formData);
+    return this.http.post(`${this.urlBase}/importador/clientes/${id}/${idLayout}`, formData);
   }
 
   enviarArquivoClienteEscritorio(id, file: Set<File>) {
@@ -73,7 +73,7 @@ export class ImportadorService extends BaseServiceService {
     file.forEach(f => {
       formData.append('arquivo_escritorio', f[0], f.name);
     });
-    return this.http.post(`${this.urlBase}/importador/clientes/${id}`, formData);
+    return this.http.post(`${this.urlBase}/importador/clientes/${id}/1`, formData);
   }
 
     confrontarClientes(idEmpresa: number) {

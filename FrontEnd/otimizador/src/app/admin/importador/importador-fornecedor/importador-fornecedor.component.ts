@@ -54,7 +54,7 @@ export class ImportadorFornecedorComponent implements OnInit {
       .subscribe((resp: any) => {
         this.layoutPagamento = resp;
         if (this.layoutPagamento) {
-          this.idLayoutPagamento = this.layoutPagamento[0].id_pagamento;
+          this.idLayoutPagamento = this.layoutPagamento[0] ? this.layoutPagamento[0].id_pagamento : null;
         }
       });
       this.spinner.hide();
@@ -130,5 +130,9 @@ export class ImportadorFornecedorComponent implements OnInit {
 
   atualizaIdLayout(e) {
     this.idLayoutPagamento = e.target.value;
+  }
+
+  novoLayout() {
+    this.router.navigate(['/layouts/pagamentos/' + this.idEmpresa  + '/novo']);
   }
 }

@@ -18,7 +18,7 @@
       <app-input-control-erro [msgErro]="imprimeErro('senha')" [mostrarErro]="mostraErro('senha')"></app-input-control-erro>
     </div>
     <div class="col-md-3 mb-3">
-      <app-input-field id="cpf" (keyup)="mascaraCPF($event)" label="CPF" place="CPF" type="text" readOnly="!!isReadOnly" formControlName="cpf" [classeValidacao]="verificaValidadeCampo('cpf')">
+      <app-input-field id="cpf" label="CPF" place="CPF" type="text" readOnly="!!isReadOnly" formControlName="cpf" [classeValidacao]="verificaValidadeCampo('cpf')">
       </app-input-field>
       <app-input-control-erro [msgErro]="imprimeErro('cpf')"  [mostrarErro]="mostraErro('cpf')"></app-input-control-erro>
     </div>

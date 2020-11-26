@@ -1,3 +1,4 @@
+import { LayoutRecebimento } from './../model/layout-recebimento';
 import { LayoutPagamento } from './../model/layout-pagamento';
 import { HttpClient } from '@angular/common/http';
 import { BaseServiceService } from './base-service.service';
@@ -32,6 +33,25 @@ export class LayoutService extends BaseServiceService {
       return this.http.put(`${this.url}/layouts-pagamento/${idLayoutPagamento}`, dados);
     } else if (idEmpresa) {
       return this.http.post(`${this.url}/layouts-pagamento/${idEmpresa}`, dados);
+    }
+  }
+
+  // listar layouts de recebimento de uma empresa
+  listaLayoutRecebimentos(idEmpresa: number) {
+    return this.http.get<LayoutRecebimento[]>(`${this.url}/layouts-recebimentos/${idEmpresa}`);
+  }
+
+  // listar um layout por id
+  listaLayoutRecebimento(idLayoutRecebimento: number) {
+    return this.http.get<LayoutRecebimento[]>(`${this.url}/layouts-recebimento/${idLayoutRecebimento}`);
+  }
+
+  // Gravar layout de recebimento
+  gravarLayoutRecebimento(idLayoutRecebimento, idEmpresa, dados) {
+    if (idLayoutRecebimento) {
+      return this.http.put(`${this.url}/layouts-recebimento/${idLayoutRecebimento}`, dados);
+    } else if (idEmpresa) {
+      return this.http.post(`${this.url}/layouts-recebimento/${idEmpresa}`, dados);
     }
   }
 }

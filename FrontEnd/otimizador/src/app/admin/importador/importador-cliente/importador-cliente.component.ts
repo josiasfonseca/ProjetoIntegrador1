@@ -1,3 +1,5 @@
+import { LayoutService } from './../../../services/layout.service';
+import { LayoutRecebimento } from './../../../model/layout-recebimento';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ImportadorService } from './../../../services/importador.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -17,6 +19,8 @@ export class ImportadorClienteComponent implements OnInit {
   totalRegistros = 0;
   idEmpresa: number;
   empresa: Empresa;
+  layoutRecebimento: LayoutRecebimento[];
+  idLayoutRecebimento: number;
   msgCliente = '';
   msgEscritorio = '';
   fileCliente: Set<File>;
@@ -25,6 +29,7 @@ export class ImportadorClienteComponent implements OnInit {
   constructor(
     private service: ImportadorService,
     private serviceEmpresa: EmpresaService,
+    private serviceLayoutRec: LayoutService,
     public alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute,
@@ -47,7 +52,16 @@ export class ImportadorClienteComponent implements OnInit {
     this.serviceEmpresa.listPorId(this.idEmpresa)
     .subscribe( (dados: any) => {
       this.empresa = dados;
+      this.serviceLayoutRec.listaLayoutRecebimentos(this.idEmpresa)
+      .subscribe((resp: any) => {
+        this.layoutRecebimento = resp;
+        if (this.layoutRecebimento) {
+          this.idLayoutRecebimento = this.layoutRecebimento[0] ? this.layoutRecebimento[0].id_recebimento : null;
+        }
+      }, error => this.spinner.hide());
+      this.spinner.hide();
     }, (error: any) => {
+      this.spinner.hide();
       this.onBack();
     });
   }
@@ -72,10 +86,12 @@ export class ImportadorClienteComponent implements OnInit {
     this.spinner.show();
     this.msgCliente = 'Enviando arquivo. Aguarde...';
     if (this.fileCliente && this.fileCliente.size > 0) {
-      this.service.enviarArquivoCliente(this.idEmpresa, this.fileCliente)
+      this.service.enviarArquivoCliente(this.idEmpresa, this.idLayoutRecebimento, this.fileCliente)
       .subscribe( (response: any) => {
-        console.log(response);
         this.msgCliente = 'Arquivo enviado com sucesso!';
+        this.spinner.hide();
+      }, (error: any) => {
+        this.alertService.showAlertDanger('Erro ao enviar arquivo!' + error);
         this.spinner.hide();
       });
     }
@@ -96,6 +112,9 @@ export class ImportadorClienteComponent implements OnInit {
       .subscribe(response => {
         this.msgEscritorio = 'Arquivo enviado com sucesso!';
         this.spinner.hide();
+      }, (error: any) => {
+        this.alertService.showAlertDanger('Erro ao enviar arquivo!' + error);
+        this.spinner.hide();
       });
     }
   }
@@ -111,6 +130,16 @@ export class ImportadorClienteComponent implements OnInit {
         this.alertService.closeAlert();
         this.router.navigate(['/importador/importador-clientes/resultado-confronto/' + this.idEmpresa]);
       }, 2000);
+    }, (error) => {
+      this.spinner.hide();
     });
+  }
+
+  atualizaIdLayout(e) {
+    this.idLayoutRecebimento = e.target.value;
+  }
+
+  novoLayout() {
+    this.router.navigate(['/layouts/recebimentos/' + this.idEmpresa  + '/novo']);
   }
 }

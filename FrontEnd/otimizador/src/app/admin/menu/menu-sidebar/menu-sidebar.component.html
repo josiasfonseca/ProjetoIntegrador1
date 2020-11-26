@@ -68,6 +68,12 @@
               <p class="ml-2">Controles Geral</p>
             </a>
           </li>
+          <li class="nav-item" *ngIf="usuarioLogado.tipo_usuario.tipo == 'GERENTE'" >
+            <a routerLink='/logs' class="nav-link" routerLinkActive="active">
+              <i class="fas fa-paste"></i>
+              <p class="ml-2">Logs</p>
+            </a>
+          </li>
       </ul>
         </li>
       </ul>

@@ -1,0 +1,26 @@
+<div class="row" *ngIf="empresa" >
+  <div class="col-sm-12">
+    <hr>
+      <h4>{{ empresa?.nome }} - {{ empresa?.id_empresa }}</h4>
+      <h6>Responsável: {{ empresa?.usuario?.nome }} </h6>
+    <hr>
+  </div>
+</div>
+
+<h3 class="text-center">Lista de layouts de recebimentos</h3>
+
+<button type="button" class="btn btn-primary btn-sm mb-2 mr-2" (click)="onEdit(layout[0].layout_id)"><i class="fas fa-edit"></i> Editar</button>
+<table class="table table-hover table-striped">
+  <thead>
+    <th>Campo</th>
+    <th>Coluna</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let l of listaLayout" >
+      <td>{{ l[0] }}</td>
+      <td>{{ l[1] }}</td>
+    </tr>
+    </tbody>
+</table>
+<button type="button" class="btn btn-primary" (click)="onBack()" ><i class="fas fa-undo-alt"></i>  Voltar</button>
+<ngx-spinner></ngx-spinner>

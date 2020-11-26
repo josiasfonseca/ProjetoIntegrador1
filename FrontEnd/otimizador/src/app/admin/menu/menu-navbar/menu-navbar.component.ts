@@ -18,6 +18,7 @@ export class MenuNavbarComponent implements OnInit {
     this.usuario = this.authService.getUser();
 
     this.usuarioLogado = JSON.parse(atob(localStorage.getItem('user')));
+    console.log(this.usuarioLogado);
 
   }
 

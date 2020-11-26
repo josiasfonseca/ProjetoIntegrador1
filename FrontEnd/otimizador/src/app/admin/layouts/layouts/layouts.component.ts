@@ -64,6 +64,10 @@ export class LayoutsComponent implements OnInit {
     this.router.navigate([`layouts/pagamentos/${idEmpresa}`]);
   }
 
+  recebimento(idEmpresa: number) {
+    this.router.navigate([`layouts/recebimentos/${idEmpresa}`]);
+  }
+
   previous(paginaAtual: number) {
     this.atualizaLista(paginaAtual - 1);
   }

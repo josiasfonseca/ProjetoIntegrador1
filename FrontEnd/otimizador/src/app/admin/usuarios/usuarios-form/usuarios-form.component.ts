@@ -190,29 +190,9 @@ export class UsuariosFormComponent implements OnInit {
     return diaF + '/' + mesF + '/' + ano + ' ' + hora + ':' + minutos + ':' + segundos;
   }
 
-  mascaraCPF(e) {
-    // let result = '';
-    // const cpf = e.target.value;
-    // const tamanho = (cpf.replace(/[^\d]+/g, '')).length;
-    // const a = cpf.replace(/[^\d]+/g, '');
-    // for (let i = 0; i < tamanho; i++) {
-    //   if (i === 2) {
-    //     result = a.replace(a[i], a[i] + '.');
-    //     this.formulario.get('cpf').setValue(result);
-    //     console.log('2', i);
-    //   }
-    //   if (i === 5) {
-    //     result = a.replace(a[i], a[i] + '.');
-    //     this.formulario.get('cpf').setValue(result);
-    //     console.log('7', i);
-    //   }
-    // }
-  }
-
-  gravarForm() {
+ gravarForm() {
     this.formataLogin();
     const usuario = this.formulario.value;
-    console.log(usuario);
     let id: number;
     if (this.usuarioUrl) {
       id = this.usuarioUrl;
@@ -235,6 +215,7 @@ export class UsuariosFormComponent implements OnInit {
           this.spinner.hide();
         },
         (erro: any) => {
+          this.spinner.hide();
           this.erros = erro.error.errors as Usuario;
           if (this.erros.login[0] === 'validation.unique') {
             this.alertService.showAlertDanger(

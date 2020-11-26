@@ -1,3 +1,4 @@
+import { LogListComponent } from './logs/log-list/log-list.component';
 import { StarterComponent } from './starter/starter.component';
 import { AuthGuard } from './../guards/auth.guard';
 import { Routes, RouterModule } from '@angular/router';
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'importador', loadChildren: () => import('./importador/importador.module').then(m => m.ImportadorModule) },
       { path: 'relatorios', loadChildren: () => import('./relatorios/relatorios.module').then(m => m.RelatoriosModule) },
       { path: 'layouts', loadChildren: () => import('./layouts/layouts.module').then(m => m.LayoutsModule) },
+      { path: 'logs',  component: LogListComponent },
     ]
   },
 ];
