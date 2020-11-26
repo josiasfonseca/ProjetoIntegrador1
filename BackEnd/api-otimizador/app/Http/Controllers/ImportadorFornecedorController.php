@@ -55,7 +55,9 @@ class ImportadorFornecedorController extends Controller
     public function lerArquivoFornecedor($idEmpresa, $idLayoutPagamento) {
         try {
             $duplicatas = DuplicataPagar::where("empresa_id", $idEmpresa)->delete();
+            activity()->disableLogging();
             Excel::import(new DuplicataPagarImport($idEmpresa, $idLayoutPagamento), storage_path("app/arquivos/fornecedores/$idEmpresa/$this->nomeArquivoFornecedor.xls", null, \Maatwebsite\Excel\Excel::XLS));
+            activity()->enableLogging();
             return "";
         } catch (\Exception $ex) {
             return $ex->getMessage();

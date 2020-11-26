@@ -9,6 +9,7 @@ use App\Exports\ClientesContabilidade;
 use App\Models\DuplicataReceber;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ResultClientesComErro;
+use App\Models\Layouts\LayoutRecebimento;
 
 class ImportadorClienteController extends Controller
 {
@@ -22,13 +23,13 @@ class ImportadorClienteController extends Controller
         $this->pathBase  = storage_path() . "/app/";
     }
 
-    public function carregarArquivo(Request $request, $idEmpresa = null) {
+    public function carregarArquivo(Request $request, $idEmpresa = null, $idLayoutRecebimento = null) {
         try {
             if($request->hasFile("arquivo_cliente")) {
                 if($request->arquivo_cliente->isValid() && $idEmpresa != null ){
                     $name = $this->nomeArquivoCliente . "." . $request->arquivo_cliente->clientExtension();
                     $request->arquivo_cliente->storeAs("$this->path/$idEmpresa/", $name);
-                    $result = $this->lerArquivoCliente($idEmpresa);
+                    $result = $this->lerArquivoCliente($idEmpresa, $idLayoutRecebimento);
                 } else {
                     return response()->json(["msg" => "Arquivo inválido!"], 500);
                 }
@@ -50,10 +51,12 @@ class ImportadorClienteController extends Controller
         }
     }
 
-    public function lerArquivoCliente($idEmpresa) {
+    public function lerArquivoCliente($idEmpresa, $idLayoutRecebimento) {
         try {
             $duplicatas = DuplicataReceber::where("empresa_id", $idEmpresa)->delete();
-            Excel::import(new DuplicataReceberImport($idEmpresa), storage_path("app/arquivos/clientes/$idEmpresa/$this->nomeArquivoCliente.xls", null, \Maatwebsite\Excel\Excel::XLS));
+            activity()->disableLogging();
+            Excel::import(new DuplicataReceberImport($idEmpresa, $idLayoutRecebimento), storage_path("app/arquivos/clientes/$idEmpresa/$this->nomeArquivoCliente.xls", null, \Maatwebsite\Excel\Excel::XLS));
+            activity()->enableLogging();
             return "";
         } catch (\Exception $ex) {
             return $ex->getMessage();
@@ -78,10 +81,13 @@ class ImportadorClienteController extends Controller
         foreach ($duplicatas as $key => $value){
             $cnpj = $value["cnpj"];
             $dado = null;
-            foreach($result[0] as $k => $v) {
-                $dado = array_search($cnpj, $v);
-                if($dado){
-                    break;
+            // return $result;
+            if($result[0]) {
+                foreach($result[0] as $k => $v) {
+                    $dado = array_search($cnpj, $v);
+                    if($dado){
+                        break;
+                    }
                 }
             }
             if(!$dado) {

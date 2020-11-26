@@ -62,7 +62,11 @@ class UsuarioController extends Controller
 
             foreach($request->all() as $key => $value){
                 if($key != '_method' && $key != '_token'){
+
                     $usuario->$key = $value;
+                    if($key != 'email' && $key != 'senha' && $key != 'id_usuario') {
+                        $usuario->$key = strtoupper($value);
+                    }
                     if($key == 'login') {
                         $usuario->$key = strtolower($usuario->$key);
                         $usuario->$key = str_replace(" ", "", $usuario->$key);
@@ -77,7 +81,7 @@ class UsuarioController extends Controller
             else
                 return  response()->json(["msg" => "Erro na inclusao", "dados" => $usuario], 400);
             } catch (\Exception $ex) {
-                return  response()->json(["msg" => "Erro na inclusao", "dados" => $usuario], 400);
+                return  response()->json(["msg" => "Erro na inclusao", "erro" => $ex->getMessage()], 400);
         }
     }
 
@@ -105,6 +109,9 @@ class UsuarioController extends Controller
             foreach($request->all() as $key => $value){
                 if($key != '_method' && $key != '_token'){
                     $usuario->$key = $value;
+                    if($key != 'email' && $key != 'senha' && $key != 'id_usuario') {
+                        $usuario->$key = strtoupper($value);
+                    }
                     if($key == 'login') {
                         $usuario->$key = strtolower($usuario->$key);
                     }

@@ -28,12 +28,11 @@ class LayoutRecebimento extends Layout
     protected static $logOnlyDirty = true;
     protected static $submitEmptyLogs = false;
 
-
     public function empresa() {
         return $this->hasOne('App\Models\Empresa', 'id_empresa');
     }
 
-    public function layouts() {
-        return $this->belongsTo('App\Models\Layout', 'id_layout');
+    public function layout() {
+        return $this->hasOne('App\Models\Layout', 'id_layout', 'layout_id');
     }
 }

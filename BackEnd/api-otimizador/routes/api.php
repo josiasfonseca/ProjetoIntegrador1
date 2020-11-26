@@ -58,7 +58,7 @@ Route::group(['middleware' => ['apiJwt']], function () {
 
     //Importador clientes
     Route::group(['prefix' => 'importador/clientes'], function () {
-        Route::post('{idEmpresa}', 'ImportadorClienteController@carregarArquivo')->name('importador.clientes.carregarArquivo');
+        Route::post('{idEmpresa}/{idLayoutRecebimento}', 'ImportadorClienteController@carregarArquivo')->name('importador.clientes.carregarArquivo');
         Route::get('confrontar/{idEmpresa}', 'ImportadorClienteController@confrontar')->name('importador.clientes.confrontar');
         Route::get('download-clientes-com-erro/{idEmpresa}/{extensao}', 'ImportadorClienteController@baixarArquivoClientesComErro')->name('importador.clientes.download');
         Route::get('gerarArquivoContabilidade/{idEmpresa}', 'ImportadorClienteController@gerarArquivoContabilidade')->name('importador.clientes.gerarArquivoContabilidade');
@@ -89,15 +89,21 @@ Route::group(['middleware' => ['apiJwt']], function () {
 
     //Layouts
     Route::group(['prefix' => 'layouts'], function () {
+            //Pagamentos
             Route::get('layouts-pagamentos/{idEmpresa}', 'Layouts\LayoutPagamentoController@listaLayoutPagamentos')->name('layouts-pagamento.listaLayoutPagamentos');
             Route::get('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@listaLayoutPagamento')->name('layouts-pagamento.listaLayoutPagamento');
             Route::put('layouts-pagamento/{idLayoutPagamento}', 'Layouts\LayoutPagamentoController@atualizaLayoutPagamento')->name('layouts-pagamento.atualizaLayoutPagamento');
             Route::post('layouts-pagamento/{idEmpresa}', 'Layouts\LayoutPagamentoController@incluiLayoutPagamento')->name('layouts-pagamento.incluiLayoutPagamento');
+            //Recebimentos
+            Route::get('layouts-recebimentos/{idEmpresa}', 'Layouts\LayoutRecebimentoController@listaLayoutRecebimentos')->name('layouts-recebimento.listaLayoutRecebimentos');
+            Route::get('layouts-recebimento/{idLayoutRecebimento}', 'Layouts\LayoutRecebimentoController@listaLayoutRecebimento')->name('layouts-recebimento.listaLayoutRecebimento');
+            Route::put('layouts-recebimento/{idLayoutRecebimento}', 'Layouts\LayoutRecebimentoController@atualizaLayoutRecebimento')->name('layouts-recebimento.atualizaLayoutRecebimento');
+            Route::post('layouts-recebimento/{idEmpresa}', 'Layouts\LayoutRecebimentoController@incluiLayoutRecebimento')->name('layouts-recebimento.incluiLayoutRecebimento');
     });
 
     //Logs
     Route::group(['prefix' => 'logs'], function () {
-        Route::get('logs', 'LogSpatieController@index')->name('logs.index');
+        Route::get('logs', 'LogController@index')->name('logs.index');
     });
 
 });

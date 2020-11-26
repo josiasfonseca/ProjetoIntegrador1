@@ -27,7 +27,7 @@ class DuplicataPagarImport implements ToModel
         if($row[0] == "ID TRN") {
             return null;
         }
-        $layoutPagamento = LayoutPagamento::with(['layout'])->where('layout_id', $this->idLayoutPagamento)->first();
+        $layoutPagamento = LayoutPagamento::with(['layout'])->where('id_pagamento', $this->idLayoutPagamento)->first();
         $campos = $layoutPagamento->layout->campos;
         $a = explode(';', $campos);
         $array = [];

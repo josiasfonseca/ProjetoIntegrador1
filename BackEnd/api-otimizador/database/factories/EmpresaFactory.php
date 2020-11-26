@@ -9,7 +9,7 @@ $factory->define(App\Models\Empresa::class, function (Faker $faker) {
     return [
         'nome' => strtoupper($faker->company),
         'razao_social' => strtoupper($faker->company),
-        'usuario_id' => $faker->numberBetween($min = 1, $max = 10),
+        'usuario_id' => $faker->numberBetween($min = 1, $max = 5),
         'cnpj' => '9' . $faker->ean13,
         'ie' => $faker->ean13,
         'im' =>  substr($faker->ean13, 0, 6),
